@@ -2,119 +2,83 @@
 
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Check, Loader2, Zap, ArrowRight } from "lucide-react";
+import { Check, Loader2, Zap, ArrowRight, Crown, Sparkles } from "lucide-react";
+import { useLocale } from "@/components/shared/locale-provider";
+import { POLAR_PRODUCT_IDS, getCheckoutUrl } from "@/lib/polar";
 
-const PLANS = [
-  {
-    id: "credits" as const,
-    name: "轻量包",
-    subname: "积分套餐",
-    price: "0.99",
-    unit: "一次性",
-    priceNote: "约 2 张照片修复",
-    features: [
-      "10 积分一次性到账",
-      "约 2 张照片修复",
-      "无需续费，随用随买",
-      "适合尝鲜体验",
-    ],
-    cta: "立即购买",
-    ctaLoading: "购买中…",
-    highlight: false,
-    isPurchase: true,
-  },
-  {
-    id: "weekly" as const,
-    name: "周会员",
-    subname: "周套餐",
-    price: "9.99",
-    unit: "/ 周",
-    priceNote: "约 20 张/周，折合不到 $0.5/张",
-    features: [
-      "每周 100 积分",
-      "约 20 张照片修复/周",
-      "折合不到 $0.5/张",
-      "周期按开通日自动刷新",
-    ],
-    cta: "立即订阅",
-    ctaLoading: "开通中…",
-    highlight: false,
-    isPurchase: false,
-  },
-  {
-    id: "yearly" as const,
-    name: "年会员",
-    subname: "年套餐",
-    price: "39.99",
-    unit: "/ 年",
-    priceNote: "约 2000 张/年，折合不到 $0.02/张",
-    features: [
-      "每年 10000 积分",
-      "约 2000 张照片修复/年",
-      "折合不到 $0.02/张",
-      "全年最低单价，最划算",
-    ],
-    cta: "立即订阅",
-    ctaLoading: "开通中…",
-    highlight: true,
-    isPurchase: false,
-  },
-] as const;
+function usePlans(t: (key: string) => string) {
+  return [
+    {
+      id: "credits" as const,
+      name: t("member.planCreditsName"),
+      subname: t("member.planCreditsSub"),
+      price: "0.99",
+      unit: t("member.planCreditsUnit"),
+      priceNote: t("member.planCreditsNote"),
+      features: [t("member.planCreditsF1"), t("member.planCreditsF2"), t("member.planCreditsF3"), t("member.planCreditsF4")],
+      cta: t("member.planCreditsCta"),
+      ctaLoading: t("member.planCreditsCtaLoading"),
+      highlight: false,
+      isPurchase: true,
+    },
+    {
+      id: "weekly" as const,
+      name: t("member.planWeeklyName"),
+      subname: t("member.planWeeklySub"),
+      price: "9.99",
+      unit: t("member.planWeeklyUnit"),
+      priceNote: t("member.planWeeklyNote"),
+      features: [t("member.planWeeklyF1"), t("member.planWeeklyF2"), t("member.planWeeklyF3"), t("member.planWeeklyF4")],
+      cta: t("member.planWeeklyCta"),
+      ctaLoading: t("member.planWeeklyCtaLoading"),
+      highlight: false,
+      isPurchase: false,
+    },
+    {
+      id: "yearly" as const,
+      name: t("member.planYearlyName"),
+      subname: t("member.planYearlySub"),
+      price: "39.99",
+      unit: t("member.planYearlyUnit"),
+      priceNote: t("member.planYearlyNote"),
+      features: [t("member.planYearlyF1"), t("member.planYearlyF2"), t("member.planYearlyF3"), t("member.planYearlyF4")],
+      cta: t("member.planYearlyCta"),
+      ctaLoading: t("member.planYearlyCtaLoading"),
+      highlight: true,
+      isPurchase: false,
+    },
+  ] as const;
+}
 
 export default function SubscribePage() {
+  const { t } = useLocale();
+  const PLANS = usePlans(t);
   const { data: session, status } = useSession();
-  const router = useRouter();
   const [loading, setLoading] = useState<"credits" | "weekly" | "yearly" | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleCreditsPurchase = async () => {
+  const customerParams =
+    session?.user?.email || session?.user?.id
+      ? {
+          customerEmail: session.user.email ?? undefined,
+          customerExternalId: typeof session.user.id === "string" ? session.user.id : undefined,
+        }
+      : undefined;
+
+  const handleCreditsPurchase = () => {
     if (!session?.user) return;
     setError(null);
     setLoading("credits");
-    try {
-      const res = await fetch("/api/membership/purchase-credits", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pack: "10" }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(data.message ?? data.error ?? "购买失败");
-        return;
-      }
-      router.push("/member");
-      router.refresh();
-    } catch {
-      setError("网络错误，请重试");
-    } finally {
-      setLoading(null);
-    }
+    window.location.href = getCheckoutUrl(POLAR_PRODUCT_IDS.credits10, customerParams);
   };
 
-  const handleSubscribe = async (plan: "weekly" | "yearly") => {
+  const handleSubscribe = (plan: "weekly" | "yearly") => {
     if (!session?.user) return;
     setError(null);
     setLoading(plan);
-    try {
-      const res = await fetch("/api/membership/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(data.message ?? data.error ?? "订阅失败");
-        return;
-      }
-      router.push("/member");
-      router.refresh();
-    } catch {
-      setError("网络错误，请重试");
-    } finally {
-      setLoading(null);
-    }
+    const productId = plan === "weekly" ? POLAR_PRODUCT_IDS.weekly : POLAR_PRODUCT_IDS.yearly;
+    window.location.href = getCheckoutUrl(productId, customerParams);
   };
 
   const handleCta = (plan: (typeof PLANS)[number]) => {
@@ -124,117 +88,152 @@ export default function SubscribePage() {
 
   if (status === "loading" || !session) {
     return (
-      <div className="min-h-[50vh] flex flex-col items-center justify-center px-4">
-        <p className="text-warm-600 mb-4">请先登录后再选择套餐。</p>
+      <div className="min-h-[60vh] flex flex-col items-center justify-center px-4 -mx-4 -mt-8 rounded-2xl bg-warm-100/80">
+        <p className="text-warm-600 text-lg mb-4">{t("member.subscribeSignInFirst")}</p>
         <Link
           href="/?login=1"
-          className="rounded-xl bg-accent hover:bg-accent-muted text-white px-6 py-3 font-medium transition-colors"
+          className="rounded-xl bg-accent hover:bg-accent-muted text-white px-8 py-4 font-semibold transition-colors shadow-lg shadow-accent/20"
         >
-          去登录
+          {t("member.goLogin")}
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 py-12 md:py-16">
-      {/* Header */}
-      <header className="text-center mb-12 md:mb-16">
-        <h1 className="font-serif text-3xl md:text-4xl font-bold text-warm-800 mb-3">
-          选择套餐
-        </h1>
-        <p className="text-warm-500 text-lg max-w-2xl mx-auto">
-          按需选择积分包或会员订阅，获得更多修复次数与更低单价。
-        </p>
+    <div className="w-full max-w-6xl mx-auto px-4 -mx-4 md:mx-0">
+      {/* Hero header — 强视觉区 */}
+      <header className="relative rounded-2xl md:rounded-3xl overflow-hidden mb-12 md:mb-16">
+        <div
+          className="absolute inset-0 opacity-95"
+          style={{
+            background: "linear-gradient(135deg, #2A1F10 0%, #3D2E1C 50%, #5C4D3C 100%)",
+          }}
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(212,168,83,0.25),transparent)]" />
+        <div className="relative px-6 py-14 md:py-20 text-center">
+          <div className="inline-flex items-center gap-2 rounded-full bg-accent/20 text-accent-light px-4 py-1.5 text-sm font-medium mb-6">
+            <Crown className="w-4 h-4" />
+            {t("member.subscribeBadge")}
+          </div>
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-4">
+            {t("member.subscribeTitle")}
+          </h1>
+          <p className="text-warm-200/90 text-lg md:text-xl max-w-2xl mx-auto">
+            {t("member.subscribeSubtitle")}
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-4 text-white/90 text-sm">
+            <span className="flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-accent-light" />
+              {t("member.perPhotoCredits")}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Check className="w-4 h-4 text-accent-light" />
+              {t("member.instantCredits")}
+            </span>
+          </div>
+        </div>
       </header>
 
       {error && (
-        <div className="max-w-2xl mx-auto mb-8 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-red-700 text-center">
+        <div className="max-w-2xl mx-auto mb-8 rounded-xl bg-red-50 border-2 border-red-200 px-5 py-4 text-red-700 text-center font-medium">
           {error}
         </div>
       )}
 
-      {/* Plans */}
+      {/* Plans — 大卡片 + 推荐突出 */}
       <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
         {PLANS.map((plan) => {
           const isLoading = loading === plan.id;
+          const isHighlight = plan.highlight;
           return (
             <div
               key={plan.id}
-              className={`relative rounded-2xl border-2 bg-white p-6 md:p-7 flex flex-col transition-all ${
-                plan.highlight
-                  ? "border-accent shadow-lg shadow-accent/10"
-                  : "border-warm-300 hover:border-warm-400 shadow-sm"
+              className={`relative flex flex-col transition-all duration-300 ${
+                isHighlight ? "md:-mt-2 md:mb-2 md:scale-[1.03]" : ""
               }`}
             >
-              {plan.highlight && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex items-center gap-1 rounded-full bg-accent/15 text-accent px-3 py-1 text-xs font-semibold">
-                  <Zap className="w-3.5 h-3.5" />
-                  最划算
-                </div>
-              )}
-
-              <div className="mb-5">
-                <p className="text-sm text-warm-500 uppercase tracking-wide">
-                  {plan.subname}
-                </p>
-                <h2 className="font-serif text-xl md:text-2xl font-bold text-warm-800 mt-1">
-                  {plan.name}
-                </h2>
-              </div>
-
-              <div className="mb-6">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-warm-600 font-medium">$</span>
-                  <span className="font-serif text-4xl font-bold text-warm-800 tabular-nums">
-                    {plan.price}
-                  </span>
-                  <span className="text-warm-500 text-sm ml-1">{plan.unit}</span>
-                </div>
-                <p className="text-sm text-warm-500 mt-1">{plan.priceNote}</p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => handleCta(plan)}
-                disabled={!!loading}
-                className={`w-full rounded-xl py-3.5 font-semibold flex items-center justify-center gap-2 transition-all disabled:opacity-60 ${
-                  plan.highlight
-                    ? "bg-accent hover:bg-accent-muted text-white"
-                    : "bg-warm-800 hover:bg-warm-700 text-white"
+              <div
+                className={`relative rounded-2xl md:rounded-3xl flex flex-col flex-1 overflow-hidden transition-all duration-300 ${
+                  isHighlight
+                    ? "border-2 border-accent bg-white shadow-2xl shadow-accent/20 ring-4 ring-accent/10"
+                    : "border-2 border-warm-300 bg-white shadow-lg shadow-warm-900/10 hover:border-warm-400 hover:shadow-xl"
                 }`}
               >
-                {isLoading ? (
+                {isHighlight && (
                   <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    {plan.ctaLoading}
-                  </>
-                ) : (
-                  <>
-                    {plan.cta}
-                    <ArrowRight className="w-4 h-4" />
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-accent-light to-accent" />
+                    <div className="absolute top-4 right-4 flex items-center gap-1 rounded-full bg-accent px-3 py-1.5 text-xs font-bold text-white shadow-lg">
+                      <Zap className="w-3.5 h-3.5" />
+                      {t("member.bestValue")}
+                    </div>
                   </>
                 )}
-              </button>
 
-              <ul className="mt-6 pt-6 border-t border-warm-200 space-y-3 flex-1">
-                {plan.features.map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-start gap-2 text-sm text-warm-600"
+                <div className="p-6 md:p-8 flex flex-col flex-1">
+                  <div className="mb-6">
+                    <p className="text-xs font-semibold text-warm-500 uppercase tracking-widest">
+                      {plan.subname}
+                    </p>
+                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-warm-800 mt-2">
+                      {plan.name}
+                    </h2>
+                  </div>
+
+                  <div className="mb-8">
+                    <div className="flex items-baseline gap-0.5">
+                      <span className="text-2xl font-bold text-warm-600">$</span>
+                      <span className="font-serif text-5xl md:text-6xl font-bold text-warm-800 tabular-nums leading-none">
+                        {plan.price}
+                      </span>
+                      <span className="text-warm-500 text-base ml-1">{plan.unit}</span>
+                    </div>
+                    <p className="text-warm-500 mt-2 font-medium">{plan.priceNote}</p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => handleCta(plan)}
+                    disabled={!!loading}
+                    className={`w-full rounded-xl py-4 text-lg font-bold flex items-center justify-center gap-2 transition-all disabled:opacity-60 ${
+                      isHighlight
+                        ? "bg-accent hover:bg-accent-muted text-white shadow-lg shadow-accent/30 hover:shadow-accent/40"
+                        : "bg-warm-800 hover:bg-warm-700 text-white shadow-md hover:shadow-lg"
+                    }`}
                   >
-                    <Check className="w-5 h-5 shrink-0 text-accent mt-0.5" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        {plan.ctaLoading}
+                      </>
+                    ) : (
+                      <>
+                        {plan.cta}
+                        <ArrowRight className="w-5 h-5" />
+                      </>
+                    )}
+                  </button>
+
+                  <ul className="mt-8 pt-8 border-t-2 border-warm-200 space-y-4 flex-1">
+                    {plan.features.map((feature) => (
+                      <li
+                        key={feature}
+                        className="flex items-start gap-3 text-base text-warm-700 font-medium"
+                      >
+                        <Check className="w-6 h-6 shrink-0 text-accent mt-0.5" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
           );
         })}
       </div>
 
-      <p className="text-center text-sm text-warm-400 mt-10">
-        当前为演示环境，开通/购买后积分即时到账，后续将接入真实支付。
+      <p className="text-center text-sm text-warm-500 mt-12">
+        {t("member.checkoutNote")}
       </p>
     </div>
   );

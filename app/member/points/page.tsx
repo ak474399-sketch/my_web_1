@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { Coins, ChevronDown } from "lucide-react";
+import { useLocale } from "@/components/shared/locale-provider";
 
 type Item = {
   id: string;
@@ -11,16 +13,17 @@ type Item = {
   created_at: string;
 };
 
-const REASON_LABEL: Record<string, string> = {
-  subscribe_weekly: "开通周会员",
-  subscribe_yearly: "开通年会员",
-  refill_weekly: "周会员周期刷新",
-  refill_yearly: "年会员周期刷新",
-  restore_photo: "修复照片",
-  refund_restore_failed: "修复失败退回",
+const REASON_KEYS: Record<string, string> = {
+  subscribe_weekly: "member.reasonSubscribeWeekly",
+  subscribe_yearly: "member.reasonSubscribeYearly",
+  refill_weekly: "member.reasonRefillWeekly",
+  refill_yearly: "member.reasonRefillYearly",
+  restore_photo: "member.reasonRestorePhoto",
+  refund_restore_failed: "member.reasonRefundRestoreFailed",
 };
 
 export default function PointsHistoryPage() {
+  const { t } = useLocale();
   const { data: session, status } = useSession();
   const [items, setItems] = useState<Item[]>([]);
   const [page, setPage] = useState(1);
@@ -56,7 +59,10 @@ export default function PointsHistoryPage() {
   if (status === "loading" || !session) {
     return (
       <div className="max-w-2xl mx-auto text-center py-16 text-warm-500">
-        请先登录后查看积分明细。
+        <p className="mb-4">{t("member.signInFirstPoints")}</p>
+        <Link href="/?login=1" className="text-accent hover:underline font-medium">
+          {t("member.goLogin")}
+        </Link>
       </div>
     );
   }
@@ -64,26 +70,26 @@ export default function PointsHistoryPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-serif text-2xl font-bold text-warm-800">积分明细</h1>
+        <h1 className="font-serif text-2xl font-bold text-warm-800">{t("member.pointsTitle")}</h1>
         <span className="flex items-center gap-2 text-lg font-semibold text-warm-800 tabular-nums">
           <Coins className="w-5 h-5 text-accent" />
-          {credits !== null ? credits : "—"} 积分
+          {credits !== null ? credits : "—"} {t("member.creditsUnit")}
         </span>
       </div>
 
       <div className="rounded-2xl border border-warm-300 bg-white overflow-hidden shadow-sm">
         <ul className="divide-y divide-warm-200">
           {items.length === 0 && !loading && (
-            <li className="px-4 py-8 text-center text-warm-500">暂无记录</li>
+            <li className="px-4 py-8 text-center text-warm-500">{t("member.noRecords")}</li>
           )}
           {items.map((item) => (
             <li key={item.id} className="flex items-center justify-between px-4 py-3">
               <div>
                 <p className="font-medium text-warm-800">
-                  {REASON_LABEL[item.reason] ?? item.reason}
+                  {REASON_KEYS[item.reason] ? t(REASON_KEYS[item.reason]) : item.reason}
                 </p>
                 <p className="text-xs text-warm-400">
-                  {new Date(item.created_at).toLocaleString("zh-CN")}
+                  {new Date(item.created_at).toLocaleString()}
                 </p>
               </div>
               <span
@@ -105,7 +111,7 @@ export default function PointsHistoryPage() {
               disabled={loading}
               className="inline-flex items-center gap-1 text-sm text-accent hover:underline disabled:opacity-50"
             >
-              {loading ? "加载中…" : "加载更多"}
+              {loading ? t("member.loading") : t("member.loadMore")}
               <ChevronDown className="w-4 h-4" />
             </button>
           </div>

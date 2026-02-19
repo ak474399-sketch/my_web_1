@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { useSearchParams, usePathname } from "next/navigation";
-import { Heart, ChevronDown, FileText, Shield, LogIn, LogOut, History, Coins, Crown, Images } from "lucide-react";
+import { Heart, ChevronDown, FileText, Shield, LogIn, LogOut, History, Coins, Crown, Images, MoreHorizontal, Globe } from "lucide-react";
 import { LoginModal } from "@/components/shared/login-modal";
 import { LanguageSelector } from "@/components/shared/language-selector";
 import { useLocale } from "@/components/shared/locale-provider";
@@ -19,7 +19,9 @@ export function Navbar() {
   const pathname = usePathname();
   const [toolsOpen, setToolsOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const moreTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [avatarBroken, setAvatarBroken] = useState(false);
   const [credits, setCredits] = useState<number | null>(null);
   const toolsTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -47,6 +49,13 @@ export function Navbar() {
   };
   const closeUser = () => {
     userTimeout.current = setTimeout(() => setUserMenuOpen(false), 150);
+  };
+  const openMore = () => {
+    if (moreTimeout.current) clearTimeout(moreTimeout.current);
+    setMoreOpen(true);
+  };
+  const closeMore = () => {
+    moreTimeout.current = setTimeout(() => setMoreOpen(false), 150);
   };
 
   // 通过 URL ?login=1 打开登录弹窗（如从 /login 跳转）
@@ -86,6 +95,7 @@ export function Navbar() {
     return () => {
       if (toolsTimeout.current) clearTimeout(toolsTimeout.current);
       if (userTimeout.current) clearTimeout(userTimeout.current);
+      if (moreTimeout.current) clearTimeout(moreTimeout.current);
     };
   }, []);
 
@@ -103,19 +113,19 @@ export function Navbar() {
         <nav className="flex items-center gap-5">
           <Link
             href="/cases"
-            onClick={() => logNavClick("/cases", "案例")}
+            onClick={() => logNavClick("/cases", t("nav.cases"))}
             className="flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors"
           >
             <Images className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">案例</span>
+            <span className="hidden sm:inline">{t("nav.cases")}</span>
           </Link>
           <Link
             href="/member"
-            onClick={() => logNavClick("/member", "会员")}
+            onClick={() => logNavClick("/member", t("nav.member"))}
             className="flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors"
           >
             <Crown className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">会员</span>
+            <span className="hidden sm:inline">{t("nav.member")}</span>
           </Link>
           {session?.user && (
             <Link
@@ -179,24 +189,37 @@ export function Navbar() {
             )}
           </div>
 
-          <LanguageSelector />
-
-          <Link
-            href="/terms"
-            onClick={() => logNavClick("/terms", "条款")}
-            className="hidden md:inline-flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors"
-          >
-            <FileText className="w-3.5 h-3.5" />
-            {t("nav.terms")}
-          </Link>
-          <Link
-            href="/privacy"
-            onClick={() => logNavClick("/privacy", "隐私")}
-            className="hidden md:inline-flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors"
-          >
-            <Shield className="w-3.5 h-3.5" />
-            {t("nav.privacy")}
-          </Link>
+          {/* 更多：语言 / 条款 / 隐私（未登录时显示；已登录时在用户菜单内） */}
+          {!session?.user && (
+            <div
+              className="relative"
+              onMouseEnter={openMore}
+              onMouseLeave={closeMore}
+            >
+              <button className="flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors">
+                <MoreHorizontal className="w-4 h-4" />
+                <span className="hidden sm:inline">{t("nav.more")}</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${moreOpen ? "rotate-180" : ""}`} />
+              </button>
+              {moreOpen && (
+                <div className="absolute top-full right-0 mt-2 w-52 rounded-2xl border border-warm-300 bg-white shadow-xl shadow-warm-900/10 p-2 z-50">
+                  <Link href="/terms" onClick={() => setMoreOpen(false)} className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-warm-600 hover:bg-warm-50">
+                    <FileText className="w-4 h-4" />
+                    {t("nav.terms")}
+                  </Link>
+                  <Link href="/privacy" onClick={() => setMoreOpen(false)} className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-warm-600 hover:bg-warm-50">
+                    <Shield className="w-4 h-4" />
+                    {t("nav.privacy")}
+                  </Link>
+                  <div className="pt-2 mt-1 border-t border-warm-100">
+                    <div className="px-2 py-1.5">
+                      <LanguageSelector />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Auth: 积分与头像合并，点击头像展开下拉 */}
           {status === "loading" ? (
@@ -239,17 +262,27 @@ export function Navbar() {
                       <span className="tabular-nums">{credits !== null ? credits : "—"} 积分 · 查看明细</span>
                     </Link>
                   </div>
-                  <Link
-                    href="/history"
-                    onClick={() => setUserMenuOpen(false)}
-                    className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-warm-600 hover:bg-warm-50 transition-colors"
-                  >
+                  <Link href="/history" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-warm-600 hover:bg-warm-50">
                     <History className="w-4 h-4" />
                     {t("nav.history")}
                   </Link>
+                  <Link href="/terms" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-warm-600 hover:bg-warm-50">
+                    <FileText className="w-4 h-4" />
+                    {t("nav.terms")}
+                  </Link>
+                  <Link href="/privacy" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-warm-600 hover:bg-warm-50">
+                    <Shield className="w-4 h-4" />
+                    {t("nav.privacy")}
+                  </Link>
+                  <div className="pt-2 mt-1 border-t border-warm-100">
+                    <div className="px-2 py-1.5 flex items-center gap-2 text-warm-500 text-sm">
+                      <Globe className="w-4 h-4 shrink-0" />
+                      <LanguageSelector />
+                    </div>
+                  </div>
                   <button
                     onClick={() => signOut({ callbackUrl: "/" })}
-                    className="w-full flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-warm-500 hover:bg-warm-50 hover:text-warm-700 transition-colors"
+                    className="w-full flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-warm-500 hover:bg-warm-50 hover:text-warm-700 transition-colors mt-1"
                   >
                     <LogOut className="w-4 h-4" />
                     {t("nav.signOut")}

@@ -1,15 +1,20 @@
+/**
+ * 多语言文案汇总：全站翻译均在此文件中维护，新增或修改文案只需改这一处。
+ * All multilingual copy lives here; add or change text in this file only.
+ */
 import type { Locale } from "./i18n";
 
 export type TranslationKeys = {
-  nav: { restore: string; history: string; tools: string; terms: string; privacy: string; signIn: string; signOut: string; memoryRestore: string };
+  nav: { restore: string; history: string; tools: string; cases: string; member: string; feedback: string; terms: string; privacy: string; more: string; signIn: string; signOut: string; memoryRestore: string };
   login: { welcomeBack: string; welcomeToBrand: string; signInToSave: string; continueWithGoogle: string; signInWithApple: string; signInWithEmail: string; comingSoon: string; agreeTerms: string; and: string; terms: string; privacyPolicy: string; redirecting: string; pleaseComplete: string };
-  footer: { memoryRestore: string; tagline: string; restoreMemories: string; history: string; oldPhotos: string; fixScratches: string; reviveFaded: string; addColor: string; termsOfService: string; privacyPolicy: string; madeWithCare: string };
+  footer: { memoryRestore: string; tagline: string; restoreMemories: string; cases: string; member: string; history: string; oldPhotos: string; fixScratches: string; reviveFaded: string; addColor: string; termsOfService: string; privacyPolicy: string; madeWithCare: string };
   common: { before: string; after: string; beforeAfter: string };
   home: {
     hero: { badge: string; titleLine1: string; titleLine2: string; intro: string; dropTitle: string; dropHint: string; privateNote: string; pullDown: string; carousel0: string; carousel1: string; carousel2: string };
     heroBanner: { title: string; subtitle: string; cta: string };
     steps: { title: string; subtitle: string; step1Title: string; step1Desc: string; step2Title: string; step2Desc: string; step3Title: string; step3Desc: string };
     toolsSection: { title: string; subtitle: string };
+    reviewsSection: { title: string; subtitle: string; cta: string };
     privacySection: { title: string; body: string; cta: string };
     toolKeywords: Record<string, string>;
     toolDescriptions: Record<string, string>;
@@ -43,6 +48,80 @@ export type TranslationKeys = {
     beforeAfter: string;
   };
   loginSuccess: { title: string; description: string; close: string };
+  cookieConsent: { message: string; accept: string; learnMore: string };
+  memberNav: { home: string; points: string; subscribe: string; feedback: string; review: string };
+  member: {
+    signInFirst: string;
+    goLogin: string;
+    memberCenter: string;
+    currentCredits: string;
+    creditsPerRestore: string;
+    pointsDetail: string;
+    membershipStatus: string;
+    planYearly: string;
+    planWeekly: string;
+    notSubscribed: string;
+    subscribedAt: string;
+    goSubscribe: string;
+    pointsTitle: string;
+    signInFirstPoints: string;
+    noRecords: string;
+    loadMore: string;
+    loading: string;
+    creditsUnit: string;
+    reasonSubscribeWeekly: string;
+    reasonSubscribeYearly: string;
+    reasonRefillWeekly: string;
+    reasonRefillYearly: string;
+    reasonRestorePhoto: string;
+    reasonRefundRestoreFailed: string;
+    subscribeSignInFirst: string;
+    subscribeBadge: string;
+    subscribeTitle: string;
+    subscribeSubtitle: string;
+    perPhotoCredits: string;
+    instantCredits: string;
+    bestValue: string;
+    demoNote: string;
+    checkoutNote: string;
+    purchaseFailed: string;
+    subscribeFailed: string;
+    networkError: string;
+    planCreditsName: string;
+    planCreditsSub: string;
+    planCreditsUnit: string;
+    planCreditsNote: string;
+    planCreditsF1: string;
+    planCreditsF2: string;
+    planCreditsF3: string;
+    planCreditsF4: string;
+    planCreditsCta: string;
+    planCreditsCtaLoading: string;
+    planWeeklyName: string;
+    planWeeklySub: string;
+    planWeeklyUnit: string;
+    planWeeklyNote: string;
+    planWeeklyF1: string;
+    planWeeklyF2: string;
+    planWeeklyF3: string;
+    planWeeklyF4: string;
+    planWeeklyCta: string;
+    planWeeklyCtaLoading: string;
+    planYearlyName: string;
+    planYearlySub: string;
+    planYearlyUnit: string;
+    planYearlyNote: string;
+    planYearlyF1: string;
+    planYearlyF2: string;
+    planYearlyF3: string;
+    planYearlyF4: string;
+    planYearlyCta: string;
+    planYearlyCtaLoading: string;
+    layoutTitle: string;
+    layoutDescription: string;
+  };
+  feedback: { title: string; description: string; messagePlaceholder: string; contextPlaceholder: string; submit: string; success: string; ctaAfterRestore: string; signInFirst: string; goLogin: string; labelMessage: string; labelContext: string; submitting: string };
+  review: { title: string; description: string; successMessage: string; labelEmail: string; labelContent: string; labelCountry: string; placeholderEmail: string; placeholderContent: string; placeholderCountry: string; submit: string; submitting: string };
 };
 
 const translations: Record<Locale, TranslationKeys> = {
@@ -51,8 +130,12 @@ const translations: Record<Locale, TranslationKeys> = {
       restore: "Restore",
       history: "History",
       tools: "Tools",
+      cases: "Cases",
+      member: "Member",
+      feedback: "Feedback",
       terms: "Terms",
       privacy: "Privacy",
+      more: "More",
       signIn: "Sign In",
       signOut: "Sign Out",
       memoryRestore: "AI RestorePic",
@@ -76,6 +159,8 @@ const translations: Record<Locale, TranslationKeys> = {
       memoryRestore: "AI RestorePic",
       tagline: "Helping families preserve and rediscover their most treasured photographs.",
       restoreMemories: "Restore Memories",
+      cases: "Cases",
+      member: "Member",
       history: "History",
       oldPhotos: "Old Photos",
       fixScratches: "Fix Scratches",
@@ -116,6 +201,7 @@ const translations: Record<Locale, TranslationKeys> = {
         step3Desc: "Slide between before and after to see your memory come back to life.",
       },
       toolsSection: { title: "Find the Right Tool for Your Photo", subtitle: "Every photo has its own story and its own needs. Choose the restoration that fits yours." },
+      reviewsSection: { title: "What Users Say", subtitle: "Real experiences from people who restored their memories.", cta: "Share your experience →" },
       privacySection: {
         title: "Your Memories Are Safe With Us",
         body: "We understand how personal your photos are. That's why we never save, share, or use your images for anything other than restoring them for you. Once you're done, they're gone from our system.",
@@ -179,14 +265,92 @@ const translations: Record<Locale, TranslationKeys> = {
       beforeAfter: "Before / After",
     },
     loginSuccess: { title: "Signed in successfully", description: "History and sync are now enabled.", close: "Close" },
+    cookieConsent: { message: "We use cookies to improve your experience and analyze traffic.", accept: "Accept", learnMore: "Privacy Policy" },
+    feedback: { title: "Feedback", description: "We'd love to hear from you.", messagePlaceholder: "Tell us what you think or suggest…", contextPlaceholder: "Optional: which feature or page?", submit: "Submit", success: "Thank you! Your feedback has been sent.", ctaAfterRestore: "How was the result? Send feedback", signInFirst: "Please sign in to submit feedback.", goLogin: "Sign in", labelMessage: "Your message *", labelContext: "Context (optional)", submitting: "Submitting…" },
+    memberNav: { home: "Member Center", points: "Points", subscribe: "Subscribe", feedback: "Feedback", review: "Reviews" },
+    member: {
+      signInFirst: "Please sign in to view the member center.",
+      goLogin: "Sign in",
+      memberCenter: "Member Center",
+      currentCredits: "Current points",
+      creditsPerRestore: "5 points per restoration. View",
+      pointsDetail: "Points history",
+      membershipStatus: "Membership",
+      planYearly: "Yearly",
+      planWeekly: "Weekly",
+      notSubscribed: "Not subscribed",
+      subscribedAt: "Started",
+      goSubscribe: "Subscribe",
+      pointsTitle: "Points History",
+      signInFirstPoints: "Please sign in to view points history.",
+      noRecords: "No records yet.",
+      loadMore: "Load more",
+      loading: "Loading…",
+      creditsUnit: "points",
+      reasonSubscribeWeekly: "Weekly membership",
+      reasonSubscribeYearly: "Yearly membership",
+      reasonRefillWeekly: "Weekly refill",
+      reasonRefillYearly: "Yearly refill",
+      reasonRestorePhoto: "Photo restoration",
+      reasonRefundRestoreFailed: "Refund (restore failed)",
+      subscribeSignInFirst: "Please sign in to choose a plan.",
+      subscribeBadge: "More points · Lower price",
+      subscribeTitle: "Choose your plan",
+      subscribeSubtitle: "Buy credits or subscribe weekly/yearly for more restorations and the best price.",
+      perPhotoCredits: "~5 points per photo",
+      instantCredits: "Instant credits",
+      bestValue: "Best value",
+      demoNote: "Demo: credits are added instantly. Real payment will be integrated later.",
+      checkoutNote: "Payment is securely processed by Polar.",
+      purchaseFailed: "Purchase failed",
+      subscribeFailed: "Subscription failed",
+      networkError: "Network error. Please try again.",
+      planCreditsName: "Starter",
+      planCreditsSub: "Credits pack",
+      planCreditsUnit: "one-time",
+      planCreditsNote: "~2 photo restorations",
+      planCreditsF1: "10 points one-time",
+      planCreditsF2: "~2 photo restorations",
+      planCreditsF3: "No renewal, use as needed",
+      planCreditsF4: "Good for trying out",
+      planCreditsCta: "Buy now",
+      planCreditsCtaLoading: "Purchasing…",
+      planWeeklyName: "Weekly",
+      planWeeklySub: "Weekly plan",
+      planWeeklyUnit: "/ week",
+      planWeeklyNote: "~20 photos/week, under $0.5/photo",
+      planWeeklyF1: "100 points per week",
+      planWeeklyF2: "~20 restorations/week",
+      planWeeklyF3: "Under $0.5/photo",
+      planWeeklyF4: "Auto-refresh each week",
+      planWeeklyCta: "Subscribe",
+      planWeeklyCtaLoading: "Subscribing…",
+      planYearlyName: "Yearly",
+      planYearlySub: "Yearly plan",
+      planYearlyUnit: "/ year",
+      planYearlyNote: "~2000 photos/year, under $0.02/photo",
+      planYearlyF1: "10000 points per year",
+      planYearlyF2: "~2000 restorations/year",
+      planYearlyF3: "Under $0.02/photo",
+      planYearlyF4: "Best value",
+      planYearlyCta: "Subscribe",
+      planYearlyCtaLoading: "Subscribing…",
+      layoutTitle: "Member Center",
+      layoutDescription: "Points history and membership",
+    },
+    review: { title: "Write a review", description: "Your experience may be shown on the homepage to help others.", successMessage: "Thank you! Your review was submitted and will appear after moderation.", labelEmail: "Email *", labelContent: "Your review *", labelCountry: "Country or region (optional)", placeholderEmail: "your@email.com", placeholderContent: "Share your restoration experience or thoughts…", placeholderCountry: "e.g. United States, China", submit: "Submit review", submitting: "Submitting…" },
   },
   de: {
     nav: {
       restore: "Wiederherstellen",
       history: "Verlauf",
       tools: "Werkzeuge",
+      cases: "Fälle",
+      member: "Mitglied",
+      feedback: "Feedback",
       terms: "AGB",
       privacy: "Datenschutz",
+      more: "Mehr",
       signIn: "Anmelden",
       signOut: "Abmelden",
       memoryRestore: "AI RestorePic",
@@ -210,6 +374,8 @@ const translations: Record<Locale, TranslationKeys> = {
       memoryRestore: "AI RestorePic",
       tagline: "Familien dabei helfen, ihre wertvollsten Fotos zu bewahren und wiederzuentdecken.",
       restoreMemories: "Erinnerungen wiederherstellen",
+      cases: "Fälle",
+      member: "Mitglied",
       history: "Verlauf",
       oldPhotos: "Alte Fotos",
       fixScratches: "Kratzer entfernen",
@@ -225,6 +391,7 @@ const translations: Record<Locale, TranslationKeys> = {
       heroBanner: { title: "AI RestorePic macht alles", subtitle: "Alte Fotos wiederherstellen, kolorieren und in Sekunden zum Leben erwecken.", cta: "Jetzt starten" },
       steps: { title: "So einfach wie 1, 2, 3", subtitle: "Keine Apps, kein Konto. Nur Sie und Ihr Foto.", step1Title: "Foto wählen", step1Desc: "Wählen Sie ein altes Foto aus Schublade, Album oder Handy. Einfach hereinziehen oder antippen.", step2Title: "KI arbeitet", step2Desc: "Unsere KI entfernt Schäden, schärft Gesichter und stellt verblasste Farben in Sekunden wieder her.", step3Title: "Vergleich ansehen", step3Desc: "Schieben Sie zwischen Vorher und Nachher und sehen Sie Ihre Erinnerung wieder lebendig werden." },
       toolsSection: { title: "Das passende Werkzeug für Ihr Foto", subtitle: "Jedes Foto hat seine eigene Geschichte und eigene Bedürfnisse. Wählen Sie die passende Wiederherstellung." },
+      reviewsSection: { title: "Was Nutzer sagen", subtitle: "Echte Erfahrungen von Menschen, die ihre Erinnerungen wiederhergestellt haben.", cta: "Teilen Sie Ihre Erfahrung →" },
       privacySection: { title: "Ihre Erinnerungen sind bei uns sicher", body: "Wir wissen, wie persönlich Ihre Fotos sind. Deshalb speichern, teilen oder nutzen wir Ihre Bilder nie für etwas anderes als die Wiederherstellung.", cta: "Erinnerung wiederherstellen" },
       toolKeywords: { "old-photo-restoration": "Alte Fotos wiederherstellen", "faded-photo-repair": "Verblasste Fotos reparieren", "scratch-removal": "Kratzer entfernen", "water-damaged-photo-repair": "Wasserschaden reparieren", "black-and-white-photo-colorization": "Schwarz-Weiß kolorieren", "blurry-photo-fix": "Unschärfe beheben", "torn-photo-repair": "Eingerissene Fotos reparieren", "photo-noise-reduction": "Bildrauschen reduzieren", "face-enhancement": "Gesichter verbessern", "vintage-photo-enhancement": "Vintage-Fotos verbessern", "polaroid-photo-restoration": "Polaroid wiederherstellen", "book-photo-restoration": "Buchfotos wiederherstellen" },
       toolDescriptions: {},
@@ -234,14 +401,23 @@ const translations: Record<Locale, TranslationKeys> = {
     restore: { pageTitle: "Foto wiederherstellen", pageSubtitle: "Wählen Sie ein Foto aus dem Familienalbum — unsere KI entfernt Schäden, hellt Farben auf und bringt Details zurück." },
     history: { loadingHistory: "Verlauf wird geladen…", signInToSeeHistory: "Melden Sie sich an, um Ihren Verlauf zu sehen", signInToSeeHistoryDesc: "Wiederhergestellte Fotos werden hier nach der Anmeldung gespeichert.", restorationHistory: "Wiederherstellungsverlauf", photosRestoredWhileSignedIn: "Fotos, die Sie nach der Anmeldung wiederhergestellt haben.", noRestorationsYet: "Noch keine Wiederherstellungen. Stellen Sie ein Foto wieder her, sobald Sie angemeldet sind.", restoreAPhoto: "Foto wiederherstellen", beforeAfter: "Vorher / Nachher" },
     loginSuccess: { title: "Erfolgreich angemeldet", description: "Verlauf und Sync sind jetzt aktiv.", close: "Schließen" },
+    cookieConsent: { message: "Wir verwenden Cookies für bessere Nutzererfahrung und Analyse.", accept: "Akzeptieren", learnMore: "Datenschutz" },
+    feedback: { title: "Feedback", description: "Wir freuen uns über Ihre Meinung.", messagePlaceholder: "Was möchten Sie uns mitteilen?", contextPlaceholder: "Optional: welche Funktion oder Seite?", submit: "Senden", success: "Vielen Dank! Ihr Feedback wurde gesendet.", ctaAfterRestore: "Wie war das Ergebnis? Feedback senden", signInFirst: "Bitte melden Sie sich an, um Feedback zu senden.", goLogin: "Anmelden", labelMessage: "Ihre Nachricht *", labelContext: "Kontext (optional)", submitting: "Wird gesendet…" },
+    memberNav: { home: "Mitgliederbereich", points: "Punkte", subscribe: "Abonnieren", feedback: "Feedback", review: "Bewertungen" },
+    member: { signInFirst: "Bitte melden Sie sich an, um den Mitgliederbereich zu sehen.", goLogin: "Anmelden", memberCenter: "Mitgliederbereich", currentCredits: "Aktuelle Punkte", creditsPerRestore: "5 Punkte pro Wiederherstellung. Anzeigen", pointsDetail: "Punkteverlauf", membershipStatus: "Mitgliedschaft", planYearly: "Jahresabo", planWeekly: "Wochenabo", notSubscribed: "Nicht abonniert", subscribedAt: "Beginn", goSubscribe: "Abonnieren", pointsTitle: "Punkteverlauf", signInFirstPoints: "Bitte anmelden, um den Punkteverlauf zu sehen.", noRecords: "Noch keine Einträge.", loadMore: "Mehr laden", loading: "Laden…", creditsUnit: "Punkte", reasonSubscribeWeekly: "Wochenabo", reasonSubscribeYearly: "Jahresabo", reasonRefillWeekly: "Wochen-Auffüllung", reasonRefillYearly: "Jahres-Auffüllung", reasonRestorePhoto: "Fotowiederherstellung", reasonRefundRestoreFailed: "Erstattung (Wiederherstellung fehlgeschlagen)", subscribeSignInFirst: "Bitte anmelden, um einen Plan zu wählen.", subscribeBadge: "Mehr Punkte · Günstiger", subscribeTitle: "Plan wählen", subscribeSubtitle: "Punkte kaufen oder wöchentlich/jährlich abonnieren.", perPhotoCredits: "~5 Punkte pro Foto", instantCredits: "Sofort gutgeschrieben", bestValue: "Bester Wert", demoNote: "Demo: Punkte werden sofort gutgeschrieben. Echtes Zahlungssystem folgt.", checkoutNote: "Zahlung wird sicher von Polar abgewickelt.", purchaseFailed: "Kauf fehlgeschlagen", subscribeFailed: "Abonnement fehlgeschlagen", networkError: "Netzwerkfehler. Bitte erneut versuchen.", planCreditsName: "Starter", planCreditsSub: "Punktepaket", planCreditsUnit: "einmalig", planCreditsNote: "~2 Fotos", planCreditsF1: "10 Punkte einmalig", planCreditsF2: "~2 Wiederherstellungen", planCreditsF3: "Keine Verlängerung", planCreditsF4: "Zum Ausprobieren", planCreditsCta: "Jetzt kaufen", planCreditsCtaLoading: "Wird gekauft…", planWeeklyName: "Woche", planWeeklySub: "Wochenplan", planWeeklyUnit: "/ Woche", planWeeklyNote: "~20 Fotos/Woche", planWeeklyF1: "100 Punkte/Woche", planWeeklyF2: "~20 Wiederherstellungen/Woche", planWeeklyF3: "Unter 0,50 €/Foto", planWeeklyF4: "Wöchentliche Auffüllung", planWeeklyCta: "Abonnieren", planWeeklyCtaLoading: "Wird abonniert…", planYearlyName: "Jahr", planYearlySub: "Jahresplan", planYearlyUnit: "/ Jahr", planYearlyNote: "~2000 Fotos/Jahr", planYearlyF1: "10000 Punkte/Jahr", planYearlyF2: "~2000 Wiederherstellungen/Jahr", planYearlyF3: "Unter 0,02 €/Foto", planYearlyF4: "Bester Wert", planYearlyCta: "Abonnieren", planYearlyCtaLoading: "Wird abonniert…", layoutTitle: "Mitgliederbereich", layoutDescription: "Punkteverlauf und Mitgliedschaft" },
+    review: { title: "Bewertung schreiben", description: "Ihre Erfahrung kann auf der Startseite angezeigt werden.", successMessage: "Danke! Ihre Bewertung wurde gesendet und erscheint nach Prüfung.", labelEmail: "E-Mail *", labelContent: "Ihre Bewertung *", labelCountry: "Land (optional)", placeholderEmail: "ihre@email.de", placeholderContent: "Teilen Sie Ihre Erfahrung…", placeholderCountry: "z. B. Deutschland", submit: "Bewertung senden", submitting: "Wird gesendet…" },
   },
   fr: {
     nav: {
       restore: "Restaurer",
       history: "Historique",
       tools: "Outils",
+      cases: "Cas",
+      member: "Membre",
+      feedback: "Commentaires",
       terms: "CGU",
       privacy: "Confidentialité",
+      more: "Plus",
       signIn: "Connexion",
       signOut: "Déconnexion",
       memoryRestore: "AI RestorePic",
@@ -265,6 +441,8 @@ const translations: Record<Locale, TranslationKeys> = {
       memoryRestore: "AI RestorePic",
       tagline: "Aider les familles à préserver et redécouvrir leurs photos les plus précieuses.",
       restoreMemories: "Restaurer des souvenirs",
+      cases: "Cas",
+      member: "Membre",
       history: "Historique",
       oldPhotos: "Vieilles photos",
       fixScratches: "Réparer les rayures",
@@ -280,6 +458,7 @@ const translations: Record<Locale, TranslationKeys> = {
       heroBanner: { title: "AI RestorePic fait tout", subtitle: "Restaurez, colorisez et redonnez vie aux vieilles photos — en quelques secondes.", cta: "Commencer" },
       steps: { title: "Aussi simple que 1, 2, 3", subtitle: "Aucune app à installer, aucun compte. Juste vous et votre photo.", step1Title: "Choisir une photo", step1Desc: "Prenez n'importe quelle vieille photo dans votre tiroir, album ou téléphone. Glissez-déposez ou touchez pour sélectionner.", step2Title: "Laisser l'IA agir", step2Desc: "Notre IA supprime les dommages, affine les visages et restaure les couleurs délavées en quelques secondes.", step3Title: "Voir la différence", step3Desc: "Glissez entre avant et après pour voir votre souvenir reprendre vie." },
       toolsSection: { title: "Trouvez l'outil adapté à votre photo", subtitle: "Chaque photo a son histoire et ses besoins. Choisissez la restauration qui vous convient." },
+      reviewsSection: { title: "Ce que disent les utilisateurs", subtitle: "Expériences réelles de ceux qui ont restauré leurs souvenirs.", cta: "Partagez votre expérience →" },
       privacySection: { title: "Vos souvenirs sont en sécurité", body: "Nous savons à quel point vos photos sont personnelles. Nous ne les enregistrons, ne les partageons ni ne les utilisons pour rien d'autre que les restaurer. Une fois terminé, elles disparaissent de nos systèmes.", cta: "Restaurer un souvenir" },
       toolKeywords: { "old-photo-restoration": "Restauration de vieilles photos", "faded-photo-repair": "Réparer photos délavées", "scratch-removal": "Retirer les rayures", "water-damaged-photo-repair": "Réparer dégâts des eaux", "black-and-white-photo-colorization": "Colorisation noir et blanc", "blurry-photo-fix": "Corriger flou", "torn-photo-repair": "Réparer photos déchirées", "photo-noise-reduction": "Réduction du bruit", "face-enhancement": "Améliorer les visages", "vintage-photo-enhancement": "Améliorer photos vintage", "polaroid-photo-restoration": "Restauration Polaroid", "book-photo-restoration": "Restauration de photos de livre" },
       toolDescriptions: {},
@@ -289,14 +468,23 @@ const translations: Record<Locale, TranslationKeys> = {
     restore: { pageTitle: "Restaurer votre photo", pageSubtitle: "Choisissez une photo de l'album familial ; notre IA supprimera les dommages, ravivera les couleurs et restituera les détails." },
     history: { loadingHistory: "Chargement de l'historique…", signInToSeeHistory: "Connectez-vous pour voir votre historique", signInToSeeHistoryDesc: "Vos photos restaurées sont enregistrées ici après connexion.", restorationHistory: "Historique de restauration", photosRestoredWhileSignedIn: "Photos que vous avez restaurées en étant connecté.", noRestorationsYet: "Aucune restauration. Restaurez une photo en étant connecté pour la voir ici.", restoreAPhoto: "Restaurer une photo", beforeAfter: "Avant / Après" },
     loginSuccess: { title: "Connexion réussie", description: "Historique et synchronisation sont activés.", close: "Fermer" },
+    cookieConsent: { message: "Nous utilisons des cookies pour améliorer votre expérience.", accept: "Accepter", learnMore: "Confidentialité" },
+    feedback: { title: "Commentaires", description: "Votre avis nous intéresse.", messagePlaceholder: "Dites-nous ce que vous en pensez…", contextPlaceholder: "Optionnel : quelle fonction ou page ?", submit: "Envoyer", success: "Merci ! Votre message a bien été envoyé.", ctaAfterRestore: "Comment était le résultat ? Envoyer un avis", signInFirst: "Veuillez vous connecter pour envoyer un avis.", goLogin: "Se connecter", labelMessage: "Votre message *", labelContext: "Contexte (optionnel)", submitting: "Envoi…" },
+    memberNav: { home: "Espace membre", points: "Points", subscribe: "Abonnement", feedback: "Commentaires", review: "Avis" },
+    member: { signInFirst: "Veuillez vous connecter pour accéder à l'espace membre.", goLogin: "Se connecter", memberCenter: "Espace membre", currentCredits: "Points actuels", creditsPerRestore: "5 points par restauration. Voir", pointsDetail: "Historique des points", membershipStatus: "Abonnement", planYearly: "Annuel", planWeekly: "Hebdo", notSubscribed: "Non abonné", subscribedAt: "Début", goSubscribe: "S'abonner", pointsTitle: "Historique des points", signInFirstPoints: "Veuillez vous connecter pour voir l'historique.", noRecords: "Aucun enregistrement.", loadMore: "Charger plus", loading: "Chargement…", creditsUnit: "points", reasonSubscribeWeekly: "Abonnement hebdo", reasonSubscribeYearly: "Abonnement annuel", reasonRefillWeekly: "Recharge hebdo", reasonRefillYearly: "Recharge annuelle", reasonRestorePhoto: "Restauration photo", reasonRefundRestoreFailed: "Remboursement (échec)", subscribeSignInFirst: "Veuillez vous connecter pour choisir un forfait.", subscribeBadge: "Plus de points · Prix réduit", subscribeTitle: "Choisissez votre forfait", subscribeSubtitle: "Achetez des points ou abonnez-vous à la semaine/année.", perPhotoCredits: "~5 points par photo", instantCredits: "Crédits immédiats", bestValue: "Meilleur rapport qualité-prix", demoNote: "Démo : les points sont crédités immédiatement. Paiement réel à venir.", checkoutNote: "Paiement sécurisé par Polar.", purchaseFailed: "Achat échoué", subscribeFailed: "Abonnement échoué", networkError: "Erreur réseau. Réessayez.", planCreditsName: "Starter", planCreditsSub: "Pack de points", planCreditsUnit: "unique", planCreditsNote: "~2 restaurations", planCreditsF1: "10 points en une fois", planCreditsF2: "~2 restaurations", planCreditsF3: "Sans renouvellement", planCreditsF4: "Pour essayer", planCreditsCta: "Acheter", planCreditsCtaLoading: "Achat…", planWeeklyName: "Hebdo", planWeeklySub: "Forfait hebdo", planWeeklyUnit: "/ semaine", planWeeklyNote: "~20 photos/semaine", planWeeklyF1: "100 points/semaine", planWeeklyF2: "~20 restaurations/semaine", planWeeklyF3: "Moins de 0,50 €/photo", planWeeklyF4: "Recharge auto chaque semaine", planWeeklyCta: "S'abonner", planWeeklyCtaLoading: "Abonnement…", planYearlyName: "Annuel", planYearlySub: "Forfait annuel", planYearlyUnit: "/ an", planYearlyNote: "~2000 photos/an", planYearlyF1: "10000 points/an", planYearlyF2: "~2000 restaurations/an", planYearlyF3: "Moins de 0,02 €/photo", planYearlyF4: "Meilleur rapport qualité-prix", planYearlyCta: "S'abonner", planYearlyCtaLoading: "Abonnement…", layoutTitle: "Espace membre", layoutDescription: "Historique des points et abonnement" },
+    review: { title: "Écrire un avis", description: "Votre expérience peut être affichée sur la page d'accueil.", successMessage: "Merci ! Votre avis a été envoyé et sera visible après modération.", labelEmail: "E-mail *", labelContent: "Votre avis *", labelCountry: "Pays ou région (optionnel)", placeholderEmail: "votre@email.fr", placeholderContent: "Partagez votre expérience…", placeholderCountry: "ex. France", submit: "Envoyer l'avis", submitting: "Envoi…" },
   },
   "zh-CN": {
     nav: {
       restore: "修复",
       history: "历史",
       tools: "工具",
+      cases: "案例",
+      member: "会员",
+      feedback: "反馈",
       terms: "条款",
       privacy: "隐私",
+      more: "更多",
       signIn: "登录",
       signOut: "退出",
       memoryRestore: "AI RestorePic",
@@ -320,6 +508,8 @@ const translations: Record<Locale, TranslationKeys> = {
       memoryRestore: "AI RestorePic",
       tagline: "帮助家庭保存并重新发现最珍贵的照片。",
       restoreMemories: "修复回忆",
+      cases: "案例",
+      member: "会员",
       history: "历史",
       oldPhotos: "老照片",
       fixScratches: "去除划痕",
@@ -335,6 +525,7 @@ const translations: Record<Locale, TranslationKeys> = {
       heroBanner: { title: "AI RestorePic 全能修复", subtitle: "修复、上色，让老照片重获新生 — 只需几秒。", cta: "立即开始" },
       steps: { title: "简单三步", subtitle: "无需安装应用、无需注册。只有你和你的照片。", step1Title: "选择照片", step1Desc: "从抽屉、相册或手机里选一张老照片。拖入或点击即可。", step2Title: "交给 AI 处理", step2Desc: "我们的 AI 会轻柔去除损伤、锐化人脸并恢复褪色，几秒完成。", step3Title: "查看对比", step3Desc: "在修复前后之间滑动，看回忆重获新生。" },
       toolsSection: { title: "为你的照片选对工具", subtitle: "每张照片都有自己的故事和需求。选择适合的修复方式。" },
+      reviewsSection: { title: "用户怎么说", subtitle: "真实用户修复回忆后的体验分享。", cta: "分享你的使用体验 →" },
       privacySection: { title: "您的回忆由我们守护", body: "我们深知照片的私密性。因此我们从不保存、分享或将您的图片用于修复以外的任何用途。完成后即从系统中清除。", cta: "修复一张回忆" },
       toolKeywords: { "old-photo-restoration": "老照片修复", "faded-photo-repair": "褪色修复", "scratch-removal": "去除划痕", "water-damaged-photo-repair": "水渍修复", "black-and-white-photo-colorization": "黑白上色", "blurry-photo-fix": "模糊修复", "torn-photo-repair": "撕损修复", "photo-noise-reduction": "降噪", "face-enhancement": "人脸增强", "vintage-photo-enhancement": "复古增强", "polaroid-photo-restoration": "宝丽来修复", "book-photo-restoration": "书本照片修复" },
       toolDescriptions: {},
@@ -344,14 +535,23 @@ const translations: Record<Locale, TranslationKeys> = {
     restore: { pageTitle: "修复你的照片", pageSubtitle: "从家庭相册选一张照片，我们的 AI 会细心去除损伤、提亮褪色并还原你记得的细节。" },
     history: { loadingHistory: "正在加载历史…", signInToSeeHistory: "登录后可查看历史", signInToSeeHistoryDesc: "登录后修复的照片会保存在这里。", restorationHistory: "修复历史", photosRestoredWhileSignedIn: "您登录后修复的照片。", noRestorationsYet: "暂无修复记录。登录后修复一张照片即可在此查看。", restoreAPhoto: "修复一张照片", beforeAfter: "修复前 / 修复后" },
     loginSuccess: { title: "登录成功", description: "已为你启用历史记录与同步保存功能。", close: "关闭" },
+    cookieConsent: { message: "我们使用 Cookie 以提升体验与流量分析。", accept: "同意", learnMore: "隐私政策" },
+    feedback: { title: "用户反馈", description: "欢迎留下您的意见或建议。", messagePlaceholder: "请写下您的想法或建议…", contextPlaceholder: "选填：来自哪个功能或页面？", submit: "提交", success: "感谢！您的反馈已提交。", ctaAfterRestore: "修复效果如何？给我们反馈", signInFirst: "请先登录后提交反馈。", goLogin: "去登录", labelMessage: "反馈内容 *", labelContext: "来源（选填）", submitting: "提交中…" },
+    memberNav: { home: "会员中心", points: "积分明细", subscribe: "订阅", feedback: "反馈", review: "评价" },
+    member: { signInFirst: "请先登录后查看会员中心。", goLogin: "去登录", memberCenter: "会员中心", currentCredits: "当前积分", creditsPerRestore: "每次修复照片消耗 5 积分。查看", pointsDetail: "积分明细", membershipStatus: "会员状态", planYearly: "年会员", planWeekly: "周会员", notSubscribed: "未开通", subscribedAt: "开通时间", goSubscribe: "去订阅", pointsTitle: "积分明细", signInFirstPoints: "请先登录后查看积分明细。", noRecords: "暂无记录", loadMore: "加载更多", loading: "加载中…", creditsUnit: "积分", reasonSubscribeWeekly: "开通周会员", reasonSubscribeYearly: "开通年会员", reasonRefillWeekly: "周会员周期刷新", reasonRefillYearly: "年会员周期刷新", reasonRestorePhoto: "修复照片", reasonRefundRestoreFailed: "修复失败退回", subscribeSignInFirst: "请先登录后再选择套餐。", subscribeBadge: "更多积分 · 更低单价", subscribeTitle: "选择你的套餐", subscribeSubtitle: "按需购买积分包，或订阅周/年会员，解锁更多修复次数与全年最低价。", perPhotoCredits: "每张约 5 积分", instantCredits: "即时到账", bestValue: "最划算", demoNote: "当前为演示环境，开通/购买后积分即时到账，后续将接入真实支付。", checkoutNote: "支付由 Polar 安全处理。", purchaseFailed: "购买失败", subscribeFailed: "订阅失败", networkError: "网络错误，请重试", planCreditsName: "轻量包", planCreditsSub: "积分套餐", planCreditsUnit: "一次性", planCreditsNote: "约 2 张照片修复", planCreditsF1: "10 积分一次性到账", planCreditsF2: "约 2 张照片修复", planCreditsF3: "无需续费，随用随买", planCreditsF4: "适合尝鲜体验", planCreditsCta: "立即购买", planCreditsCtaLoading: "购买中…", planWeeklyName: "周会员", planWeeklySub: "周套餐", planWeeklyUnit: "/ 周", planWeeklyNote: "约 20 张/周，折合不到 $0.5/张", planWeeklyF1: "每周 100 积分", planWeeklyF2: "约 20 张照片修复/周", planWeeklyF3: "折合不到 $0.5/张", planWeeklyF4: "周期按开通日自动刷新", planWeeklyCta: "立即订阅", planWeeklyCtaLoading: "开通中…", planYearlyName: "年会员", planYearlySub: "年套餐", planYearlyUnit: "/ 年", planYearlyNote: "约 2000 张/年，折合不到 $0.02/张", planYearlyF1: "每年 10000 积分", planYearlyF2: "约 2000 张照片修复/年", planYearlyF3: "折合不到 $0.02/张", planYearlyF4: "全年最低单价，最划算", planYearlyCta: "立即订阅", planYearlyCtaLoading: "开通中…", layoutTitle: "会员中心", layoutDescription: "积分明细与会员订阅" },
+    review: { title: "写评价", description: "您的使用体验会展示在首页，帮助更多人了解我们。", successMessage: "感谢！您的评价已提交，审核通过后会展示在首页。", labelEmail: "邮箱 *", labelContent: "评价内容 *", labelCountry: "国家或地区（选填）", placeholderEmail: "your@email.com", placeholderContent: "分享您的修复体验或对产品的看法…", placeholderCountry: "例如：中国、美国", submit: "提交评价", submitting: "提交中…" },
   },
   "zh-TW": {
     nav: {
       restore: "修復",
       history: "歷史",
       tools: "工具",
+      cases: "案例",
+      member: "會員",
+      feedback: "反饋",
       terms: "條款",
       privacy: "隱私",
+      more: "更多",
       signIn: "登入",
       signOut: "登出",
       memoryRestore: "AI RestorePic",
@@ -375,6 +575,8 @@ const translations: Record<Locale, TranslationKeys> = {
       memoryRestore: "AI RestorePic",
       tagline: "幫助家庭保存並重新發現最珍貴的照片。",
       restoreMemories: "修復回憶",
+      cases: "案例",
+      member: "會員",
       history: "歷史",
       oldPhotos: "老照片",
       fixScratches: "去除刮痕",
@@ -390,6 +592,7 @@ const translations: Record<Locale, TranslationKeys> = {
       heroBanner: { title: "AI RestorePic 全能修復", subtitle: "修復、上色，讓老照片重獲新生 — 只需幾秒。", cta: "立即開始" },
       steps: { title: "簡單三步", subtitle: "無需安裝應用、無需註冊。只有你和你的照片。", step1Title: "選擇照片", step1Desc: "從抽屜、相冊或手機裡選一張老照片。拖入或點擊即可。", step2Title: "交給 AI 處理", step2Desc: "我們的 AI 會輕柔去除損傷、銳化人臉並恢復褪色，幾秒完成。", step3Title: "查看對比", step3Desc: "在修復前後之間滑動，看回憶重獲新生。" },
       toolsSection: { title: "為你的照片選對工具", subtitle: "每張照片都有自己的故事和需求。選擇適合的修復方式。" },
+      reviewsSection: { title: "用戶怎麼說", subtitle: "真實用戶修復回憶後的體驗分享。", cta: "分享你的使用體驗 →" },
       privacySection: { title: "您的回憶由我們守護", body: "我們深知照片的私密性。因此我們從不儲存、分享或將您的圖片用於修復以外的任何用途。完成後即從系統中清除。", cta: "修復一張回憶" },
       toolKeywords: { "old-photo-restoration": "老照片修復", "faded-photo-repair": "褪色修復", "scratch-removal": "去除刮痕", "water-damaged-photo-repair": "水漬修復", "black-and-white-photo-colorization": "黑白上色", "blurry-photo-fix": "模糊修復", "torn-photo-repair": "撕損修復", "photo-noise-reduction": "降噪", "face-enhancement": "人臉增強", "vintage-photo-enhancement": "復古增強", "polaroid-photo-restoration": "寶麗來修復", "book-photo-restoration": "書本照片修復" },
       toolDescriptions: {},
@@ -399,14 +602,23 @@ const translations: Record<Locale, TranslationKeys> = {
     restore: { pageTitle: "修復你的照片", pageSubtitle: "從家庭相冊選一張照片，我們的 AI 會細心去除損傷、提亮褪色並還原你記得的細節。" },
     history: { loadingHistory: "正在載入歷史…", signInToSeeHistory: "登入後可查看歷史", signInToSeeHistoryDesc: "登入後修復的照片會儲存在這裡。", restorationHistory: "修復歷史", photosRestoredWhileSignedIn: "您登入後修復的照片。", noRestorationsYet: "暫無修復記錄。登入後修復一張照片即可在此查看。", restoreAPhoto: "修復一張照片", beforeAfter: "修復前 / 修復後" },
     loginSuccess: { title: "登入成功", description: "已為你啟用歷史記錄與同步儲存功能。", close: "關閉" },
+    cookieConsent: { message: "我們使用 Cookie 以提升體驗與流量分析。", accept: "同意", learnMore: "隱私權政策" },
+    feedback: { title: "用戶反饋", description: "歡迎留下您的意見或建議。", messagePlaceholder: "請寫下您的想法或建議…", contextPlaceholder: "選填：來自哪個功能或頁面？", submit: "提交", success: "感謝！您的反饋已提交。", ctaAfterRestore: "修復效果如何？給我們反饋", signInFirst: "請先登入後提交反饋。", goLogin: "去登入", labelMessage: "反饋內容 *", labelContext: "來源（選填）", submitting: "提交中…" },
+    memberNav: { home: "會員中心", points: "積分明細", subscribe: "訂閱", feedback: "反饋", review: "評價" },
+    member: { signInFirst: "請先登入後查看會員中心。", goLogin: "去登入", memberCenter: "會員中心", currentCredits: "當前積分", creditsPerRestore: "每次修復照片消耗 5 積分。查看", pointsDetail: "積分明細", membershipStatus: "會員狀態", planYearly: "年會員", planWeekly: "周會員", notSubscribed: "未開通", subscribedAt: "開通時間", goSubscribe: "去訂閱", pointsTitle: "積分明細", signInFirstPoints: "請先登入後查看積分明細。", noRecords: "暫無記錄", loadMore: "載入更多", loading: "載入中…", creditsUnit: "積分", reasonSubscribeWeekly: "開通周會員", reasonSubscribeYearly: "開通年會員", reasonRefillWeekly: "周會員週期刷新", reasonRefillYearly: "年會員週期刷新", reasonRestorePhoto: "修復照片", reasonRefundRestoreFailed: "修復失敗退回", subscribeSignInFirst: "請先登入後再選擇套餐。", subscribeBadge: "更多積分 · 更低單價", subscribeTitle: "選擇你的套餐", subscribeSubtitle: "按需購買積分包，或訂閱周/年會員，解鎖更多修復次數與全年最低價。", perPhotoCredits: "每張約 5 積分", instantCredits: "即時到帳", bestValue: "最划算", demoNote: "當前為演示環境，開通/購買後積分即時到帳，後續將接入真實支付。", checkoutNote: "支付由 Polar 安全處理。", purchaseFailed: "購買失敗", subscribeFailed: "訂閱失敗", networkError: "網路錯誤，請重試", planCreditsName: "輕量包", planCreditsSub: "積分套餐", planCreditsUnit: "一次性", planCreditsNote: "約 2 張照片修復", planCreditsF1: "10 積分一次性到帳", planCreditsF2: "約 2 張照片修復", planCreditsF3: "無需續費，隨用隨買", planCreditsF4: "適合嘗鮮體驗", planCreditsCta: "立即購買", planCreditsCtaLoading: "購買中…", planWeeklyName: "周會員", planWeeklySub: "周套餐", planWeeklyUnit: "/ 周", planWeeklyNote: "約 20 張/周", planWeeklyF1: "每週 100 積分", planWeeklyF2: "約 20 張照片修復/周", planWeeklyF3: "折合不到 $0.5/張", planWeeklyF4: "週期按開通日自動刷新", planWeeklyCta: "立即訂閱", planWeeklyCtaLoading: "開通中…", planYearlyName: "年會員", planYearlySub: "年套餐", planYearlyUnit: "/ 年", planYearlyNote: "約 2000 張/年", planYearlyF1: "每年 10000 積分", planYearlyF2: "約 2000 張照片修復/年", planYearlyF3: "折合不到 $0.02/張", planYearlyF4: "全年最低單價，最划算", planYearlyCta: "立即訂閱", planYearlyCtaLoading: "開通中…", layoutTitle: "會員中心", layoutDescription: "積分明細與會員訂閱" },
+    review: { title: "寫評價", description: "您的使用體驗會展示在首頁，幫助更多人了解我們。", successMessage: "感謝！您的評價已提交，審核通過後會展示在首頁。", labelEmail: "信箱 *", labelContent: "評價內容 *", labelCountry: "國家或地區（選填）", placeholderEmail: "your@email.com", placeholderContent: "分享您的修復體驗或對產品的看法…", placeholderCountry: "例如：台灣、美國", submit: "提交評價", submitting: "提交中…" },
   },
   es: {
     nav: {
       restore: "Restaurar",
       history: "Historial",
       tools: "Herramientas",
+      cases: "Casos",
+      member: "Miembro",
+      feedback: "Comentarios",
       terms: "Términos",
       privacy: "Privacidad",
+      more: "Más",
       signIn: "Iniciar sesión",
       signOut: "Cerrar sesión",
       memoryRestore: "AI RestorePic",
@@ -430,6 +642,8 @@ const translations: Record<Locale, TranslationKeys> = {
       memoryRestore: "AI RestorePic",
       tagline: "Ayudando a las familias a preservar y redescubrir sus fotografías más preciadas.",
       restoreMemories: "Restaurar recuerdos",
+      cases: "Casos",
+      member: "Miembro",
       history: "Historial",
       oldPhotos: "Fotos antiguas",
       fixScratches: "Reparar rayaduras",
@@ -445,6 +659,7 @@ const translations: Record<Locale, TranslationKeys> = {
       heroBanner: { title: "AI RestorePic lo hace todo", subtitle: "Restaura, coloriza y devuelve la vida a fotos antiguas — en segundos.", cta: "Empezar ahora" },
       steps: { title: "Tan fácil como 1, 2, 3", subtitle: "Sin apps que instalar, sin cuentas. Solo tú y tu foto.", step1Title: "Elige una foto", step1Desc: "Cualquier foto antigua de tu cajón, álbum o móvil. Arrastra o toca para seleccionar.", step2Title: "Deja que la IA actúe", step2Desc: "Nuestra IA elimina daños, afina rostros y restaura colores desvaídos en segundos.", step3Title: "Mira la diferencia", step3Desc: "Desliza entre antes y después para ver tu recuerdo cobrar vida." },
       toolsSection: { title: "Encuentra la herramienta adecuada para tu foto", subtitle: "Cada foto tiene su historia y sus necesidades. Elige la restauración que te convenga." },
+      reviewsSection: { title: "Lo que dicen los usuarios", subtitle: "Experiencias reales de quienes restauraron sus recuerdos.", cta: "Comparte tu experiencia →" },
       privacySection: { title: "Tus recuerdos están seguros con nosotros", body: "Entendemos lo personales que son tus fotos. Por eso nunca guardamos, compartimos ni usamos tus imágenes para nada más que restaurarlas. Al terminar, desaparecen de nuestro sistema.", cta: "Restaurar un recuerdo" },
       toolKeywords: { "old-photo-restoration": "Restauración de fotos antiguas", "faded-photo-repair": "Reparar fotos descoloridas", "scratch-removal": "Eliminar rayaduras", "water-damaged-photo-repair": "Reparar daños por agua", "black-and-white-photo-colorization": "Colorizar blanco y negro", "blurry-photo-fix": "Corregir desenfoque", "torn-photo-repair": "Reparar fotos rotas", "photo-noise-reduction": "Reducir ruido", "face-enhancement": "Mejorar rostros", "vintage-photo-enhancement": "Mejorar fotos vintage", "polaroid-photo-restoration": "Restauración Polaroid", "book-photo-restoration": "Restauración de fotos de libro" },
       toolDescriptions: {},
@@ -454,14 +669,23 @@ const translations: Record<Locale, TranslationKeys> = {
     restore: { pageTitle: "Restaurar tu foto", pageSubtitle: "Elige una foto del álbum familiar; nuestra IA eliminará daños, avivará colores y recuperará los detalles que recuerdas." },
     history: { loadingHistory: "Cargando historial…", signInToSeeHistory: "Inicia sesión para ver tu historial", signInToSeeHistoryDesc: "Tus fotos restauradas se guardan aquí tras iniciar sesión.", restorationHistory: "Historial de restauración", photosRestoredWhileSignedIn: "Fotos que has restaurado con la sesión iniciada.", noRestorationsYet: "Aún no hay restauraciones. Restaura una foto con la sesión iniciada para verla aquí.", restoreAPhoto: "Restaurar una foto", beforeAfter: "Antes / Después" },
     loginSuccess: { title: "Sesión iniciada correctamente", description: "El historial y la sincronización están activos.", close: "Cerrar" },
+    cookieConsent: { message: "Usamos cookies para mejorar tu experiencia y analizar tráfico.", accept: "Aceptar", learnMore: "Privacidad" },
+    feedback: { title: "Comentarios", description: "Nos encantaría saber tu opinión.", messagePlaceholder: "Cuéntanos qué piensas o sugiere…", contextPlaceholder: "Opcional: ¿qué función o página?", submit: "Enviar", success: "¡Gracias! Tu comentario se ha enviado.", ctaAfterRestore: "¿Cómo fue el resultado? Enviar comentarios", signInFirst: "Inicia sesión para enviar comentarios.", goLogin: "Iniciar sesión", labelMessage: "Tu mensaje *", labelContext: "Contexto (opcional)", submitting: "Enviando…" },
+    memberNav: { home: "Mi cuenta", points: "Puntos", subscribe: "Suscripción", feedback: "Comentarios", review: "Reseñas" },
+    member: { signInFirst: "Inicia sesión para ver tu cuenta.", goLogin: "Iniciar sesión", memberCenter: "Mi cuenta", currentCredits: "Puntos actuales", creditsPerRestore: "5 puntos por restauración. Ver", pointsDetail: "Historial de puntos", membershipStatus: "Suscripción", planYearly: "Anual", planWeekly: "Semanal", notSubscribed: "Sin suscripción", subscribedAt: "Inicio", goSubscribe: "Suscribirse", pointsTitle: "Historial de puntos", signInFirstPoints: "Inicia sesión para ver el historial.", noRecords: "Sin registros.", loadMore: "Cargar más", loading: "Cargando…", creditsUnit: "puntos", reasonSubscribeWeekly: "Suscripción semanal", reasonSubscribeYearly: "Suscripción anual", reasonRefillWeekly: "Recarga semanal", reasonRefillYearly: "Recarga anual", reasonRestorePhoto: "Restauración", reasonRefundRestoreFailed: "Reembolso (fallo)", subscribeSignInFirst: "Inicia sesión para elegir un plan.", subscribeBadge: "Más puntos · Mejor precio", subscribeTitle: "Elige tu plan", subscribeSubtitle: "Compra puntos o suscríbete semanal/anual.", perPhotoCredits: "~5 puntos por foto", instantCredits: "Puntos al instante", bestValue: "Mejor valor", demoNote: "Demo: los puntos se añaden al instante. Pago real próximamente.", checkoutNote: "Pago seguro procesado por Polar.", purchaseFailed: "Compra fallida", subscribeFailed: "Suscripción fallida", networkError: "Error de red. Inténtalo de nuevo.", planCreditsName: "Starter", planCreditsSub: "Pack de puntos", planCreditsUnit: "único", planCreditsNote: "~2 fotos", planCreditsF1: "10 puntos de una vez", planCreditsF2: "~2 restauraciones", planCreditsF3: "Sin renovación", planCreditsF4: "Para probar", planCreditsCta: "Comprar", planCreditsCtaLoading: "Comprando…", planWeeklyName: "Semanal", planWeeklySub: "Plan semanal", planWeeklyUnit: "/ semana", planWeeklyNote: "~20 fotos/semana", planWeeklyF1: "100 puntos/semana", planWeeklyF2: "~20 restauraciones/semana", planWeeklyF3: "Menos de 0,50 €/foto", planWeeklyF4: "Recarga automática", planWeeklyCta: "Suscribirse", planWeeklyCtaLoading: "Suscribiendo…", planYearlyName: "Anual", planYearlySub: "Plan anual", planYearlyUnit: "/ año", planYearlyNote: "~2000 fotos/año", planYearlyF1: "10000 puntos/año", planYearlyF2: "~2000 restauraciones/año", planYearlyF3: "Menos de 0,02 €/foto", planYearlyF4: "Mejor valor", planYearlyCta: "Suscribirse", planYearlyCtaLoading: "Suscribiendo…", layoutTitle: "Mi cuenta", layoutDescription: "Historial de puntos y suscripción" },
+    review: { title: "Escribir reseña", description: "Tu experiencia puede mostrarse en la página principal.", successMessage: "¡Gracias! Tu reseña se ha enviado y se mostrará tras moderación.", labelEmail: "Email *", labelContent: "Tu reseña *", labelCountry: "País o región (opcional)", placeholderEmail: "tu@email.com", placeholderContent: "Comparte tu experiencia…", placeholderCountry: "ej. España", submit: "Enviar reseña", submitting: "Enviando…" },
   },
   pt: {
     nav: {
       restore: "Restaurar",
       history: "Histórico",
       tools: "Ferramentas",
+      cases: "Casos",
+      member: "Membro",
+      feedback: "Feedback",
       terms: "Termos",
       privacy: "Privacidade",
+      more: "Mais",
       signIn: "Entrar",
       signOut: "Sair",
       memoryRestore: "AI RestorePic",
@@ -485,6 +709,8 @@ const translations: Record<Locale, TranslationKeys> = {
       memoryRestore: "AI RestorePic",
       tagline: "Ajudando famílias a preservar e redescobrir suas fotos mais preciosas.",
       restoreMemories: "Restaurar memórias",
+      cases: "Casos",
+      member: "Membro",
       history: "Histórico",
       oldPhotos: "Fotos antigas",
       fixScratches: "Reparar arranhões",
@@ -500,6 +726,7 @@ const translations: Record<Locale, TranslationKeys> = {
       heroBanner: { title: "AI RestorePic faz tudo", subtitle: "Restaure, colorize e traga fotos antigas de volta à vida — em segundos.", cta: "Começar agora" },
       steps: { title: "Tão fácil quanto 1, 2, 3", subtitle: "Sem apps para instalar, sem contas. Só você e sua foto.", step1Title: "Escolha uma foto", step1Desc: "Qualquer foto antiga da gaveta, álbum ou celular. Arraste ou toque para selecionar.", step2Title: "Deixe a IA trabalhar", step2Desc: "Nossa IA remove danos, afia rostos e restaura cores desbotadas em segundos.", step3Title: "Veja a diferença", step3Desc: "Deslize entre antes e depois para ver sua memória ganhar vida." },
       toolsSection: { title: "Encontre a ferramenta certa para sua foto", subtitle: "Cada foto tem sua história e suas necessidades. Escolha a restauração que combina com você." },
+      reviewsSection: { title: "O que os usuários dizem", subtitle: "Experiências reais de quem restaurou suas memórias.", cta: "Compartilhe sua experiência →" },
       privacySection: { title: "Suas memórias estão seguras conosco", body: "Entendemos o quanto suas fotos são pessoais. Por isso nunca salvamos, compartilhamos ou usamos suas imagens para nada além de restaurá-las. Quando terminar, somem do nosso sistema.", cta: "Restaurar uma memória" },
       toolKeywords: { "old-photo-restoration": "Restauração de fotos antigas", "faded-photo-repair": "Reparar fotos desbotadas", "scratch-removal": "Remover arranhões", "water-damaged-photo-repair": "Reparar danos por água", "black-and-white-photo-colorization": "Colorizar preto e branco", "blurry-photo-fix": "Corrigir desfoque", "torn-photo-repair": "Reparar fotos rasgadas", "photo-noise-reduction": "Reduzir ruído", "face-enhancement": "Melhorar rostos", "vintage-photo-enhancement": "Melhorar fotos vintage", "polaroid-photo-restoration": "Restauração Polaroid", "book-photo-restoration": "Restauração de fotos de livro" },
       toolDescriptions: {},
@@ -509,14 +736,23 @@ const translations: Record<Locale, TranslationKeys> = {
     restore: { pageTitle: "Restaurar sua foto", pageSubtitle: "Escolha uma foto do álbum de família; nossa IA removerá danos, avivará cores e recuperará os detalhes que você lembra." },
     history: { loadingHistory: "Carregando histórico…", signInToSeeHistory: "Entre para ver seu histórico", signInToSeeHistoryDesc: "Suas fotos restauradas são salvas aqui após entrar.", restorationHistory: "Histórico de restauração", photosRestoredWhileSignedIn: "Fotos que você restaurou com a sessão iniciada.", noRestorationsYet: "Ainda não há restaurações. Restaure uma foto com a sessão iniciada para aparecer aqui.", restoreAPhoto: "Restaurar uma foto", beforeAfter: "Antes / Depois" },
     loginSuccess: { title: "Login realizado com sucesso", description: "Histórico e sincronização estão ativos.", close: "Fechar" },
+    cookieConsent: { message: "Usamos cookies para melhorar sua experiência e analisar tráfego.", accept: "Aceitar", learnMore: "Privacidade" },
+    feedback: { title: "Feedback", description: "Adoraríamos ouvir você.", messagePlaceholder: "Conte o que achou ou sugira…", contextPlaceholder: "Opcional: qual função ou página?", submit: "Enviar", success: "Obrigado! Seu feedback foi enviado.", ctaAfterRestore: "Como foi o resultado? Enviar feedback", signInFirst: "Faça login para enviar feedback.", goLogin: "Entrar", labelMessage: "Sua mensagem *", labelContext: "Contexto (opcional)", submitting: "Enviando…" },
+    memberNav: { home: "Minha conta", points: "Pontos", subscribe: "Assinatura", feedback: "Feedback", review: "Avaliações" },
+    member: { signInFirst: "Faça login para ver sua conta.", goLogin: "Entrar", memberCenter: "Minha conta", currentCredits: "Pontos atuais", creditsPerRestore: "5 pontos por restauração. Ver", pointsDetail: "Histórico de pontos", membershipStatus: "Assinatura", planYearly: "Anual", planWeekly: "Semanal", notSubscribed: "Sem assinatura", subscribedAt: "Início", goSubscribe: "Assinar", pointsTitle: "Histórico de pontos", signInFirstPoints: "Faça login para ver o histórico.", noRecords: "Nenhum registro.", loadMore: "Carregar mais", loading: "Carregando…", creditsUnit: "pontos", reasonSubscribeWeekly: "Assinatura semanal", reasonSubscribeYearly: "Assinatura anual", reasonRefillWeekly: "Recarga semanal", reasonRefillYearly: "Recarga anual", reasonRestorePhoto: "Restauração", reasonRefundRestoreFailed: "Reembolso (falha)", subscribeSignInFirst: "Faça login para escolher um plano.", subscribeBadge: "Mais pontos · Menor preço", subscribeTitle: "Escolha seu plano", subscribeSubtitle: "Compre pontos ou assine semanal/anual.", perPhotoCredits: "~5 pontos por foto", instantCredits: "Pontos instantâneos", bestValue: "Melhor valor", demoNote: "Demo: os pontos são creditados na hora. Pagamento real em breve.", checkoutNote: "Pagamento processado com segurança pela Polar.", purchaseFailed: "Falha na compra", subscribeFailed: "Falha na assinatura", networkError: "Erro de rede. Tente novamente.", planCreditsName: "Starter", planCreditsSub: "Pacote de pontos", planCreditsUnit: "único", planCreditsNote: "~2 fotos", planCreditsF1: "10 pontos de uma vez", planCreditsF2: "~2 restaurações", planCreditsF3: "Sem renovação", planCreditsF4: "Para experimentar", planCreditsCta: "Comprar", planCreditsCtaLoading: "Comprando…", planWeeklyName: "Semanal", planWeeklySub: "Plano semanal", planWeeklyUnit: "/ semana", planWeeklyNote: "~20 fotos/semana", planWeeklyF1: "100 pontos/semana", planWeeklyF2: "~20 restaurações/semana", planWeeklyF3: "Menos de US$ 0,50/foto", planWeeklyF4: "Recarga automática", planWeeklyCta: "Assinar", planWeeklyCtaLoading: "Assinando…", planYearlyName: "Anual", planYearlySub: "Plano anual", planYearlyUnit: "/ ano", planYearlyNote: "~2000 fotos/ano", planYearlyF1: "10000 pontos/ano", planYearlyF2: "~2000 restaurações/ano", planYearlyF3: "Menos de US$ 0,02/foto", planYearlyF4: "Melhor valor", planYearlyCta: "Assinar", planYearlyCtaLoading: "Assinando…", layoutTitle: "Minha conta", layoutDescription: "Histórico de pontos e assinatura" },
+    review: { title: "Escrever avaliação", description: "Sua experiência pode ser exibida na página inicial.", successMessage: "Obrigado! Sua avaliação foi enviada e aparecerá após moderação.", labelEmail: "Email *", labelContent: "Sua avaliação *", labelCountry: "País ou região (opcional)", placeholderEmail: "seu@email.com", placeholderContent: "Compartilhe sua experiência…", placeholderCountry: "ex. Brasil", submit: "Enviar avaliação", submitting: "Enviando…" },
   },
   ar: {
     nav: {
       restore: "استعادة",
       history: "السجل",
       tools: "أدوات",
+      cases: "حالات",
+      member: "عضو",
+      feedback: "تعليقات",
       terms: "الشروط",
       privacy: "الخصوصية",
+      more: "المزيد",
       signIn: "تسجيل الدخول",
       signOut: "تسجيل الخروج",
       memoryRestore: "AI RestorePic",
@@ -540,6 +776,8 @@ const translations: Record<Locale, TranslationKeys> = {
       memoryRestore: "AI RestorePic",
       tagline: "نساعد العائلات في الحفاظ على صورها الثمينة وإعادة اكتشافها.",
       restoreMemories: "استعادة الذكريات",
+      cases: "حالات",
+      member: "عضو",
       history: "السجل",
       oldPhotos: "صور قديمة",
       fixScratches: "إصلاح الخدوش",
@@ -555,6 +793,7 @@ const translations: Record<Locale, TranslationKeys> = {
       heroBanner: { title: "AI RestorePic يفعل كل شيء", subtitle: "استعد الصور، لوّنها وأعد الحياة للصور القديمة — في ثوانٍ.", cta: "ابدأ الآن" },
       steps: { title: "بسهولة ١، ٢، ٣", subtitle: "بدون تطبيقات أو حسابات. فقط أنت وصورتك.", step1Title: "اختر صورة", step1Desc: "أي صورة قديمة من الدرج أو الألبوم أو الهاتف. اسحبها أو انقر للاختيار.", step2Title: "دع الذكاء الاصطناعي يعمل", step2Desc: "ذكاؤنا يزيل الأضرار ويحدّد الوجوه ويعيد الألوان الباهتة في ثوانٍ.", step3Title: "شاهد الفرق", step3Desc: "مرّر بين قبل وبعد لترى ذكراك تعود للحياة." },
       toolsSection: { title: "اعثر على الأداة المناسبة لصورتك", subtitle: "كل صورة لها قصتها واحتياجاتها. اختر الاستعادة التي تناسبك." },
+      reviewsSection: { title: "ماذا يقول المستخدمون", subtitle: "تجارب حقيقية ممن استعادوا ذكرياتهم.", cta: "شارك تجربتك ←" },
       privacySection: { title: "ذكرياتك في أمان معنا", body: "نفهم مدى خصوصية صورك. لذلك لا نحفظها ولا نشاركها ولا نستخدمها لأي شيء سوى استعادتها. عند الانتهاء تُزال من نظامنا.", cta: "استعادة ذكرى" },
       toolKeywords: { "old-photo-restoration": "استعادة الصور القديمة", "faded-photo-repair": "إصلاح الصور الباهتة", "scratch-removal": "إزالة الخدوش", "water-damaged-photo-repair": "إصلاح أضرار الماء", "black-and-white-photo-colorization": "تلوين الأبيض والأسود", "blurry-photo-fix": "إصلاح الضبابية", "torn-photo-repair": "إصلاح الصور الممزقة", "photo-noise-reduction": "تقليل التشويش", "face-enhancement": "تحسين الوجوه", "vintage-photo-enhancement": "تحسين الصور العتيقة", "polaroid-photo-restoration": "استعادة بولارويد", "book-photo-restoration": "استعادة صور الكتب" },
       toolDescriptions: {},
@@ -564,14 +803,18 @@ const translations: Record<Locale, TranslationKeys> = {
     restore: { pageTitle: "استعادة صورتك", pageSubtitle: "اختر صورة من ألبوم العائلة؛ ذكاؤنا يزيل الأضرار ويحيي الألوان ويعيد التفاصيل التي تتذكرها." },
     history: { loadingHistory: "جاري تحميل السجل…", signInToSeeHistory: "سجّل الدخول لعرض سجلك", signInToSeeHistoryDesc: "صورك المستعادة تُحفظ هنا بعد تسجيل الدخول.", restorationHistory: "سجل الاستعادة", photosRestoredWhileSignedIn: "الصور التي استعدتها أثناء تسجيل الدخول.", noRestorationsYet: "لا استعادة بعد. استعد صورة أثناء تسجيل الدخول لتظهر هنا.", restoreAPhoto: "استعادة صورة", beforeAfter: "قبل / بعد" },
     loginSuccess: { title: "تم تسجيل الدخول بنجاح", description: "السجل والمزامنة مفعّلان الآن.", close: "إغلاق" },
+    cookieConsent: { message: "نستخدم ملفات تعريف الارتباط لتحسين تجربتك وتحليل الزيارات.", accept: "قبول", learnMore: "الخصوصية" },
+    feedback: { title: "تعليقات", description: "نود أن نسمع منك.", messagePlaceholder: "أخبرنا برأيك أو اقتراحك…", contextPlaceholder: "اختياري: أي ميزة أو صفحة؟", submit: "إرسال", success: "شكراً! تم إرسال تعليقك.", ctaAfterRestore: "كيف كانت النتيجة؟ أرسل تعليقاً", signInFirst: "يرجى تسجيل الدخول لإرسال التعليقات.", goLogin: "تسجيل الدخول", labelMessage: "رسالتك *", labelContext: "السياق (اختياري)", submitting: "جاري الإرسال…" },
+    memberNav: { home: "مركز العضوية", points: "النقاط", subscribe: "الاشتراك", feedback: "تعليقات", review: "التقييمات" },
+    member: { signInFirst: "يرجى تسجيل الدخول لعرض مركز العضوية.", goLogin: "تسجيل الدخول", memberCenter: "مركز العضوية", currentCredits: "النقاط الحالية", creditsPerRestore: "5 نقاط لكل استعادة. عرض", pointsDetail: "سجل النقاط", membershipStatus: "الاشتراك", planYearly: "سنوي", planWeekly: "أسبوعي", notSubscribed: "غير مشترك", subscribedAt: "البداية", goSubscribe: "اشترك", pointsTitle: "سجل النقاط", signInFirstPoints: "يرجى تسجيل الدخول لعرض سجل النقاط.", noRecords: "لا توجد سجلات بعد.", loadMore: "تحميل المزيد", loading: "جاري التحميل…", creditsUnit: "نقاط", reasonSubscribeWeekly: "اشتراك أسبوعي", reasonSubscribeYearly: "اشتراك سنوي", reasonRefillWeekly: "تعبئة أسبوعية", reasonRefillYearly: "تعبئة سنوية", reasonRestorePhoto: "استعادة الصور", reasonRefundRestoreFailed: "استرداد (فشل)", subscribeSignInFirst: "يرجى تسجيل الدخول لاختيار خطة.", subscribeBadge: "المزيد من النقاط · سعر أقل", subscribeTitle: "اختر خطتك", subscribeSubtitle: "اشترِ نقاطاً أو اشترك أسبوعياً/سنوياً.", perPhotoCredits: "~5 نقاط لكل صورة", instantCredits: "نقاط فورية", bestValue: "أفضل قيمة", demoNote: "عرض توضيحي: تُضاف النقاط فوراً. الدفع الحقيقي قريباً.", checkoutNote: "الدفع تتم معالجته بأمان عبر Polar.", purchaseFailed: "فشل الشراء", subscribeFailed: "فشل الاشتراك", networkError: "خطأ في الشبكة. حاول مرة أخرى.", planCreditsName: "المبتدئ", planCreditsSub: "حزمة النقاط", planCreditsUnit: "مرة واحدة", planCreditsNote: "~2 صورة", planCreditsF1: "10 نقاط مرة واحدة", planCreditsF2: "~2 استعادة", planCreditsF3: "بدون تجديد", planCreditsF4: "للتجربة", planCreditsCta: "اشترِ الآن", planCreditsCtaLoading: "جاري الشراء…", planWeeklyName: "أسبوعي", planWeeklySub: "الخطة الأسبوعية", planWeeklyUnit: "/ أسبوع", planWeeklyNote: "~20 صورة/أسبوع", planWeeklyF1: "100 نقطة/أسبوع", planWeeklyF2: "~20 استعادة/أسبوع", planWeeklyF3: "أقل من 0.50$/صورة", planWeeklyF4: "تعبئة تلقائية", planWeeklyCta: "اشترك", planWeeklyCtaLoading: "جاري الاشتراك…", planYearlyName: "سنوي", planYearlySub: "الخطة السنوية", planYearlyUnit: "/ سنة", planYearlyNote: "~2000 صورة/سنة", planYearlyF1: "10000 نقطة/سنة", planYearlyF2: "~2000 استعادة/سنة", planYearlyF3: "أقل من 0.02$/صورة", planYearlyF4: "أفضل قيمة", planYearlyCta: "اشترك", planYearlyCtaLoading: "جاري الاشتراك…", layoutTitle: "مركز العضوية", layoutDescription: "سجل النقاط والاشتراك" },
+    review: { title: "اكتب تقييماً", description: "قد تُعرض تجربتك على الصفحة الرئيسية.", successMessage: "شكراً! تم إرسال تقييمك وسيظهر بعد المراجعة.", labelEmail: "البريد الإلكتروني *", labelContent: "تقييمك *", labelCountry: "الدولة أو المنطقة (اختياري)", placeholderEmail: "your@email.com", placeholderContent: "شارك تجربتك…", placeholderCountry: "مثال: مصر", submit: "إرسال التقييم", submitting: "جاري الإرسال…" },
   },
-};
+};;
 
 export function getTranslations(locale: Locale): TranslationKeys {
   return translations[locale] ?? translations.en;
 }
 
-/** 根据 key 路径取值，支持多级如 t('nav.restore') 或 t('home.hero.badge') */
 export function t(locale: Locale, key: string): string {
   const T = getTranslations(locale) as Record<string, unknown>;
   const keys = key.split(".");

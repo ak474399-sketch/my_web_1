@@ -7,7 +7,7 @@ import { logToolClick, logNavClick } from "@/lib/analytics";
 
 const TOOL_LINKS = [
   { href: "/restore", labelKey: "footer.restoreMemories" as const },
-  { href: "/cases", label: "案例" },
+  { href: "/cases", labelKey: "footer.cases" as const },
   { href: "/history", labelKey: "footer.history" as const },
   { href: "/restore/old-photo-restoration", labelKey: "footer.oldPhotos" as const },
   { href: "/restore/scratch-removal", labelKey: "footer.fixScratches" as const },
@@ -35,7 +35,7 @@ export function Footer() {
           </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-warm-500">
             {TOOL_LINKS.map((link) => {
-              const label = "label" in link ? link.label : t(link.labelKey);
+              const label = t(link.labelKey) as string;
               const isTool = link.href.startsWith("/restore/");
               const slug = isTool ? link.href.replace(/^\/restore\//, "") : undefined;
               return (

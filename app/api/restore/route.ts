@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { imageBase64, mimeType, userPrompt } = body;
+    const { imageBase64, mimeType, slug, userPrompt } = body;
 
     if (!imageBase64 || typeof imageBase64 !== "string") {
       return NextResponse.json(
@@ -62,6 +62,7 @@ export async function POST(request: NextRequest) {
     const result = await restorePhoto({
       imageBase64,
       mimeType: typeof mimeType === "string" ? mimeType : undefined,
+      slug: typeof slug === "string" ? slug : undefined,
       userPrompt: typeof userPrompt === "string" ? userPrompt : undefined,
     });
 

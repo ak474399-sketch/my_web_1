@@ -6,6 +6,7 @@ import { Loader2 } from "lucide-react";
 import { UploadZone } from "@/components/tool/upload-zone";
 import { CompareSlider } from "@/components/tool/compare-slider";
 import { logRestoreStarted, logRestoreCompleted, logRestoreFailed, logToolView } from "@/lib/analytics";
+import { useLocale } from "@/components/shared/locale-provider";
 
 type RestoreToolProps = { slug?: string };
 
@@ -19,6 +20,7 @@ type RestoreResponse = {
 };
 
 export function RestoreTool({ slug = "" }: RestoreToolProps) {
+  const { t } = useLocale();
   const [originalDataUrl, setOriginalDataUrl] = useState<string | null>(null);
   const [restoredDataUrl, setRestoredDataUrl] = useState<string | null>(null);
   const [restoreText, setRestoreText] = useState<string | null>(null);
@@ -59,7 +61,7 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
         body: JSON.stringify({
           imageBase64: base64,
           mimeType,
-          userPrompt: "Restore this photo.",
+          slug: slug || undefined,
         }),
       });
 
@@ -171,12 +173,22 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
       )}
 
       {originalDataUrl && (restoredDataUrl || restoreText) && !loading && (
-        <CompareSlider
-          beforeSrc={originalDataUrl}
-          afterSrc={restoredDataUrl ?? originalDataUrl}
-          beforeLabel="Before"
-          afterLabel="After"
-        />
+        <>
+          <CompareSlider
+            beforeSrc={originalDataUrl}
+            afterSrc={restoredDataUrl ?? originalDataUrl}
+            beforeLabel="Before"
+            afterLabel="After"
+          />
+          <div className="text-center pt-4">
+            <Link
+              href="/member/feedback"
+              className="text-sm text-warm-500 hover:text-accent transition-colors"
+            >
+              {t("feedback.ctaAfterRestore")}
+            </Link>
+          </div>
+        </>
       )}
     </div>
   );

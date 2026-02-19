@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { MemberNav } from "@/components/member/member-nav";
+import { getTranslations } from "@/lib/translations";
+import type { Locale } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: "会员中心",
-  description: "积分明细与会员订阅",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const locale = (cookieStore.get("NEXT_LOCALE")?.value ?? "en") as Locale;
+  const T = getTranslations(locale);
+  return {
+    title: T.member.layoutTitle,
+    description: T.member.layoutDescription,
+  };
+}
 
 export default function MemberLayout({
   children,

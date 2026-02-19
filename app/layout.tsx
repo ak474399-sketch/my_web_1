@@ -10,6 +10,7 @@ import { LoginSuccessToast } from "@/components/shared/login-success-toast";
 import { PullToRefreshWrapper } from "@/components/shared/pull-to-refresh-wrapper";
 import { FirebaseAnalytics } from "@/components/analytics/firebase-analytics";
 import { PageViewTracker } from "@/components/analytics/page-view-tracker";
+import { CookieConsentBar } from "@/components/shared/cookie-consent-bar";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -74,6 +75,7 @@ export default function RootLayout({
           <Suspense fallback={null}>
             <LoginSuccessToast />
           </Suspense>
+          <CookieConsentBar />
           </LocaleProvider>
         </AuthProvider>
       </body>

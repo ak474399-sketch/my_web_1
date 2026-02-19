@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.41.0",
+    "@polar-sh/nextjs": "^0.9.3",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.97.0",
     "firebase": "^12.9.0",
