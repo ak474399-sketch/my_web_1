@@ -8,7 +8,7 @@ export function FirebaseAnalytics() {
   useEffect(() => {
     if (!app || typeof window === "undefined") return;
     import("firebase/analytics").then(({ getAnalytics }) => {
-      const analytics = getAnalytics(app);
+      const analytics = getAnalytics(app!);
       setAnalyticsInstance(analytics);
     });
   }, []);
