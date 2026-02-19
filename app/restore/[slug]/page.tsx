@@ -8,13 +8,31 @@ export async function generateStaticParams() {
   return ALL_SLUGS.map((slug) => ({ slug }));
 }
 
+const baseUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.NEXTAUTH_URL ||
+  "https://restorepic.xyz";
+
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const data = getSlugData(slug);
   if (!data) return { title: "Photo Restoration", description: "AI photo restoration tool." };
+  const canonical = `${baseUrl}/restore/${slug}`;
   return {
     title: data.title,
     description: data.description,
+    alternates: { canonical },
+    openGraph: {
+      title: data.title,
+      description: data.description,
+      url: canonical,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: data.title,
+      description: data.description,
+    },
   };
 }
 
@@ -24,8 +42,25 @@ export default async function RestoreSlugPage({ params }: Props) {
 
   if (!data) return notFound();
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: data.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="container mx-auto px-4 py-8 md:py-14">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <h1 className="font-serif text-3xl md:text-4xl font-bold text-warm-800 mb-4 text-center">
         {data.keyword}
       </h1>

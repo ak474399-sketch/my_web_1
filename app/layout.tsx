@@ -34,6 +34,18 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  openGraph: {
+    title: "AI RestorePic - Professional AI Photo Restoration",
+    description: "AI RestorePic helps you restore, colorize, and sharpen old photos in seconds. Free, simple, and safe.",
+    url: siteUrl,
+    siteName: "AI RestorePic",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI RestorePic - Professional AI Photo Restoration",
+    description: "AI RestorePic helps you restore, colorize, and sharpen old photos in seconds.",
+  },
 };
 
 export default function RootLayout({
