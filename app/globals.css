@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #FDFCF8;
+  --fg: #3D2E1C;
+  --muted: #7A6B5A;
+  --border: #E0D5C4;
+}
+
+html {
+  @apply antialiased scroll-smooth;
+}
+
+body {
+  @apply bg-warm-50 text-warm-700 min-h-screen;
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+input[type="range"] {
+  @apply accent-accent;
+}
+
+::selection {
+  background-color: #D4A85340;
+}
