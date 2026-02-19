@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ALL_SLUGS, RESTORE_SLUGS } from "@/lib/seo-data";
 import { SlugIcon } from "@/lib/icons";
 import { useLocale } from "@/components/shared/locale-provider";
+import FullscreenHeroBanner from "@/components/shared/fullscreen-hero-banner";
 import HeroSection from "@/components/shared/hero-section";
 import FeatureSection from "@/components/shared/feature-section";
 import KnowledgeSection from "@/components/shared/knowledge-section";
@@ -20,6 +21,7 @@ export default function HomePage() {
   const { t } = useLocale();
   return (
     <div>
+      <FullscreenHeroBanner />
       <HeroSection />
 
       <section className="border-t border-warm-200 bg-warm-50">

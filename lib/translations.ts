@@ -2,11 +2,12 @@ import type { Locale } from "./i18n";
 
 export type TranslationKeys = {
   nav: { restore: string; history: string; tools: string; terms: string; privacy: string; signIn: string; signOut: string; memoryRestore: string };
-  login: { welcomeBack: string; signInToSave: string; continueWithGoogle: string; agreeTerms: string; and: string; terms: string; privacyPolicy: string; redirecting: string; pleaseComplete: string };
+  login: { welcomeBack: string; welcomeToBrand: string; signInToSave: string; continueWithGoogle: string; signInWithApple: string; signInWithEmail: string; comingSoon: string; agreeTerms: string; and: string; terms: string; privacyPolicy: string; redirecting: string; pleaseComplete: string };
   footer: { memoryRestore: string; tagline: string; restoreMemories: string; history: string; oldPhotos: string; fixScratches: string; reviveFaded: string; addColor: string; termsOfService: string; privacyPolicy: string; madeWithCare: string };
   common: { before: string; after: string; beforeAfter: string };
   home: {
     hero: { badge: string; titleLine1: string; titleLine2: string; intro: string; dropTitle: string; dropHint: string; privateNote: string; pullDown: string; carousel0: string; carousel1: string; carousel2: string };
+    heroBanner: { title: string; subtitle: string; cta: string };
     steps: { title: string; subtitle: string; step1Title: string; step1Desc: string; step2Title: string; step2Desc: string; step3Title: string; step3Desc: string };
     toolsSection: { title: string; subtitle: string };
     privacySection: { title: string; body: string; cta: string };
@@ -58,11 +59,15 @@ const translations: Record<Locale, TranslationKeys> = {
     },
     login: {
       welcomeBack: "Welcome Back",
+      welcomeToBrand: "Welcome to AI RestorePic",
       signInToSave: "Sign in to save your restorations and track your history.",
-      continueWithGoogle: "Continue with Google",
-      agreeTerms: "By signing in, you agree to our",
+      continueWithGoogle: "Sign in with Google",
+      signInWithApple: "Sign in with Apple",
+      signInWithEmail: "Sign in with email",
+      comingSoon: "Coming soon",
+      agreeTerms: "By clicking Sign in with Google, you agree to our",
       and: " and ",
-      terms: "Terms",
+      terms: "Terms of Service",
       privacyPolicy: "Privacy Policy",
       redirecting: "Redirecting to Google…",
       pleaseComplete: "Please complete sign-in in the new window.",
@@ -94,6 +99,11 @@ const translations: Record<Locale, TranslationKeys> = {
         carousel0: "A Family Moment, Reborn",
         carousel1: "Color Returns to Old Memories",
         carousel2: "Scratches Fade, Stories Stay",
+      },
+      heroBanner: {
+        title: "AI RestorePic Does It All",
+        subtitle: "Restore, colorize, and bring old photos back to life — in seconds.",
+        cta: "Start Restoring",
       },
       steps: {
         title: "As Easy as 1, 2, 3",
@@ -183,9 +193,13 @@ const translations: Record<Locale, TranslationKeys> = {
     },
     login: {
       welcomeBack: "Willkommen zurück",
+      welcomeToBrand: "Willkommen bei AI RestorePic",
       signInToSave: "Melden Sie sich an, um Wiederherstellungen zu speichern und den Verlauf zu sehen.",
-      continueWithGoogle: "Mit Google fortfahren",
-      agreeTerms: "Mit der Anmeldung stimmen Sie unseren",
+      continueWithGoogle: "Mit Google anmelden",
+      signInWithApple: "Mit Apple anmelden",
+      signInWithEmail: "Mit E-Mail anmelden",
+      comingSoon: "Demnächst",
+      agreeTerms: "Mit „Mit Google anmelden“ stimmen Sie unseren",
       and: " und ",
       terms: "AGB",
       privacyPolicy: "Datenschutzrichtlinie",
@@ -208,6 +222,7 @@ const translations: Record<Locale, TranslationKeys> = {
     common: { before: "Vorher", after: "Nachher", beforeAfter: "Vorher / Nachher" },
     home: {
       hero: { badge: "Einfach · Kostenlos · Sicher", titleLine1: "Jedes Foto erzählt", titleLine2: "eine Familiengeschichte", intro: "Ein altes Foto in der Schublade gefunden? Verblasst, zerkratzt oder eingerissen? Legen Sie es hier ab und sehen Sie zu, wie die Spuren der Zeit verschwinden.", dropTitle: "Foto hier ablegen zum Start", dropHint: "oder klicken zum Durchsuchen · JPG, PNG, WebP · max. 8 MB", privateNote: "Ihre Fotos bleiben privat — wir speichern oder teilen sie nicht.", pullDown: "Zum Aktualisieren nach unten ziehen", carousel0: "Ein Familienmoment, neu erweckt", carousel1: "Farbe kehrt in alte Erinnerungen zurück", carousel2: "Kratzer verblassen, Geschichten bleiben" },
+      heroBanner: { title: "AI RestorePic macht alles", subtitle: "Alte Fotos wiederherstellen, kolorieren und in Sekunden zum Leben erwecken.", cta: "Jetzt starten" },
       steps: { title: "So einfach wie 1, 2, 3", subtitle: "Keine Apps, kein Konto. Nur Sie und Ihr Foto.", step1Title: "Foto wählen", step1Desc: "Wählen Sie ein altes Foto aus Schublade, Album oder Handy. Einfach hereinziehen oder antippen.", step2Title: "KI arbeitet", step2Desc: "Unsere KI entfernt Schäden, schärft Gesichter und stellt verblasste Farben in Sekunden wieder her.", step3Title: "Vergleich ansehen", step3Desc: "Schieben Sie zwischen Vorher und Nachher und sehen Sie Ihre Erinnerung wieder lebendig werden." },
       toolsSection: { title: "Das passende Werkzeug für Ihr Foto", subtitle: "Jedes Foto hat seine eigene Geschichte und eigene Bedürfnisse. Wählen Sie die passende Wiederherstellung." },
       privacySection: { title: "Ihre Erinnerungen sind bei uns sicher", body: "Wir wissen, wie persönlich Ihre Fotos sind. Deshalb speichern, teilen oder nutzen wir Ihre Bilder nie für etwas anderes als die Wiederherstellung.", cta: "Erinnerung wiederherstellen" },
@@ -233,9 +248,13 @@ const translations: Record<Locale, TranslationKeys> = {
     },
     login: {
       welcomeBack: "Bon retour",
+      welcomeToBrand: "Bienvenue sur AI RestorePic",
       signInToSave: "Connectez-vous pour enregistrer vos restaurations et consulter l’historique.",
-      continueWithGoogle: "Continuer avec Google",
-      agreeTerms: "En vous connectant, vous acceptez nos",
+      continueWithGoogle: "Se connecter avec Google",
+      signInWithApple: "Se connecter avec Apple",
+      signInWithEmail: "Se connecter avec e-mail",
+      comingSoon: "Bientôt disponible",
+      agreeTerms: "En cliquant sur « Se connecter avec Google », vous acceptez nos",
       and: " et ",
       terms: "CGU",
       privacyPolicy: "Politique de confidentialité",
@@ -258,6 +277,7 @@ const translations: Record<Locale, TranslationKeys> = {
     common: { before: "Avant", after: "Après", beforeAfter: "Avant / Après" },
     home: {
       hero: { badge: "Simple · Gratuit · Sécurisé", titleLine1: "Chaque photo raconte", titleLine2: "une histoire de famille", intro: "Une vieille photo dans un tiroir ? Décolorée, rayée ou déchirée ? Déposez-la ici et regardez les années d'usure disparaître en douceur.", dropTitle: "Déposez votre photo ici pour commencer", dropHint: "ou cliquez pour parcourir · JPG, PNG, WebP · max 8 Mo", privateNote: "Vos photos restent privées — nous ne les enregistrons ni ne les partageons.", pullDown: "Tirez pour actualiser", carousel0: "Un moment familial, renaissance", carousel1: "La couleur revient aux vieux souvenirs", carousel2: "Les rayures s'effacent, les histoires restent" },
+      heroBanner: { title: "AI RestorePic fait tout", subtitle: "Restaurez, colorisez et redonnez vie aux vieilles photos — en quelques secondes.", cta: "Commencer" },
       steps: { title: "Aussi simple que 1, 2, 3", subtitle: "Aucune app à installer, aucun compte. Juste vous et votre photo.", step1Title: "Choisir une photo", step1Desc: "Prenez n'importe quelle vieille photo dans votre tiroir, album ou téléphone. Glissez-déposez ou touchez pour sélectionner.", step2Title: "Laisser l'IA agir", step2Desc: "Notre IA supprime les dommages, affine les visages et restaure les couleurs délavées en quelques secondes.", step3Title: "Voir la différence", step3Desc: "Glissez entre avant et après pour voir votre souvenir reprendre vie." },
       toolsSection: { title: "Trouvez l'outil adapté à votre photo", subtitle: "Chaque photo a son histoire et ses besoins. Choisissez la restauration qui vous convient." },
       privacySection: { title: "Vos souvenirs sont en sécurité", body: "Nous savons à quel point vos photos sont personnelles. Nous ne les enregistrons, ne les partageons ni ne les utilisons pour rien d'autre que les restaurer. Une fois terminé, elles disparaissent de nos systèmes.", cta: "Restaurer un souvenir" },
@@ -283,11 +303,15 @@ const translations: Record<Locale, TranslationKeys> = {
     },
     login: {
       welcomeBack: "欢迎回来",
+      welcomeToBrand: "欢迎使用 AI RestorePic",
       signInToSave: "登录后可保存修复记录并查看历史。",
-      continueWithGoogle: "使用 Google 继续",
-      agreeTerms: "登录即表示您同意我们的",
+      continueWithGoogle: "使用 Google 登录",
+      signInWithApple: "使用 Apple 登录",
+      signInWithEmail: "使用邮箱登录",
+      comingSoon: "即将上线",
+      agreeTerms: "点击「使用 Google 登录」即表示您同意我们的",
       and: "与",
-      terms: "条款",
+      terms: "服务条款",
       privacyPolicy: "隐私政策",
       redirecting: "正在跳转到 Google…",
       pleaseComplete: "请在新窗口中完成登录。",
@@ -308,6 +332,7 @@ const translations: Record<Locale, TranslationKeys> = {
     common: { before: "修复前", after: "修复后", beforeAfter: "修复前 / 修复后" },
     home: {
       hero: { badge: "简单 · 免费 · 安全", titleLine1: "每张照片都在讲述", titleLine2: "一个家庭故事", intro: "在抽屉里发现老照片？褪色、划痕或破损？拖到这里，让岁月的痕迹轻轻消失——就像把家庭相册拨回从前。", dropTitle: "将照片拖到此处开始", dropHint: "或点击选择 · JPG、PNG、WebP · 最大 8MB", privateNote: "您的照片仅您可见，我们不会保存或分享。", pullDown: "下拉刷新", carousel0: "家庭瞬间，重获新生", carousel1: "色彩重回旧日回忆", carousel2: "划痕褪去，故事留存" },
+      heroBanner: { title: "AI RestorePic 全能修复", subtitle: "修复、上色，让老照片重获新生 — 只需几秒。", cta: "立即开始" },
       steps: { title: "简单三步", subtitle: "无需安装应用、无需注册。只有你和你的照片。", step1Title: "选择照片", step1Desc: "从抽屉、相册或手机里选一张老照片。拖入或点击即可。", step2Title: "交给 AI 处理", step2Desc: "我们的 AI 会轻柔去除损伤、锐化人脸并恢复褪色，几秒完成。", step3Title: "查看对比", step3Desc: "在修复前后之间滑动，看回忆重获新生。" },
       toolsSection: { title: "为你的照片选对工具", subtitle: "每张照片都有自己的故事和需求。选择适合的修复方式。" },
       privacySection: { title: "您的回忆由我们守护", body: "我们深知照片的私密性。因此我们从不保存、分享或将您的图片用于修复以外的任何用途。完成后即从系统中清除。", cta: "修复一张回忆" },
@@ -333,11 +358,15 @@ const translations: Record<Locale, TranslationKeys> = {
     },
     login: {
       welcomeBack: "歡迎回來",
+      welcomeToBrand: "歡迎使用 AI RestorePic",
       signInToSave: "登入後可儲存修復記錄並查看歷史。",
-      continueWithGoogle: "使用 Google 繼續",
-      agreeTerms: "登入即表示您同意我們的",
+      continueWithGoogle: "使用 Google 登入",
+      signInWithApple: "使用 Apple 登入",
+      signInWithEmail: "使用電子郵件登入",
+      comingSoon: "即將上線",
+      agreeTerms: "點擊「使用 Google 登入」即表示您同意我們的",
       and: "與",
-      terms: "條款",
+      terms: "服務條款",
       privacyPolicy: "隱私權政策",
       redirecting: "正在跳轉至 Google…",
       pleaseComplete: "請在新視窗中完成登入。",
@@ -358,6 +387,7 @@ const translations: Record<Locale, TranslationKeys> = {
     common: { before: "修復前", after: "修復後", beforeAfter: "修復前 / 修復後" },
     home: {
       hero: { badge: "簡單 · 免費 · 安全", titleLine1: "每張照片都在講述", titleLine2: "一個家庭故事", intro: "在抽屜裡發現老照片？褪色、刮痕或破損？拖到這裡，讓歲月的痕跡輕輕消失。", dropTitle: "將照片拖到此處開始", dropHint: "或點擊選擇 · JPG、PNG、WebP · 最大 8MB", privateNote: "您的照片僅您可見，我們不會儲存或分享。", pullDown: "下拉重新整理", carousel0: "家庭瞬間，重獲新生", carousel1: "色彩重回舊日回憶", carousel2: "刮痕褪去，故事留存" },
+      heroBanner: { title: "AI RestorePic 全能修復", subtitle: "修復、上色，讓老照片重獲新生 — 只需幾秒。", cta: "立即開始" },
       steps: { title: "簡單三步", subtitle: "無需安裝應用、無需註冊。只有你和你的照片。", step1Title: "選擇照片", step1Desc: "從抽屜、相冊或手機裡選一張老照片。拖入或點擊即可。", step2Title: "交給 AI 處理", step2Desc: "我們的 AI 會輕柔去除損傷、銳化人臉並恢復褪色，幾秒完成。", step3Title: "查看對比", step3Desc: "在修復前後之間滑動，看回憶重獲新生。" },
       toolsSection: { title: "為你的照片選對工具", subtitle: "每張照片都有自己的故事和需求。選擇適合的修復方式。" },
       privacySection: { title: "您的回憶由我們守護", body: "我們深知照片的私密性。因此我們從不儲存、分享或將您的圖片用於修復以外的任何用途。完成後即從系統中清除。", cta: "修復一張回憶" },
@@ -383,11 +413,15 @@ const translations: Record<Locale, TranslationKeys> = {
     },
     login: {
       welcomeBack: "Bienvenido de nuevo",
+      welcomeToBrand: "Bienvenido a AI RestorePic",
       signInToSave: "Inicia sesión para guardar restauraciones y ver el historial.",
-      continueWithGoogle: "Continuar con Google",
-      agreeTerms: "Al iniciar sesión, aceptas nuestros",
+      continueWithGoogle: "Iniciar sesión con Google",
+      signInWithApple: "Iniciar sesión con Apple",
+      signInWithEmail: "Iniciar sesión con correo",
+      comingSoon: "Próximamente",
+      agreeTerms: "Al hacer clic en «Iniciar sesión con Google», aceptas nuestros",
       and: " y ",
-      terms: "Términos",
+      terms: "Términos de servicio",
       privacyPolicy: "Política de privacidad",
       redirecting: "Redirigiendo a Google…",
       pleaseComplete: "Completa el inicio de sesión en la nueva ventana.",
@@ -408,6 +442,7 @@ const translations: Record<Locale, TranslationKeys> = {
     common: { before: "Antes", after: "Después", beforeAfter: "Antes / Después" },
     home: {
       hero: { badge: "Simple · Gratis · Seguro", titleLine1: "Cada foto cuenta", titleLine2: "una historia familiar", intro: "¿Encontraste una foto vieja en un cajón? ¿Descolorida, rayada o rota? Suéltala aquí y mira cómo los años de desgaste desaparecen con suavidad.", dropTitle: "Suelta tu foto aquí para empezar", dropHint: "o haz clic para explorar · JPG, PNG, WebP · máx. 8 MB", privateNote: "Tus fotos son privadas — nunca las guardamos ni compartimos.", pullDown: "Desliza hacia abajo para actualizar", carousel0: "Un momento familiar, renacido", carousel1: "El color vuelve a los recuerdos", carousel2: "Los rayones se desvanecen, las historias permanecen" },
+      heroBanner: { title: "AI RestorePic lo hace todo", subtitle: "Restaura, coloriza y devuelve la vida a fotos antiguas — en segundos.", cta: "Empezar ahora" },
       steps: { title: "Tan fácil como 1, 2, 3", subtitle: "Sin apps que instalar, sin cuentas. Solo tú y tu foto.", step1Title: "Elige una foto", step1Desc: "Cualquier foto antigua de tu cajón, álbum o móvil. Arrastra o toca para seleccionar.", step2Title: "Deja que la IA actúe", step2Desc: "Nuestra IA elimina daños, afina rostros y restaura colores desvaídos en segundos.", step3Title: "Mira la diferencia", step3Desc: "Desliza entre antes y después para ver tu recuerdo cobrar vida." },
       toolsSection: { title: "Encuentra la herramienta adecuada para tu foto", subtitle: "Cada foto tiene su historia y sus necesidades. Elige la restauración que te convenga." },
       privacySection: { title: "Tus recuerdos están seguros con nosotros", body: "Entendemos lo personales que son tus fotos. Por eso nunca guardamos, compartimos ni usamos tus imágenes para nada más que restaurarlas. Al terminar, desaparecen de nuestro sistema.", cta: "Restaurar un recuerdo" },
@@ -433,11 +468,15 @@ const translations: Record<Locale, TranslationKeys> = {
     },
     login: {
       welcomeBack: "Bem-vindo de volta",
+      welcomeToBrand: "Bem-vindo ao AI RestorePic",
       signInToSave: "Entre para salvar restaurações e ver o histórico.",
-      continueWithGoogle: "Continuar com o Google",
-      agreeTerms: "Ao entrar, você concorda com nossos",
+      continueWithGoogle: "Entrar com Google",
+      signInWithApple: "Entrar com Apple",
+      signInWithEmail: "Entrar com e-mail",
+      comingSoon: "Em breve",
+      agreeTerms: "Ao clicar em «Entrar com Google», você concorda com nossos",
       and: " e ",
-      terms: "Termos",
+      terms: "Termos de serviço",
       privacyPolicy: "Política de privacidade",
       redirecting: "Redirecionando para o Google…",
       pleaseComplete: "Conclua o login na nova janela.",
@@ -458,6 +497,7 @@ const translations: Record<Locale, TranslationKeys> = {
     common: { before: "Antes", after: "Depois", beforeAfter: "Antes / Depois" },
     home: {
       hero: { badge: "Simples · Grátis · Seguro", titleLine1: "Cada foto conta", titleLine2: "uma história de família", intro: "Achou uma foto antiga na gaveta? Desbotada, arranhada ou rasgada? Solte aqui e veja os anos de desgaste desaparecerem com suavidade.", dropTitle: "Solte sua foto aqui para começar", dropHint: "ou clique para procurar · JPG, PNG, WebP · máx. 8 MB", privateNote: "Suas fotos ficam privadas — nunca as salvamos nem compartilhamos.", pullDown: "Deslize para atualizar", carousel0: "Um momento em família, renascido", carousel1: "A cor volta às lembranças", carousel2: "Arranhões somem, histórias ficam" },
+      heroBanner: { title: "AI RestorePic faz tudo", subtitle: "Restaure, colorize e traga fotos antigas de volta à vida — em segundos.", cta: "Começar agora" },
       steps: { title: "Tão fácil quanto 1, 2, 3", subtitle: "Sem apps para instalar, sem contas. Só você e sua foto.", step1Title: "Escolha uma foto", step1Desc: "Qualquer foto antiga da gaveta, álbum ou celular. Arraste ou toque para selecionar.", step2Title: "Deixe a IA trabalhar", step2Desc: "Nossa IA remove danos, afia rostos e restaura cores desbotadas em segundos.", step3Title: "Veja a diferença", step3Desc: "Deslize entre antes e depois para ver sua memória ganhar vida." },
       toolsSection: { title: "Encontre a ferramenta certa para sua foto", subtitle: "Cada foto tem sua história e suas necessidades. Escolha a restauração que combina com você." },
       privacySection: { title: "Suas memórias estão seguras conosco", body: "Entendemos o quanto suas fotos são pessoais. Por isso nunca salvamos, compartilhamos ou usamos suas imagens para nada além de restaurá-las. Quando terminar, somem do nosso sistema.", cta: "Restaurar uma memória" },
@@ -483,11 +523,15 @@ const translations: Record<Locale, TranslationKeys> = {
     },
     login: {
       welcomeBack: "مرحباً بعودتك",
+      welcomeToBrand: "مرحباً بك في AI RestorePic",
       signInToSave: "سجّل الدخول لحفظ الاستعادة وعرض السجل.",
-      continueWithGoogle: "المتابعة مع Google",
-      agreeTerms: "بالتسجيل فإنك توافق على",
+      continueWithGoogle: "تسجيل الدخول باستخدام Google",
+      signInWithApple: "تسجيل الدخول باستخدام Apple",
+      signInWithEmail: "تسجيل الدخول بالبريد الإلكتروني",
+      comingSoon: "قريباً",
+      agreeTerms: "بالنقر على «تسجيل الدخول باستخدام Google» فإنك توافق على",
       and: " و ",
-      terms: "الشروط",
+      terms: "شروط الخدمة",
       privacyPolicy: "سياسة الخصوصية",
       redirecting: "جاري التوجيه إلى Google…",
       pleaseComplete: "يرجى إكمال تسجيل الدخول في النافذة الجديدة.",
@@ -508,6 +552,7 @@ const translations: Record<Locale, TranslationKeys> = {
     common: { before: "قبل", after: "بعد", beforeAfter: "قبل / بعد" },
     home: {
       hero: { badge: "بسيط · مجاني · آمن", titleLine1: "كل صورة تحكي", titleLine2: "قصة عائلة", intro: "عثرت على صورة قديمة في الدرج؟ باهتة أو مخدوشة أو ممزقة؟ أسقطها هنا وشاهد آثار الزمن تختفي برفق.", dropTitle: "أسقط صورتك هنا للبدء", dropHint: "أو انقر للتصفح · JPG, PNG, WebP · بحد أقصى 8 ميجا", privateNote: "صورك تبقى خاصة — لا نحفظها ولا نشاركها.", pullDown: "اسحب للأسفل للتحديث", carousel0: "لحظة عائلية، تُبعث من جديد", carousel1: "الألوان تعود للذكريات", carousel2: "الخدوش تختفي، القصص تبقى" },
+      heroBanner: { title: "AI RestorePic يفعل كل شيء", subtitle: "استعد الصور، لوّنها وأعد الحياة للصور القديمة — في ثوانٍ.", cta: "ابدأ الآن" },
       steps: { title: "بسهولة ١، ٢، ٣", subtitle: "بدون تطبيقات أو حسابات. فقط أنت وصورتك.", step1Title: "اختر صورة", step1Desc: "أي صورة قديمة من الدرج أو الألبوم أو الهاتف. اسحبها أو انقر للاختيار.", step2Title: "دع الذكاء الاصطناعي يعمل", step2Desc: "ذكاؤنا يزيل الأضرار ويحدّد الوجوه ويعيد الألوان الباهتة في ثوانٍ.", step3Title: "شاهد الفرق", step3Desc: "مرّر بين قبل وبعد لترى ذكراك تعود للحياة." },
       toolsSection: { title: "اعثر على الأداة المناسبة لصورتك", subtitle: "كل صورة لها قصتها واحتياجاتها. اختر الاستعادة التي تناسبك." },
       privacySection: { title: "ذكرياتك في أمان معنا", body: "نفهم مدى خصوصية صورك. لذلك لا نحفظها ولا نشاركها ولا نستخدمها لأي شيء سوى استعادتها. عند الانتهاء تُزال من نظامنا.", cta: "استعادة ذكرى" },
