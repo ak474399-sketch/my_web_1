@@ -8,6 +8,8 @@ import { AuthProvider } from "@/components/shared/auth-provider";
 import { LocaleProvider } from "@/components/shared/locale-provider";
 import { LoginSuccessToast } from "@/components/shared/login-success-toast";
 import { PullToRefreshWrapper } from "@/components/shared/pull-to-refresh-wrapper";
+import { FirebaseAnalytics } from "@/components/analytics/firebase-analytics";
+import { PageViewTracker } from "@/components/analytics/page-view-tracker";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -60,6 +62,8 @@ export default function RootLayout({
       >
         <AuthProvider>
           <LocaleProvider>
+          <FirebaseAnalytics />
+          <PageViewTracker />
           <PullToRefreshWrapper>
             <Suspense fallback={<header className="h-16 border-b border-warm-300 bg-warm-50/90" />}>
               <Navbar />

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { BookOpen, ArrowUpRight } from "lucide-react";
 import { useLocale } from "@/components/shared/locale-provider";
+import { logToolClick } from "@/lib/analytics";
 
 const ARTICLE_SLUGS = ["/restore/old-photo-restoration", "/restore/vintage-photo-enhancement", "/restore/faded-photo-repair"];
 const ARTICLE_KEYS = ["article0", "article1", "article2"] as const;
@@ -28,6 +29,10 @@ export default function KnowledgeSection() {
             <motion.a
               key={ARTICLE_SLUGS[i]}
               href={ARTICLE_SLUGS[i]}
+              onClick={() => {
+                const slug = ARTICLE_SLUGS[i].replace(/^\/restore\//, "");
+                logToolClick(slug, "knowledge");
+              }}
               variants={cardVariant}
               initial="hidden"
               whileInView="visible"

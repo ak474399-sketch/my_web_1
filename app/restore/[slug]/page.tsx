@@ -68,7 +68,7 @@ export default async function RestoreSlugPage({ params }: Props) {
         {data.description}
       </p>
 
-      <RestoreTool />
+      <RestoreTool slug={slug} />
 
       <section className="mt-16 max-w-3xl mx-auto">
         <h2 className="font-serif text-2xl md:text-3xl font-semibold text-warm-800 mb-4">

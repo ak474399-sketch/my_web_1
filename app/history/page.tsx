@@ -6,6 +6,7 @@ import Link from "next/link";
 import { History, ImageIcon, Loader2 } from "lucide-react";
 import { Modal } from "@/components/shared/modal";
 import { useLocale } from "@/components/shared/locale-provider";
+import { logNavClick } from "@/lib/analytics";
 
 type HistoryItem = {
   id: string;
@@ -73,6 +74,7 @@ export default function HistoryPage() {
           </p>
           <Link
             href="/?login=1"
+            onClick={() => logNavClick("/?login=1", "history_signin")}
             className="inline-flex items-center gap-2 rounded-xl bg-accent hover:bg-accent-muted text-white px-6 py-3 font-medium transition-colors active:scale-[0.98]"
           >
             {t("nav.signIn")}
@@ -110,6 +112,7 @@ export default function HistoryPage() {
             </p>
             <Link
               href="/restore"
+              onClick={() => logNavClick("/restore", "history_empty_cta")}
               className="inline-flex items-center gap-2 rounded-xl bg-accent hover:bg-accent-muted text-white px-6 py-3 font-medium transition-colors active:scale-[0.98]"
             >
               {t("history.restoreAPhoto")}

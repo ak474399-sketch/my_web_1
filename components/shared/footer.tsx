@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useLocale } from "@/components/shared/locale-provider";
+import { logToolClick, logNavClick } from "@/lib/analytics";
 
 const TOOL_LINKS = [
   { href: "/restore", labelKey: "footer.restoreMemories" as const },
@@ -33,21 +34,31 @@ export function Footer() {
             {t("footer.tagline")}
           </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-warm-500">
-            {TOOL_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="hover:text-warm-700 transition-colors"
-              >
-                {"label" in link ? link.label : t(link.labelKey)}
-              </Link>
-            ))}
+            {TOOL_LINKS.map((link) => {
+              const label = "label" in link ? link.label : t(link.labelKey);
+              const isTool = link.href.startsWith("/restore/");
+              const slug = isTool ? link.href.replace(/^\/restore\//, "") : undefined;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => {
+                    if (slug) logToolClick(slug, "footer");
+                    else logNavClick(link.href, label);
+                  }}
+                  className="hover:text-warm-700 transition-colors"
+                >
+                  {label}
+                </Link>
+              );
+            })}
           </div>
           <div className="flex gap-x-6 text-warm-400">
             {LEGAL_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={() => logNavClick(link.href, t(link.labelKey))}
                 className="hover:text-warm-600 transition-colors text-sm"
               >
                 {t(link.labelKey)}

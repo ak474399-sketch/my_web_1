@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Heart, ArrowRight } from "lucide-react";
+import { TrackedNavLink } from "@/components/analytics/tracked-nav-link";
 
 const RESTORE_CASES = [
   {
@@ -166,13 +167,14 @@ export default function CasesPage() {
             <p className="text-warm-500 leading-relaxed mb-8">
               上传老照片，让 AI 帮你还原色彩、去除划痕，留住家人与时光。
             </p>
-            <Link
+            <TrackedNavLink
               href="/restore"
+              linkLabel="立即修复"
               className="inline-flex items-center gap-2 rounded-xl bg-accent hover:bg-accent-muted text-white px-8 py-4 font-semibold transition-colors shadow-md shadow-accent/20"
             >
               立即修复
               <ArrowRight className="w-5 h-5" />
-            </Link>
+            </TrackedNavLink>
           </div>
         </div>
       </section>

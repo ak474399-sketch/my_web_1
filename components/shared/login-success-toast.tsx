@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { CheckCircle, X } from "lucide-react";
 import { useLocale } from "@/components/shared/locale-provider";
+import { logLogin } from "@/lib/analytics";
 
 const DURATION_MS = 1600;
 
@@ -14,6 +15,7 @@ export function LoginSuccessToast() {
   const searchParams = useSearchParams();
   const [visible, setVisible] = useState(false);
   const [done, setDone] = useState(false);
+  const loginLogged = useRef(false);
 
   const cleanupUrl = () => {
     const url = new URL(window.location.href);
@@ -27,6 +29,10 @@ export function LoginSuccessToast() {
     const loginSuccess = searchParams.get("login") === "success";
     if (!loginSuccess || done) return;
 
+    if (!loginLogged.current) {
+      loginLogged.current = true;
+      logLogin("Google");
+    }
     setVisible(true);
 
     const timer = setTimeout(() => {

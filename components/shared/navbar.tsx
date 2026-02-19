@@ -10,6 +10,7 @@ import { LanguageSelector } from "@/components/shared/language-selector";
 import { useLocale } from "@/components/shared/locale-provider";
 import { ALL_SLUGS, RESTORE_SLUGS } from "@/lib/seo-data";
 import { SlugIcon } from "@/lib/icons";
+import { logToolClick, logNavClick } from "@/lib/analytics";
 
 export function Navbar() {
   const { data: session, status } = useSession();
@@ -102,6 +103,7 @@ export function Navbar() {
         <nav className="flex items-center gap-5">
           <Link
             href="/cases"
+            onClick={() => logNavClick("/cases", "案例")}
             className="flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors"
           >
             <Images className="w-3.5 h-3.5" />
@@ -109,6 +111,7 @@ export function Navbar() {
           </Link>
           <Link
             href="/member"
+            onClick={() => logNavClick("/member", "会员")}
             className="flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors"
           >
             <Crown className="w-3.5 h-3.5" />
@@ -117,6 +120,7 @@ export function Navbar() {
           {session?.user && (
             <Link
               href="/history"
+              onClick={() => logNavClick("/history", "历史")}
               className="flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors"
             >
               <History className="w-3.5 h-3.5" />
@@ -150,7 +154,10 @@ export function Navbar() {
                       <Link
                         key={slug}
                         href={`/restore/${slug}`}
-                        onClick={() => setToolsOpen(false)}
+                        onClick={() => {
+                          logToolClick(slug, "navbar");
+                          setToolsOpen(false);
+                        }}
                         className="flex items-start gap-3 rounded-xl px-3 py-2.5 hover:bg-warm-100 transition-colors group"
                       >
                         <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-accent/15 transition-colors">
@@ -176,6 +183,7 @@ export function Navbar() {
 
           <Link
             href="/terms"
+            onClick={() => logNavClick("/terms", "条款")}
             className="hidden md:inline-flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors"
           >
             <FileText className="w-3.5 h-3.5" />
@@ -183,6 +191,7 @@ export function Navbar() {
           </Link>
           <Link
             href="/privacy"
+            onClick={() => logNavClick("/privacy", "隐私")}
             className="hidden md:inline-flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors"
           >
             <Shield className="w-3.5 h-3.5" />

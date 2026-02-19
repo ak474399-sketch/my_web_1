@@ -5,6 +5,9 @@ import Link from "next/link";
 import { Loader2 } from "lucide-react";
 import { UploadZone } from "@/components/tool/upload-zone";
 import { CompareSlider } from "@/components/tool/compare-slider";
+import { logRestoreStarted, logRestoreCompleted, logRestoreFailed, logToolView } from "@/lib/analytics";
+
+type RestoreToolProps = { slug?: string };
 
 type RestoreResponse = {
   error?: string;
@@ -15,7 +18,7 @@ type RestoreResponse = {
   refunded?: boolean;
 };
 
-export function RestoreTool() {
+export function RestoreTool({ slug = "" }: RestoreToolProps) {
   const [originalDataUrl, setOriginalDataUrl] = useState<string | null>(null);
   const [restoredDataUrl, setRestoredDataUrl] = useState<string | null>(null);
   const [restoreText, setRestoreText] = useState<string | null>(null);
@@ -27,7 +30,12 @@ export function RestoreTool() {
   const pointsTipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const autoTriggered = useRef(false);
 
+  useEffect(() => {
+    if (slug) logToolView(slug);
+  }, [slug]);
+
   async function handleUpload(dataUrl: string, mimeType: string) {
+    if (slug) logRestoreStarted(slug);
     setOriginalDataUrl(dataUrl);
     setRestoredDataUrl(null);
     setRestoreText(null);
@@ -64,6 +72,7 @@ export function RestoreTool() {
       }
 
       if (!res.ok) {
+        if (slug) logRestoreFailed(slug, `http_${res.status}`);
         if (res.status === 401) {
           setError(data.message ?? "请先登录后再使用修复功能");
           setErrorType("login");
@@ -83,6 +92,7 @@ export function RestoreTool() {
 
       setRestoreText(data.text ?? null);
       if (data.imageBase64) {
+        if (slug) logRestoreCompleted(slug);
         const outMime = data.imageMimeType || "image/png";
         setRestoredDataUrl(`data:${outMime};base64,${data.imageBase64}`);
       } else {
@@ -91,6 +101,7 @@ export function RestoreTool() {
       setPointsTip("deduct");
       pointsTipTimer.current = setTimeout(() => setPointsTip(null), 4000);
     } catch (e) {
+      if (slug) logRestoreFailed(slug, "network_or_error");
       setError(e instanceof Error ? e.message : "Could not connect. Please check your internet.");
     } finally {
       setLoading(false);

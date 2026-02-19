@@ -8,6 +8,7 @@ import { useLocale } from "@/components/shared/locale-provider";
 import HeroSection from "@/components/shared/hero-section";
 import FeatureSection from "@/components/shared/feature-section";
 import KnowledgeSection from "@/components/shared/knowledge-section";
+import { logToolClick, logNavClick } from "@/lib/analytics";
 
 const STEPS = [
   { icon: Upload, titleKey: "home.steps.step1Title" as const, descKey: "home.steps.step1Desc" as const },
@@ -67,6 +68,7 @@ export default function HomePage() {
                 <Link
                   key={slug}
                   href={`/restore/${slug}`}
+                  onClick={() => logToolClick(slug, "home")}
                   className="rounded-2xl bg-warm-50/50 border border-warm-200 overflow-hidden shadow-sm hover:shadow-md hover:border-warm-300 transition-all duration-200 group"
                 >
                   <div className="grid grid-cols-2 h-28 relative">
@@ -116,6 +118,7 @@ export default function HomePage() {
               </div>
               <Link
                 href="/cases"
+                onClick={() => logNavClick("/cases", "查看案例")}
                 className="inline-flex items-center gap-2 rounded-xl border-2 border-accent text-accent hover:bg-accent hover:text-white px-6 py-3 font-medium transition-colors shrink-0"
               >
                 查看案例
@@ -141,6 +144,7 @@ export default function HomePage() {
             </p>
             <Link
               href="/restore"
+              onClick={() => logNavClick("/restore", "home_cta")}
               className="inline-flex items-center gap-2 rounded-xl bg-accent hover:bg-accent-muted text-white px-8 py-4 font-semibold transition-colors shadow-md shadow-accent/20 active:scale-[0.98]"
             >
               <Heart className="w-5 h-5" />

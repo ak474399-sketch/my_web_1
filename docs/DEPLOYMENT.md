@@ -23,6 +23,7 @@
 | 变量名 | 说明 | 示例 |
 |--------|------|------|
 | `NEXT_PUBLIC_SITE_URL` | 站点规范域名，用于 canonical、OG 等 | `https://你的自定义域名.com` |
+| `NEXT_PUBLIC_FIREBASE_*` | Firebase (Analytics) 配置，用于统计 | 见 `.env.example` 中 Firebase 段，从 Firebase Console 复制 |
 
 - 若不设置 `NEXT_PUBLIC_SITE_URL`，将回退为 `NEXTAUTH_URL` 或 `https://你的域名.com`，建议与 `NEXTAUTH_URL` 一致。
 
