@@ -7,8 +7,16 @@ export async function GET() {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id as string | undefined;
 
+  if (!session?.user) {
+    return NextResponse.json({ error: "Unauthorized", message: "请先登录" }, { status: 401 });
+  }
+
   if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    console.error("[/api/restore/history] session.user.id missing — user may need to sign out and sign in again");
+    return NextResponse.json(
+      { error: "Session invalid", message: "请退出后重新登录" },
+      { status: 401 }
+    );
   }
 
   const { data, error } = await supabaseAdmin
@@ -19,9 +27,15 @@ export async function GET() {
     .limit(50);
 
   if (error) {
-    console.error("[/api/restore/history]", error);
+    console.error("[/api/restore/history]", error.message, error.code, error.details);
+    const isMissingTable = error.code === "42P01" || error.message?.includes("does not exist");
     return NextResponse.json(
-      { error: "Failed to load history" },
+      {
+        error: "Failed to load history",
+        message: isMissingTable
+          ? "历史记录表未就绪，请在 Supabase 中执行 schema 或联系管理员"
+          : "加载失败，请稍后再试",
+      },
       { status: 500 }
     );
   }

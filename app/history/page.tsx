@@ -30,9 +30,13 @@ export default function HistoryPage() {
     }
     let cancelled = false;
     fetch("/api/restore/history")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to load history");
-        return res.json();
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          const msg = (data.message || data.error) as string | undefined;
+          throw new Error(msg || "Failed to load history");
+        }
+        return data;
       })
       .then((data) => {
         if (!cancelled) setItems(data.items ?? []);
