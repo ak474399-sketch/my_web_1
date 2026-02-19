@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — Memory Restore",
-  description: "Terms and conditions for using Memory Restore services.",
+  title: "Terms of Service — AI RestorePic",
+  description: "Terms and conditions for using AI RestorePic services.",
 };
 
 export default function TermsPage() {

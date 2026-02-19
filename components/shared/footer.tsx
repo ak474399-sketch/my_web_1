@@ -55,7 +55,7 @@ export function Footer() {
             ))}
           </div>
           <p className="text-sm text-warm-400">
-            &copy; {new Date().getFullYear()} {t("footer.memoryRestore")}. {t("footer.madeWithCare")}
+            © 2026 AI RestorePic. All rights reserved.
           </p>
         </div>
       </div>

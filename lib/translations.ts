@@ -54,7 +54,7 @@ const translations: Record<Locale, TranslationKeys> = {
       privacy: "Privacy",
       signIn: "Sign In",
       signOut: "Sign Out",
-      memoryRestore: "Memory Restore",
+      memoryRestore: "AI RestorePic",
     },
     login: {
       welcomeBack: "Welcome Back",
@@ -68,7 +68,7 @@ const translations: Record<Locale, TranslationKeys> = {
       pleaseComplete: "Please complete sign-in in the new window.",
     },
     footer: {
-      memoryRestore: "Memory Restore",
+      memoryRestore: "AI RestorePic",
       tagline: "Helping families preserve and rediscover their most treasured photographs.",
       restoreMemories: "Restore Memories",
       history: "History",
@@ -179,7 +179,7 @@ const translations: Record<Locale, TranslationKeys> = {
       privacy: "Datenschutz",
       signIn: "Anmelden",
       signOut: "Abmelden",
-      memoryRestore: "Memory Restore",
+      memoryRestore: "AI RestorePic",
     },
     login: {
       welcomeBack: "Willkommen zurück",
@@ -193,7 +193,7 @@ const translations: Record<Locale, TranslationKeys> = {
       pleaseComplete: "Bitte schließen Sie die Anmeldung im neuen Fenster ab.",
     },
     footer: {
-      memoryRestore: "Memory Restore",
+      memoryRestore: "AI RestorePic",
       tagline: "Familien dabei helfen, ihre wertvollsten Fotos zu bewahren und wiederzuentdecken.",
       restoreMemories: "Erinnerungen wiederherstellen",
       history: "Verlauf",
@@ -229,7 +229,7 @@ const translations: Record<Locale, TranslationKeys> = {
       privacy: "Confidentialité",
       signIn: "Connexion",
       signOut: "Déconnexion",
-      memoryRestore: "Memory Restore",
+      memoryRestore: "AI RestorePic",
     },
     login: {
       welcomeBack: "Bon retour",
@@ -243,7 +243,7 @@ const translations: Record<Locale, TranslationKeys> = {
       pleaseComplete: "Veuillez terminer la connexion dans la nouvelle fenêtre.",
     },
     footer: {
-      memoryRestore: "Memory Restore",
+      memoryRestore: "AI RestorePic",
       tagline: "Aider les familles à préserver et redécouvrir leurs photos les plus précieuses.",
       restoreMemories: "Restaurer des souvenirs",
       history: "Historique",
@@ -279,7 +279,7 @@ const translations: Record<Locale, TranslationKeys> = {
       privacy: "隐私",
       signIn: "登录",
       signOut: "退出",
-      memoryRestore: "记忆修复",
+      memoryRestore: "AI RestorePic",
     },
     login: {
       welcomeBack: "欢迎回来",
@@ -293,7 +293,7 @@ const translations: Record<Locale, TranslationKeys> = {
       pleaseComplete: "请在新窗口中完成登录。",
     },
     footer: {
-      memoryRestore: "记忆修复",
+      memoryRestore: "AI RestorePic",
       tagline: "帮助家庭保存并重新发现最珍贵的照片。",
       restoreMemories: "修复回忆",
       history: "历史",
@@ -329,7 +329,7 @@ const translations: Record<Locale, TranslationKeys> = {
       privacy: "隱私",
       signIn: "登入",
       signOut: "登出",
-      memoryRestore: "記憶修復",
+      memoryRestore: "AI RestorePic",
     },
     login: {
       welcomeBack: "歡迎回來",
@@ -343,7 +343,7 @@ const translations: Record<Locale, TranslationKeys> = {
       pleaseComplete: "請在新視窗中完成登入。",
     },
     footer: {
-      memoryRestore: "記憶修復",
+      memoryRestore: "AI RestorePic",
       tagline: "幫助家庭保存並重新發現最珍貴的照片。",
       restoreMemories: "修復回憶",
       history: "歷史",
@@ -379,7 +379,7 @@ const translations: Record<Locale, TranslationKeys> = {
       privacy: "Privacidad",
       signIn: "Iniciar sesión",
       signOut: "Cerrar sesión",
-      memoryRestore: "Memory Restore",
+      memoryRestore: "AI RestorePic",
     },
     login: {
       welcomeBack: "Bienvenido de nuevo",
@@ -393,7 +393,7 @@ const translations: Record<Locale, TranslationKeys> = {
       pleaseComplete: "Completa el inicio de sesión en la nueva ventana.",
     },
     footer: {
-      memoryRestore: "Memory Restore",
+      memoryRestore: "AI RestorePic",
       tagline: "Ayudando a las familias a preservar y redescubrir sus fotografías más preciadas.",
       restoreMemories: "Restaurar recuerdos",
       history: "Historial",
@@ -429,7 +429,7 @@ const translations: Record<Locale, TranslationKeys> = {
       privacy: "Privacidade",
       signIn: "Entrar",
       signOut: "Sair",
-      memoryRestore: "Memory Restore",
+      memoryRestore: "AI RestorePic",
     },
     login: {
       welcomeBack: "Bem-vindo de volta",
@@ -443,7 +443,7 @@ const translations: Record<Locale, TranslationKeys> = {
       pleaseComplete: "Conclua o login na nova janela.",
     },
     footer: {
-      memoryRestore: "Memory Restore",
+      memoryRestore: "AI RestorePic",
       tagline: "Ajudando famílias a preservar e redescobrir suas fotos mais preciosas.",
       restoreMemories: "Restaurar memórias",
       history: "Histórico",
@@ -479,7 +479,7 @@ const translations: Record<Locale, TranslationKeys> = {
       privacy: "الخصوصية",
       signIn: "تسجيل الدخول",
       signOut: "تسجيل الخروج",
-      memoryRestore: "Memory Restore",
+      memoryRestore: "AI RestorePic",
     },
     login: {
       welcomeBack: "مرحباً بعودتك",
@@ -493,7 +493,7 @@ const translations: Record<Locale, TranslationKeys> = {
       pleaseComplete: "يرجى إكمال تسجيل الدخول في النافذة الجديدة.",
     },
     footer: {
-      memoryRestore: "Memory Restore",
+      memoryRestore: "AI RestorePic",
       tagline: "نساعد العائلات في الحفاظ على صورها الثمينة وإعادة اكتشافها.",
       restoreMemories: "استعادة الذكريات",
       history: "السجل",

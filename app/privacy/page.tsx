@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Memory Restore",
-  description: "Learn how Memory Restore handles your data and protects your privacy.",
+  title: "Privacy Policy — AI RestorePic",
+  description: "Learn how AI RestorePic handles your data and protects your privacy.",
 };
 
 export default function PrivacyPage() {

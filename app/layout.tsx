@@ -24,13 +24,13 @@ const lora = Lora({
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
   process.env.NEXTAUTH_URL ||
-  "https://your-domain.com";
+  "https://restorepic.xyz";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: "Restore Your Precious Memories — Free Online", template: "%s | Photo Restore AI" },
+  title: { default: "AI RestorePic - Professional AI Photo Restoration", template: "%s | AI RestorePic" },
   description:
-    "Bring old, faded, and damaged family photos back to life with AI. Free, simple, and safe — your memories deserve to be seen again.",
+    "AI RestorePic helps you restore, colorize, and sharpen old photos in seconds. Professional AI photo restoration — free, simple, and safe.",
   alternates: {
     canonical: "/",
   },
