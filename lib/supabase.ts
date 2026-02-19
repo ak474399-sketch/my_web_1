@@ -24,15 +24,13 @@ function getSupabaseAdmin(): SupabaseClient {
 /** Browser / client-side Supabase (uses anon key, respects RLS) — 延迟初始化，构建时不会因缺少 env 报错 */
 export const supabase = new Proxy({} as SupabaseClient, {
   get(_, prop) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (getSupabase() as any)[prop];
+    return Reflect.get(getSupabase(), prop);
   },
 });
 
 /** Server-side only — bypasses RLS, never expose to the client */
 export const supabaseAdmin = new Proxy({} as SupabaseClient, {
   get(_, prop) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (getSupabaseAdmin() as any)[prop];
+    return Reflect.get(getSupabaseAdmin(), prop);
   },
 });
