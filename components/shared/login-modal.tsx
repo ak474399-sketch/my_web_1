@@ -7,7 +7,8 @@ import { Modal } from "@/components/shared/modal";
 import { useLocale } from "@/components/shared/locale-provider";
 import { useTimeout } from "@/components/shared/timeout-context";
 
-const AUTH_CALLBACK_URL = "/auth/callback?next=" + encodeURIComponent("/?login=success");
+/** 登录成功后直接回到首页并带 login=success，避免 /auth/callback?next=... 被二次编码触发 NextAuth INVALID_CALLBACK_URL_ERROR */
+const AUTH_CALLBACK_URL = "/?login=success";
 const LOGIN_TIMEOUT_MS = 45_000;
 
 export function LoginModal({
