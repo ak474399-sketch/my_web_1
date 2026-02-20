@@ -5,13 +5,20 @@ import { getTranslations } from "@/lib/translations";
 import type { Locale } from "@/lib/i18n";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const cookieStore = await cookies();
-  const locale = (cookieStore.get("NEXT_LOCALE")?.value ?? "en") as Locale;
-  const T = getTranslations(locale);
-  return {
-    title: T.member.layoutTitle,
-    description: T.member.layoutDescription,
-  };
+  try {
+    const cookieStore = await cookies();
+    const locale = (cookieStore.get("NEXT_LOCALE")?.value ?? "en") as Locale;
+    const T = getTranslations(locale);
+    return {
+      title: T.member.layoutTitle,
+      description: T.member.layoutDescription,
+    };
+  } catch {
+    return {
+      title: "Member Center",
+      description: "Points and membership",
+    };
+  }
 }
 
 export default function MemberLayout({

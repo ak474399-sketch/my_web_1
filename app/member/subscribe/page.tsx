@@ -101,9 +101,9 @@ export default function SubscribePage() {
   }
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 -mx-4 md:mx-0">
-      {/* Hero header — 强视觉区 */}
-      <header className="relative rounded-2xl md:rounded-3xl overflow-hidden mb-12 md:mb-16">
+    <div className="w-full max-w-5xl mx-auto px-4 flex flex-col items-center">
+      {/* 缩短的粽色模块，便于套餐首屏展示 */}
+      <header className="relative rounded-2xl overflow-hidden mb-6 md:mb-8 w-full max-w-3xl">
         <div
           className="absolute inset-0 opacity-95"
           style={{
@@ -111,24 +111,24 @@ export default function SubscribePage() {
           }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(212,168,83,0.25),transparent)]" />
-        <div className="relative px-6 py-14 md:py-20 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full bg-accent/20 text-accent-light px-4 py-1.5 text-sm font-medium mb-6">
-            <Crown className="w-4 h-4" />
+        <div className="relative px-5 py-6 md:py-8 text-center">
+          <div className="inline-flex items-center gap-2 rounded-full bg-accent/20 text-accent-light px-3 py-1 text-xs font-medium mb-3">
+            <Crown className="w-3.5 h-3.5" />
             {t("member.subscribeBadge")}
           </div>
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-4">
+          <h1 className="font-serif text-2xl md:text-3xl font-bold text-white tracking-tight mb-2">
             {t("member.subscribeTitle")}
           </h1>
-          <p className="text-warm-200/90 text-lg md:text-xl max-w-2xl mx-auto">
+          <p className="text-warm-200/90 text-sm md:text-base max-w-xl mx-auto">
             {t("member.subscribeSubtitle")}
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4 text-white/90 text-sm">
-            <span className="flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-accent-light" />
+          <div className="mt-3 flex flex-wrap justify-center gap-3 text-white/90 text-xs">
+            <span className="flex items-center gap-1">
+              <Sparkles className="w-3.5 h-3.5 text-accent-light" />
               {t("member.perPhotoCredits")}
             </span>
-            <span className="flex items-center gap-1.5">
-              <Check className="w-4 h-4 text-accent-light" />
+            <span className="flex items-center gap-1">
+              <Check className="w-3.5 h-3.5 text-accent-light" />
               {t("member.instantCredits")}
             </span>
           </div>
@@ -136,13 +136,13 @@ export default function SubscribePage() {
       </header>
 
       {error && (
-        <div className="max-w-2xl mx-auto mb-8 rounded-xl bg-red-50 border-2 border-red-200 px-5 py-4 text-red-700 text-center font-medium">
+        <div className="w-full max-w-2xl mb-6 rounded-xl bg-red-50 border-2 border-red-200 px-5 py-4 text-red-700 text-center font-medium">
           {error}
         </div>
       )}
 
-      {/* Plans — 大卡片 + 推荐突出 */}
-      <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+      {/* 整张卡片可点击跳转支付 */}
+      <div className="grid md:grid-cols-3 gap-4 lg:gap-6 w-full max-w-5xl">
         {PLANS.map((plan) => {
           const isLoading = loading === plan.id;
           const isHighlight = plan.highlight;
@@ -150,77 +150,83 @@ export default function SubscribePage() {
             <div
               key={plan.id}
               className={`relative flex flex-col transition-all duration-300 ${
-                isHighlight ? "md:-mt-2 md:mb-2 md:scale-[1.03]" : ""
+                isHighlight ? "md:-mt-1 md:mb-1 md:scale-[1.02]" : ""
               }`}
             >
               <div
-                className={`relative rounded-2xl md:rounded-3xl flex flex-col flex-1 overflow-hidden transition-all duration-300 ${
+                role="button"
+                tabIndex={0}
+                onClick={() => handleCta(plan)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleCta(plan);
+                  }
+                }}
+                className={`relative rounded-2xl flex flex-col flex-1 overflow-hidden transition-all duration-300 cursor-pointer select-none ${
                   isHighlight
-                    ? "border-2 border-accent bg-white shadow-2xl shadow-accent/20 ring-4 ring-accent/10"
+                    ? "border-2 border-accent bg-white shadow-2xl shadow-accent/20 ring-4 ring-accent/10 hover:shadow-accent/30"
                     : "border-2 border-warm-300 bg-white shadow-lg shadow-warm-900/10 hover:border-warm-400 hover:shadow-xl"
-                }`}
+                } ${loading ? "pointer-events-none opacity-70" : ""}`}
               >
                 {isHighlight && (
                   <>
                     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-accent-light to-accent" />
-                    <div className="absolute top-4 right-4 flex items-center gap-1 rounded-full bg-accent px-3 py-1.5 text-xs font-bold text-white shadow-lg">
-                      <Zap className="w-3.5 h-3.5" />
+                    <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-xs font-bold text-white shadow-lg">
+                      <Zap className="w-3 h-3" />
                       {t("member.bestValue")}
                     </div>
                   </>
                 )}
 
-                <div className="p-6 md:p-8 flex flex-col flex-1">
-                  <div className="mb-6">
+                <div className="p-5 md:p-6 flex flex-col flex-1">
+                  <div className="mb-4">
                     <p className="text-xs font-semibold text-warm-500 uppercase tracking-widest">
                       {plan.subname}
                     </p>
-                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-warm-800 mt-2">
+                    <h2 className="font-serif text-xl md:text-2xl font-bold text-warm-800 mt-1">
                       {plan.name}
                     </h2>
                   </div>
 
-                  <div className="mb-8">
+                  <div className="mb-6">
                     <div className="flex items-baseline gap-0.5">
-                      <span className="text-2xl font-bold text-warm-600">$</span>
-                      <span className="font-serif text-5xl md:text-6xl font-bold text-warm-800 tabular-nums leading-none">
+                      <span className="text-xl font-bold text-warm-600">$</span>
+                      <span className="font-serif text-4xl md:text-5xl font-bold text-warm-800 tabular-nums leading-none">
                         {plan.price}
                       </span>
-                      <span className="text-warm-500 text-base ml-1">{plan.unit}</span>
+                      <span className="text-warm-500 text-sm ml-1">{plan.unit}</span>
                     </div>
-                    <p className="text-warm-500 mt-2 font-medium">{plan.priceNote}</p>
+                    <p className="text-warm-500 mt-1 text-sm font-medium">{plan.priceNote}</p>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => handleCta(plan)}
-                    disabled={!!loading}
-                    className={`w-full rounded-xl py-4 text-lg font-bold flex items-center justify-center gap-2 transition-all disabled:opacity-60 ${
+                  <div
+                    className={`w-full rounded-xl py-3 text-base font-bold flex items-center justify-center gap-2 ${
                       isHighlight
-                        ? "bg-accent hover:bg-accent-muted text-white shadow-lg shadow-accent/30 hover:shadow-accent/40"
-                        : "bg-warm-800 hover:bg-warm-700 text-white shadow-md hover:shadow-lg"
+                        ? "bg-accent/90 text-white"
+                        : "bg-warm-800/90 text-white"
                     }`}
                   >
                     {isLoading ? (
                       <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <Loader2 className="w-4 h-4 animate-spin" />
                         {plan.ctaLoading}
                       </>
                     ) : (
                       <>
                         {plan.cta}
-                        <ArrowRight className="w-5 h-5" />
+                        <ArrowRight className="w-4 h-4" />
                       </>
                     )}
-                  </button>
+                  </div>
 
-                  <ul className="mt-8 pt-8 border-t-2 border-warm-200 space-y-4 flex-1">
+                  <ul className="mt-6 pt-6 border-t-2 border-warm-200 space-y-3 flex-1">
                     {plan.features.map((feature) => (
                       <li
                         key={feature}
-                        className="flex items-start gap-3 text-base text-warm-700 font-medium"
+                        className="flex items-start gap-2 text-sm text-warm-700 font-medium"
                       >
-                        <Check className="w-6 h-6 shrink-0 text-accent mt-0.5" />
+                        <Check className="w-5 h-5 shrink-0 text-accent mt-0.5" />
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -232,7 +238,7 @@ export default function SubscribePage() {
         })}
       </div>
 
-      <p className="text-center text-sm text-warm-500 mt-12">
+      <p className="text-center text-sm text-warm-500 mt-8">
         {t("member.checkoutNote")}
       </p>
     </div>

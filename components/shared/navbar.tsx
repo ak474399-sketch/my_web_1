@@ -120,8 +120,8 @@ export function Navbar() {
             <span className="hidden sm:inline">{t("nav.cases")}</span>
           </Link>
           <Link
-            href="/member"
-            onClick={() => logNavClick("/member", t("nav.member"))}
+            href="/member/subscribe"
+            onClick={() => logNavClick("/member/subscribe", t("nav.member"))}
             className="flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors"
           >
             <Crown className="w-3.5 h-3.5" />
