@@ -28,14 +28,14 @@ export default function FeedbackPage() {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError(data.error ?? "提交失败");
+        setError(typeof data.error === "string" ? data.error : t("feedback.submitFailed"));
         return;
       }
       setSuccess(true);
       setMessage("");
       setContext("");
     } catch {
-      setError("网络错误，请重试");
+      setError(t("feedback.networkError"));
     } finally {
       setLoading(false);
     }

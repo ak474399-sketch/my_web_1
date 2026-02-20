@@ -15,7 +15,9 @@ export function LoginSuccessToast() {
   const searchParams = useSearchParams();
   const [visible, setVisible] = useState(false);
   const [done, setDone] = useState(false);
+  const [bonusGranted, setBonusGranted] = useState(false);
   const loginLogged = useRef(false);
+  const bonusFetched = useRef(false);
 
   const cleanupUrl = () => {
     const url = new URL(window.location.href);
@@ -33,6 +35,15 @@ export function LoginSuccessToast() {
       loginLogged.current = true;
       logLogin("Google");
     }
+
+    if (!bonusFetched.current) {
+      bonusFetched.current = true;
+      fetch("/api/user/initial-bonus", { credentials: "include" })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => data?.granted === true && setBonusGranted(true))
+        .catch(() => {});
+    }
+
     setVisible(true);
 
     const timer = setTimeout(() => {
@@ -54,6 +65,9 @@ export function LoginSuccessToast() {
           <div className="min-w-0">
             <p className="font-semibold text-base leading-snug">{t("loginSuccess.title")}</p>
             <p className="text-sm text-white/85 mt-0.5">{t("loginSuccess.description")}</p>
+            {bonusGranted && (
+              <p className="text-sm text-white/90 mt-1 font-medium">{t("loginSuccess.bonusLine")}</p>
+            )}
           </div>
           <button
             type="button"

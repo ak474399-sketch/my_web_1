@@ -101,15 +101,17 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
       if (!res.ok) {
         if (slug) logRestoreFailed(slug, `http_${res.status}`);
         if (res.status === 401) {
-          setError(data.message ?? "请先登录后再使用修复功能");
+          setError(data.message ?? t("restore.loginRequired"));
           setErrorType("login");
         } else if (res.status === 402) {
-          setError(data.message ?? "积分不足，请先开通会员或等待周期刷新");
+          setError(data.message ?? t("restore.insufficientCredits"));
           setErrorType("credits");
+        } else if (res.status === 503) {
+          setError(data.message ?? t("restore.creditsCheckFailed"));
         } else if (res.status === 500 && data.refunded) {
           setShowRefundBanner(true);
           setPointsTip("refund");
-          setError(data.message ?? data.error ?? "生成失败");
+          setError(data.message ?? data.error ?? t("restore.restoreFailedRefunded"));
           pointsTipTimer.current = setTimeout(() => setPointsTip(null), 4000);
         } else {
           const fallback = res.status === 500 ? t("restore.serverError") : `Request failed (${res.status})`;
@@ -139,7 +141,7 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
         });
       } else {
         if (slug) logRestoreFailed(slug, "network_or_error");
-        setError(e instanceof Error ? e.message : "Could not connect. Please check your internet.");
+        setError(e instanceof Error ? e.message : t("restore.networkError"));
       }
     } finally {
       if (timeoutIdRef.current) {
@@ -172,12 +174,12 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
     <div className="max-w-3xl mx-auto space-y-6">
       {pointsTip === "deduct" && (
         <div className="rounded-xl bg-emerald-50 border border-emerald-200 px-4 py-3 text-emerald-800 text-center">
-          已扣除 5 积分
+          {t("restore.pointsDeducted")}
         </div>
       )}
       {(pointsTip === "refund" || showRefundBanner) && (
         <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-amber-800 text-center">
-          生成失败，已退回 5 积分
+          {t("restore.pointsRefunded")}
         </div>
       )}
 
@@ -186,7 +188,7 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
       {loading && (
         <div className="rounded-2xl bg-white border border-warm-300 p-8 text-center text-warm-600 shadow-sm flex flex-col items-center gap-4">
           <Loader2 className="w-10 h-10 text-accent animate-spin" />
-          <p className="font-medium">正在修复照片，请稍候…</p>
+          <p className="font-medium">{t("restore.restoring")}</p>
         </div>
       )}
 
@@ -195,12 +197,12 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
           <p>{error}</p>
           {errorType === "login" && (
             <Link href="/?login=1" className="mt-2 inline-block text-accent hover:underline font-medium">
-              去登录
+              {t("member.goLogin")}
             </Link>
           )}
           {errorType === "credits" && (
             <Link href="/member/subscribe" className="mt-2 inline-block text-accent hover:underline font-medium">
-              去开通会员
+              {t("member.goSubscribe")}
             </Link>
           )}
         </div>

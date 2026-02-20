@@ -21,6 +21,7 @@ const REASON_KEYS: Record<string, string> = {
   restore_photo: "member.reasonRestorePhoto",
   refund_restore_failed: "member.reasonRefundRestoreFailed",
   signup_bonus: "member.reasonSignupBonus",
+  initial_bonus: "member.reasonInitialBonus",
 };
 
 export default function PointsHistoryPage() {

@@ -70,7 +70,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const deduct = await deductForRestore(userId);
+    let deduct: Awaited<ReturnType<typeof deductForRestore>>;
+    try {
+      deduct = await deductForRestore(userId);
+    } catch (deductErr) {
+      console.error("[/api/restore] credits check failed", deductErr);
+      return NextResponse.json(
+        { error: "credits_check_failed", message: "积分校验暂时失败，请稍后重试" },
+        { status: 503 }
+      );
+    }
     if (!deduct.ok) {
       return NextResponse.json(
         { error: "insufficient_credits", message: "积分不足，请先开通会员或等待周期刷新" },

@@ -90,6 +90,48 @@ export async function getCredits(userId: string): Promise<UserCreditsRow | null>
   return maybeRefillCredits(userId);
 }
 
+const INITIAL_BONUS_REASONS = ["signup_bonus", "initial_bonus"] as const;
+
+/** 未获得过一次性 5 积分的用户发放 5 积分（仅一次）。含老用户从未拿过的。 */
+export async function grantInitialBonusIfEligible(
+  userId: string
+): Promise<{ granted: boolean }> {
+  const { data: existing } = await supabaseAdmin
+    .from("points_history")
+    .select("id")
+    .eq("user_id", userId)
+    .in("reason", [...INITIAL_BONUS_REASONS])
+    .limit(1)
+    .maybeSingle();
+
+  if (existing) return { granted: false };
+
+  const { data: user } = await supabaseAdmin
+    .from("users")
+    .select("credits")
+    .eq("id", userId)
+    .single();
+
+  if (!user) return { granted: false };
+
+  const nowIso = new Date().toISOString();
+  const newCredits = (user.credits ?? 0) + 5;
+
+  await supabaseAdmin
+    .from("users")
+    .update({ credits: newCredits, updated_at: nowIso })
+    .eq("id", userId);
+
+  await supabaseAdmin.from("points_history").insert({
+    user_id: userId,
+    amount: 5,
+    reason: "initial_bonus",
+    created_at: nowIso,
+  });
+
+  return { granted: true };
+}
+
 /** 扣减积分（修复照片），成功返回 true，积分不足返回 false */
 export async function deductForRestore(
   userId: string,
