@@ -1,23 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionFromRequest } from "@/lib/auth";
+import { getUserIdFromRequest } from "@/lib/auth";
 import { HISTORY_ERROR_CODES } from "@/lib/history-errors";
 import { supabaseAdmin } from "@/lib/supabase";
 
+/**
+ * 历史记录：用 getUserIdFromRequest 识人（JWT + email 回退），减少 401。
+ * 失败可能：未登录/无 cookie → 401；restorations 表不存在或 DB 异常 → 500。
+ */
 export async function GET(request: NextRequest) {
-  const session = await getSessionFromRequest(request);
-  const userId = session?.user?.id as string | undefined;
-
-  if (!session?.user) {
-    return NextResponse.json(
-      { code: HISTORY_ERROR_CODES.UNAUTHORIZED, error: "Unauthorized", message: "请先登录" },
-      { status: 401 }
-    );
-  }
+  const userId = await getUserIdFromRequest(request);
 
   if (!userId) {
-    console.error("[/api/restore/history] session.user.id missing");
     return NextResponse.json(
-      { code: HISTORY_ERROR_CODES.SESSION_INVALID, error: "Session invalid", message: "请刷新页面或重新登录" },
+      { code: HISTORY_ERROR_CODES.UNAUTHORIZED, error: "Unauthorized", message: "请先登录" },
       { status: 401 }
     );
   }

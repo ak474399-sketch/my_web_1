@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionFromRequest } from "@/lib/auth";
+import { getUserIdFromRequest } from "@/lib/auth";
 import { getCredits } from "@/lib/credits";
 
 export async function GET(request: NextRequest) {
-  const session = await getSessionFromRequest(request);
-  const userId = session?.user?.id as string | undefined;
+  const userId = await getUserIdFromRequest(request);
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

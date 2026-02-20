@@ -29,7 +29,7 @@
 
 1. 用户登录成功（新用户 signIn 里已给 5 + signup_bonus；老用户 signIn 只更新资料）。
 2. 前端（登录成功 toast 或进入积分页）在未命中本地记录时请求 `GET /api/user/initial-bonus`（带 cookie）。
-3. 服务端 `getSessionFromRequest` 识人 → `grantInitialBonusIfEligible(userId)` 按上面规则决定是否发 5。
+3. 服务端用 `getUserIdFromRequest` 识人（JWT → 无则按 email 查 users → 再回退 getServerSession）→ `grantInitialBonusIfEligible(userId)` 按上面规则决定是否发 5。
 4. 若返回 `granted: true`，前端写本地记录并刷新积分/明细展示。
 
 ## 5. 小结
@@ -37,3 +37,14 @@
 - **新用户**：只在 signIn 时拿 5（signup_bonus），之后调 initial-bonus 会因已有记录而不重复发。
 - **老用户（从未拿过 5）**：登录后调 initial-bonus 会发 5 并写 initial_bonus，积分与明细由后续请求刷新。
 - **老用户（已拿过）**：DB 已有 signup_bonus 或 initial_bonus，initial-bonus API 始终返回 `granted: false`。
+
+---
+
+## 6. 历史记录加载失败可能原因（排查参考）
+
+- **401 Unauthorized**：请求未带有效登录态或服务端无法解析出 `userId`。  
+  - 可能原因：未登录；cookie 未发送（如跨域/未带 `credentials: "include"`）；JWT 里无 `userId` 且按 email 查 users 失败；NEXTAUTH_SECRET 不一致。  
+  - 已做：`/api/restore/history`、`/api/user/credits`、`/api/user/initial-bonus`、`/api/user/points-history` 均改用 `getUserIdFromRequest`（JWT + email 回退），减少因「只有 session 无 userId」导致的 401。
+- **500 TABLE_MISSING / DB_ERROR**：Supabase 报错。  
+  - 可能原因：`restorations` 表未创建（未执行 `supabase/migrations/20250126000000_restorations.sql`）；DB 连接超时或权限问题。  
+  - 处理：在 Supabase 执行迁移，确保 `public.restorations` 存在；检查服务端环境变量与网络。

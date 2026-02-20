@@ -145,12 +145,21 @@ export const authOptions: NextAuthOptions = {
 
         if (newUser) {
           const nowIso = new Date().toISOString();
-          await supabaseAdmin.from("points_history").insert({
+          let err = await supabaseAdmin.from("points_history").insert({
             user_id: newUser.id,
             amount: 5,
             reason: "signup_bonus",
             created_at: nowIso,
-          });
+          }).then((r) => r.error);
+          if (err) {
+            await new Promise((r) => setTimeout(r, 300));
+            await supabaseAdmin.from("points_history").insert({
+              user_id: newUser.id,
+              amount: 5,
+              reason: "signup_bonus",
+              created_at: new Date().toISOString(),
+            });
+          }
         }
 
         if (newUser) {
