@@ -29,7 +29,7 @@ export default function MemberLayout({
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
       <MemberNav />
-      {children}
+      <div className="mt-8">{children}</div>
     </div>
   );
 }

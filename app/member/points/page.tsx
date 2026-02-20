@@ -20,6 +20,7 @@ const REASON_KEYS: Record<string, string> = {
   refill_yearly: "member.reasonRefillYearly",
   restore_photo: "member.reasonRestorePhoto",
   refund_restore_failed: "member.reasonRefundRestoreFailed",
+  signup_bonus: "member.reasonSignupBonus",
 };
 
 export default function PointsHistoryPage() {

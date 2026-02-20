@@ -1,3 +1,4 @@
+import { createHash } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { supabase, supabaseAdmin } from "@/lib/supabase";
 
@@ -12,6 +13,12 @@ function maskEmail(email: string): string {
   const local = email.slice(0, at);
   const first = local.slice(0, 1).toUpperCase();
   return `${first}***`;
+}
+
+/** Gravatar 头像 URL（有则真人头像，无则默认剪影） */
+function gravatarUrl(email: string): string {
+  const hash = createHash("md5").update(email.trim().toLowerCase()).digest("hex");
+  return `https://www.gravatar.com/avatar/${hash}?s=96&d=mp`;
 }
 
 export async function GET() {
@@ -32,6 +39,7 @@ export async function GET() {
     content: row.content,
     country: row.country ?? undefined,
     createdAt: row.created_at,
+    avatarUrl: gravatarUrl(row.email),
   }));
 
   return NextResponse.json(list);

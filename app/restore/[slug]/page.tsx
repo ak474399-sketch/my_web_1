@@ -73,14 +73,14 @@ export default async function RestoreSlugPage({ params }: Props) {
         <RestoreTool slug={slug} />
       </RestoreGate>
 
-      <section className="mt-16 max-w-3xl mx-auto">
+      <section className="mt-12 md:mt-16 max-w-3xl mx-auto px-0">
         <h2 className="font-serif text-2xl md:text-3xl font-semibold text-warm-800 mb-4">
           How It Works
         </h2>
         <p className="text-warm-500 leading-relaxed">{data.intro}</p>
       </section>
 
-      <section className="mt-14 max-w-3xl mx-auto">
+      <section className="mt-12 md:mt-14 max-w-3xl mx-auto px-0">
         <h2 className="font-serif text-2xl md:text-3xl font-semibold text-warm-800 mb-6">
           Common Questions
         </h2>

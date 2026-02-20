@@ -10,17 +10,18 @@ type ReviewItem = {
   content: string;
   country?: string;
   createdAt: string;
+  avatarUrl?: string;
 };
 
-/** 无数据或请求失败时使用的静态展示数据 */
+/** 无数据或请求失败时使用的静态展示数据（真人风格头像占位） */
 const FALLBACK_REVIEWS: ReviewItem[] = [
-  { id: "f1", displayName: "Sarah M.", content: "Restored my grandparents' wedding photo in seconds. The result was beyond my expectations.", createdAt: "", country: undefined },
-  { id: "f2", displayName: "James L.", content: "Used the scratch removal tool on an old family portrait. Simple and fast. Will definitely use again.", createdAt: "", country: undefined },
-  { id: "f3", displayName: "Elena K.", content: "The black and white colorization brought my dad's childhood photo to life. So emotional to see it in color.", createdAt: "", country: undefined },
+  { id: "f1", displayName: "Sarah M.", content: "Restored my grandparents' wedding photo in seconds. The result was beyond my expectations.", createdAt: "", country: undefined, avatarUrl: "https://i.pravatar.cc/96?u=f1" },
+  { id: "f2", displayName: "James L.", content: "Used the scratch removal tool on an old family portrait. Simple and fast. Will definitely use again.", createdAt: "", country: undefined, avatarUrl: "https://i.pravatar.cc/96?u=f2" },
+  { id: "f3", displayName: "Elena K.", content: "The black and white colorization brought my dad's childhood photo to life. So emotional to see it in color.", createdAt: "", country: undefined, avatarUrl: "https://i.pravatar.cc/96?u=f3" },
 ];
 
-function avatarUrl(id: string): string {
-  return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(id)}`;
+function getAvatarUrl(review: ReviewItem): string {
+  return review.avatarUrl ?? `https://i.pravatar.cc/96?u=${encodeURIComponent(review.id)}`;
 }
 
 export function ReviewsCarousel() {
@@ -104,7 +105,7 @@ export function ReviewsCarousel() {
               >
                 <div className="flex items-center gap-3 mb-4">
                   <img
-                    src={avatarUrl(review.id)}
+                    src={getAvatarUrl(review)}
                     alt=""
                     className="w-12 h-12 rounded-full object-cover bg-warm-100"
                   />

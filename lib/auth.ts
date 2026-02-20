@@ -51,9 +51,20 @@ export const authOptions: NextAuthOptions = {
             email: user.email,
             name: user.name,
             avatar_url: user.image,
+            credits: 5,
           })
           .select("id")
           .single();
+
+        if (newUser) {
+          const nowIso = new Date().toISOString();
+          await supabaseAdmin.from("points_history").insert({
+            user_id: newUser.id,
+            amount: 5,
+            reason: "signup_bonus",
+            created_at: nowIso,
+          });
+        }
 
         if (newUser) {
           await supabaseAdmin.from("accounts").insert({

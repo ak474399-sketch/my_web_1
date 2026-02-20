@@ -65,7 +65,7 @@ export default function HistoryPage() {
 
   if (status !== "authenticated") {
     return (
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="max-w-md mx-auto text-center">
           <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mx-auto mb-4">
             <History className="w-7 h-7 text-accent" />

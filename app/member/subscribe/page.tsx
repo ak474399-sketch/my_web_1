@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { Check, Loader2, Zap, ArrowRight, Crown, Sparkles } from "lucide-react";
+import { Check, Loader2, Zap, ArrowRight, Crown } from "lucide-react";
 import { useLocale } from "@/components/shared/locale-provider";
 import { POLAR_PRODUCT_IDS, getCheckoutUrl } from "@/lib/polar";
 
@@ -122,16 +122,6 @@ export default function SubscribePage() {
           <p className="text-warm-200/90 text-sm md:text-base max-w-xl mx-auto">
             {t("member.subscribeSubtitle")}
           </p>
-          <div className="mt-3 flex flex-wrap justify-center gap-3 text-white/90 text-xs">
-            <span className="flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-accent-light" />
-              {t("member.perPhotoCredits")}
-            </span>
-            <span className="flex items-center gap-1">
-              <Check className="w-3.5 h-3.5 text-accent-light" />
-              {t("member.instantCredits")}
-            </span>
-          </div>
         </div>
       </header>
 
@@ -197,7 +187,7 @@ export default function SubscribePage() {
                       </span>
                       <span className="text-warm-500 text-sm ml-1">{plan.unit}</span>
                     </div>
-                    <p className="text-warm-500 mt-1 text-sm font-medium">{plan.priceNote}</p>
+                    <p className="text-warm-700 mt-1 text-sm font-bold">{plan.priceNote}</p>
                   </div>
 
                   <div
