@@ -77,7 +77,7 @@ function MemberCenterContent() {
           <span className="text-warm-500">{t("member.currentCredits")}</span>
           <span className="flex items-center gap-2 text-2xl font-bold text-warm-800 tabular-nums">
             <Coins className="w-6 h-6 text-accent" />
-            {data?.credits ?? "—"}
+            {typeof data?.credits === "number" ? Math.max(0, data.credits) : 0}
           </span>
         </div>
         <p className="text-sm text-warm-400">

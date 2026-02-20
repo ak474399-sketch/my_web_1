@@ -18,11 +18,20 @@ function cookiesFromRequest(request: Request): Record<string, string> {
   );
 }
 
-/** 供 getToken 使用的 req 形态：需带 headers 与 cookies（next-auth 从 cookie 读 JWT） */
+/** 供 getToken 使用的 req 形态：SessionStore 从 req.cookies 读，需为普通对象；Node 风格用 headers.cookie，此处用 cookies 对象兼容 */
 function reqForJwt(request: Request) {
+  const cookieHeader = request.headers.get("cookie") ?? "";
+  const cookies: Record<string, string> = {};
+  for (const part of cookieHeader.split(";")) {
+    const i = part.indexOf("=");
+    if (i === -1) continue;
+    const name = part.slice(0, i).trim();
+    const value = part.slice(i + 1).trim();
+    if (name) cookies[name] = value;
+  }
   return {
-    headers: request.headers,
-    cookies: cookiesFromRequest(request),
+    headers: { cookie: cookieHeader },
+    cookies,
   };
 }
 
@@ -47,7 +56,15 @@ export async function getSessionFromRequest(request: Request): Promise<Session |
   if (secret) {
     const token = await getToken({ req: reqForJwt(request) as never, secret });
     if (token) {
-      const userId = (token as { userId?: string }).userId;
+      let userId = (token as { userId?: string }).userId;
+      if (!userId && token.email) {
+        const { data } = await supabaseAdmin
+          .from("users")
+          .select("id")
+          .eq("email", String(token.email))
+          .maybeSingle();
+        if (data) userId = data.id;
+      }
       if (userId) {
         const session: Session = {
           user: {
@@ -81,6 +98,7 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     // Auto-link Google: create or update user + account in Supabase; sync name & avatar from Google.
+    // 新用户：此处给 5 积分并写 points_history(signup_bonus)；老用户不在此发积分，由 GET /api/user/initial-bonus 按 DB 是否已有 signup_bonus/initial_bonus 决定是否发 5。
     async signIn({ user, account }) {
       if (!user.email || !account) return false;
 
@@ -152,12 +170,20 @@ export const authOptions: NextAuthOptions = {
 
     async jwt({ token, user }) {
       if (user?.email) {
-        const { data } = await supabaseAdmin
+        let { data } = await supabaseAdmin
           .from("users")
           .select("id, role")
           .eq("email", user.email)
           .single();
-
+        if (!data) {
+          await new Promise((r) => setTimeout(r, 400));
+          const res = await supabaseAdmin
+            .from("users")
+            .select("id, role")
+            .eq("email", user.email)
+            .single();
+          data = res.data;
+        }
         if (data) {
           token.userId = data.id;
           token.role = data.role;

@@ -29,20 +29,24 @@ export default function HistoryPage() {
       return;
     }
     let cancelled = false;
+    setError(null);
     fetch("/api/restore/history")
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
         if (!res.ok) {
-          const msg = (data.message || data.error) as string | undefined;
-          throw new Error(msg || "Failed to load history");
+          const code = (data.code as string) || "DB_ERROR";
+          throw new Error(code);
         }
         return data;
       })
       .then((data) => {
-        if (!cancelled) setItems(data.items ?? []);
+        if (!cancelled) {
+          setItems(data.items ?? []);
+          setError(null);
+        }
       })
       .catch((e) => {
-        if (!cancelled) setError(e instanceof Error ? e.message : "Error");
+        if (!cancelled) setError(e instanceof Error ? e.message : "DB_ERROR");
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -89,10 +93,18 @@ export default function HistoryPage() {
   }
 
   if (error) {
+    const errorKey =
+      error === "UNAUTHORIZED"
+        ? "history.errorUnauthorized"
+        : error === "SESSION_INVALID"
+          ? "history.errorSessionInvalid"
+          : error === "TABLE_MISSING"
+            ? "history.errorTableNotReady"
+            : "history.errorLoadFailed";
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto rounded-2xl bg-red-50 border border-red-200 p-6 text-red-700 text-center">
-          {error}
+          <p className="font-medium">{t(errorKey)}</p>
         </div>
       </div>
     );

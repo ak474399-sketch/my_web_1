@@ -221,12 +221,12 @@ export function Navbar() {
             </div>
           )}
 
-          {/* Auth: 积分与头像合并，点击头像展开下拉 */}
+          {/* Auth: 头像右侧展示积分（最少显示 0），点击头像展开下拉 */}
           {status === "loading" ? (
             <div className="w-10 h-10 rounded-full bg-warm-200 animate-pulse" />
           ) : session?.user ? (
             <div
-              className="relative flex items-center"
+              className="relative flex items-center gap-2"
               onMouseEnter={openUser}
               onMouseLeave={closeUser}
             >
@@ -243,9 +243,10 @@ export function Navbar() {
                     <span className="text-sm font-semibold text-warm-700 select-none">{getInitial()}</span>
                   </div>
                 )}
-                <span className="absolute -bottom-0.5 -right-0.5 min-w-[20px] h-5 px-1 rounded-md bg-accent text-white text-xs font-medium flex items-center justify-center tabular-nums">
-                  {credits !== null ? credits : "—"}
-                </span>
+              </Link>
+              <Link href="/member/points" className="flex items-center gap-1.5 text-warm-700 hover:text-accent transition-colors" title="积分明细">
+                <Coins className="w-5 h-5 text-accent shrink-0" />
+                <span className="text-sm font-semibold tabular-nums">{credits !== null ? Math.max(0, credits) : 0}</span>
               </Link>
 
               {userMenuOpen && (
@@ -259,7 +260,7 @@ export function Navbar() {
                       className="mt-2 flex items-center gap-1.5 text-xs text-accent hover:underline"
                     >
                       <Coins className="w-3.5 h-3.5" />
-                      <span className="tabular-nums">{credits !== null ? credits : "—"} 积分 · 查看明细</span>
+                      <span className="tabular-nums">{credits !== null ? Math.max(0, credits) : 0} 积分 · 查看明细</span>
                     </Link>
                   </div>
                   <Link href="/history" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-warm-600 hover:bg-warm-50">

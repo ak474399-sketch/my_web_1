@@ -92,7 +92,13 @@ export async function getCredits(userId: string): Promise<UserCreditsRow | null>
 
 const INITIAL_BONUS_REASONS = ["signup_bonus", "initial_bonus"] as const;
 
-/** 未获得过一次性 5 积分的用户发放 5 积分（仅一次）。含老用户从未拿过的。先插入记录再改余额，配合 DB 唯一约束防并发重复发放。 */
+/**
+ * 一次性 5 积分发放逻辑（梳理）：
+ * - signup_bonus：仅新用户，在 auth signIn 回调里创建用户时同时写入 users.credits=5 和 points_history(reason=signup_bonus)。
+ * - initial_bonus：由 GET /api/user/initial-bonus 调用本函数发放；新用户已有 signup_bonus 会直接 return false，老用户只要没有任一条 signup_bonus/initial_bonus 记录就发 5 并写 initial_bonus。
+ * 认人：以 DB 的 points_history 为准（是否有上述两种 reason）；前端 localStorage 仅防重复请求与展示，不做鉴权。
+ */
+/** 未获得过一次性 5 积分的用户发放 5 积分（仅一次）。新老用户一视同仁：只要没有 signup_bonus/initial_bonus 记录就发。先插入记录再改余额，配合 DB 唯一约束防并发重复发放。 */
 export async function grantInitialBonusIfEligible(
   userId: string
 ): Promise<{ granted: boolean }> {
@@ -113,10 +119,6 @@ export async function grantInitialBonusIfEligible(
     .single();
 
   if (!user) return { granted: false };
-
-  if ((user.credits ?? 0) >= 5) {
-    return { granted: false };
-  }
 
   const nowIso = new Date().toISOString();
 

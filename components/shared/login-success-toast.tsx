@@ -54,7 +54,7 @@ export function LoginSuccessToast() {
               return res.ok ? res.json() : null;
             })
             .then((data) => {
-              if (data?.granted === true) {
+              if (data?.granted === true && userId) {
                 setLocalBonusRecord(userId);
                 setBonusGranted(true);
               }

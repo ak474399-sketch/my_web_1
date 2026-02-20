@@ -99,7 +99,7 @@ export default function PointsHistoryPage() {
         <h1 className="font-serif text-2xl font-bold text-warm-800">{t("member.pointsTitle")}</h1>
         <span className="flex items-center gap-2 text-lg font-semibold text-warm-800 tabular-nums">
           <Coins className="w-5 h-5 text-accent" />
-          {credits !== null ? credits : "—"} {t("member.creditsUnit")}
+          {credits !== null ? Math.max(0, credits) : 0} {t("member.creditsUnit")}
         </span>
       </div>
 
