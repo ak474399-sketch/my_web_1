@@ -14,6 +14,11 @@ export default function LoginSuccessPage() {
 
   useEffect(() => {
     if (status === "authenticated") {
+      try {
+        sessionStorage.setItem("loginSuccess", "1");
+      } catch {
+        // ignore
+      }
       window.location.replace("/?login=success");
     }
   }, [status]);

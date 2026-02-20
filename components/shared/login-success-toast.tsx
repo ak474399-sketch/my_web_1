@@ -29,8 +29,16 @@ export function LoginSuccessToast() {
 
   useEffect(() => {
     if (status !== "authenticated" || !session) return;
-    const loginSuccess = searchParams.get("login") === "success";
-    if (!loginSuccess || done) return;
+    const fromUrl = searchParams.get("login") === "success";
+    let fromStorage = false;
+    try {
+      fromStorage = sessionStorage.getItem("loginSuccess") === "1";
+      if (fromStorage) sessionStorage.removeItem("loginSuccess");
+    } catch {
+      // ignore
+    }
+    if (!fromUrl && !fromStorage) return;
+    if (done) return;
 
     if (!loginLogged.current) {
       loginLogged.current = true;
@@ -45,7 +53,7 @@ export function LoginSuccessToast() {
       } else {
         const delayMs = 400;
         const tryFetch = (retry = false) =>
-          fetch("/api/user/initial-bonus", { credentials: "include" })
+          fetch("/api/user/initial-bonus", { credentials: "include", cache: "no-store" })
             .then((res) => {
               if (res.status === 401 && !retry) {
                 setTimeout(() => tryFetch(true), 600);

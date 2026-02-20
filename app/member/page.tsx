@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Coins, Crown, CheckCircle } from "lucide-react";
+import { Coins, Crown, CheckCircle, Gift } from "lucide-react";
 import { useLocale } from "@/components/shared/locale-provider";
 
 type CreditsData = {
@@ -19,17 +19,38 @@ function MemberCenterContent() {
   const { data: session, status } = useSession();
   const searchParams = useSearchParams();
   const [data, setData] = useState<CreditsData | null>(null);
+  const [giftStatus, setGiftStatus] = useState<null | "claiming" | "GRANTED" | "ALREADY_CLAIMED" | "UNAUTHORIZED" | "ERROR">(null);
 
   const checkoutSuccess = searchParams.get("checkout") === "success";
   const checkoutId = searchParams.get("checkout_id") ?? searchParams.get("checkoutId") ?? null;
 
   useEffect(() => {
     if (status !== "authenticated") return;
-    fetch("/api/user/credits")
+    fetch("/api/user/credits", { credentials: "include" })
       .then((res) => (res.ok ? res.json() : null))
       .then(setData)
       .catch(() => setData(null));
   }, [status]);
+
+  const handleClaimGift = () => {
+    setGiftStatus("claiming");
+    fetch("/api/user/initial-bonus", { credentials: "include", cache: "no-store" })
+      .then(async (res) => {
+        const body = await res.json().catch(() => ({}));
+        const code = body.code ?? (res.ok ? (body.granted ? "GRANTED" : "ALREADY_CLAIMED") : "ERROR");
+        if (res.status === 401) return "UNAUTHORIZED";
+        return code as "GRANTED" | "ALREADY_CLAIMED" | "ERROR";
+      })
+      .then((code) => {
+        setGiftStatus(code);
+        if (code === "GRANTED") {
+          fetch("/api/user/credits", { credentials: "include" })
+            .then((r) => (r.ok ? r.json() : null))
+            .then((d) => d != null && setData(d));
+        }
+      })
+      .catch(() => setGiftStatus("ERROR"));
+  };
 
   if (status === "loading" || !session) {
     return (
@@ -86,6 +107,38 @@ function MemberCenterContent() {
             {t("member.pointsDetail")}
           </Link>
         </p>
+      </div>
+
+      <div className="rounded-2xl border border-warm-300 bg-white p-6 shadow-sm">
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-warm-500 flex items-center gap-2">
+            <Gift className="w-5 h-5 text-accent" />
+            {t("member.giftButton")}
+          </span>
+        </div>
+        <p className="text-sm text-warm-400 mb-4">
+          5 {t("member.creditsUnit")}，{t("member.reasonInitialBonus")}.
+        </p>
+        <button
+          type="button"
+          onClick={handleClaimGift}
+          disabled={giftStatus === "claiming"}
+          className="rounded-xl bg-accent hover:bg-accent-muted disabled:opacity-60 text-white px-5 py-2.5 font-medium transition-colors"
+        >
+          {giftStatus === "claiming" ? t("member.giftClaiming") : t("member.giftButton")}
+        </button>
+        {giftStatus === "GRANTED" && (
+          <p className="mt-3 text-sm text-green-600 font-medium">{t("member.giftSuccess")}</p>
+        )}
+        {giftStatus === "ALREADY_CLAIMED" && (
+          <p className="mt-3 text-sm text-warm-500">{t("member.giftAlreadyClaimed")}</p>
+        )}
+        {giftStatus === "UNAUTHORIZED" && (
+          <p className="mt-3 text-sm text-amber-600">{t("member.giftUnauthorized")}</p>
+        )}
+        {giftStatus === "ERROR" && (
+          <p className="mt-3 text-sm text-red-600">{t("member.giftError")}</p>
+        )}
       </div>
 
       <div className="rounded-2xl border border-warm-300 bg-white p-6 shadow-sm">

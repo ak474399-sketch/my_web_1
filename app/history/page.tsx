@@ -30,7 +30,7 @@ export default function HistoryPage() {
     }
     let cancelled = false;
     setError(null);
-    fetch("/api/restore/history")
+    fetch("/api/restore/history", { credentials: "include" })
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
         if (!res.ok) {
@@ -93,9 +93,10 @@ export default function HistoryPage() {
   }
 
   if (error) {
+    const isUnauthorized = error === "UNAUTHORIZED";
     const errorKey =
-      error === "UNAUTHORIZED"
-        ? "history.errorUnauthorized"
+      isUnauthorized
+        ? "history.errorSessionNotRecognized"
         : error === "SESSION_INVALID"
           ? "history.errorSessionInvalid"
           : error === "TABLE_MISSING"
@@ -103,8 +104,17 @@ export default function HistoryPage() {
             : "history.errorLoadFailed";
     return (
       <div className="container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto rounded-2xl bg-red-50 border border-red-200 p-6 text-red-700 text-center">
+        <div className="max-w-4xl mx-auto rounded-2xl bg-red-50 border border-red-200 p-6 text-red-700 text-center space-y-4">
           <p className="font-medium">{t(errorKey)}</p>
+          {isUnauthorized && (
+            <Link
+              href="/?login=1"
+              onClick={() => logNavClick("/?login=1", "history_relogin")}
+              className="inline-flex items-center gap-2 rounded-xl bg-accent hover:bg-accent-muted text-white px-6 py-3 font-medium transition-colors active:scale-[0.98]"
+            >
+              {t("history.relogin")}
+            </Link>
+          )}
         </div>
       </div>
     );
