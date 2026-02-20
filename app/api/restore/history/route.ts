@@ -1,14 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionFromRequest } from "@/lib/auth";
+import { HISTORY_ERROR_CODES } from "@/lib/history-errors";
 import { supabaseAdmin } from "@/lib/supabase";
-
-/** 历史记录 API 错误码，前端用于展示对应文案 */
-export const HISTORY_ERROR_CODES = {
-  UNAUTHORIZED: "UNAUTHORIZED",
-  SESSION_INVALID: "SESSION_INVALID",
-  TABLE_MISSING: "TABLE_MISSING",
-  DB_ERROR: "DB_ERROR",
-} as const;
 
 export async function GET(request: NextRequest) {
   const session = await getSessionFromRequest(request);

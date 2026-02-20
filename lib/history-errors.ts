@@ -1,0 +1,7 @@
+/** 历史记录 API 错误码，前端按 code 展示对应多语言文案 */
+export const HISTORY_ERROR_CODES = {
+  UNAUTHORIZED: "UNAUTHORIZED",
+  SESSION_INVALID: "SESSION_INVALID",
+  TABLE_MISSING: "TABLE_MISSING",
+  DB_ERROR: "DB_ERROR",
+} as const;
