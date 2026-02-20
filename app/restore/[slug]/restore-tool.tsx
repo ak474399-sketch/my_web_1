@@ -57,6 +57,7 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
 
       const res = await fetch("/api/restore", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           imageBase64: base64,

@@ -1,7 +1,9 @@
 "use client";
 
+import { Suspense } from "react";
 import { Upload, Sparkles, Eye, Shield, Heart, Images } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { ALL_SLUGS, RESTORE_SLUGS } from "@/lib/seo-data";
 import { SlugIcon } from "@/lib/icons";
 import { useLocale } from "@/components/shared/locale-provider";
@@ -10,6 +12,18 @@ import FeatureSection from "@/components/shared/feature-section";
 import { ReviewsCarousel } from "@/components/shared/reviews-carousel";
 import KnowledgeSection from "@/components/shared/knowledge-section";
 import { logToolClick, logNavClick } from "@/lib/analytics";
+
+function LoginRequiredBanner() {
+  const searchParams = useSearchParams();
+  const { t } = useLocale();
+  const fromRestore = searchParams.get("from") === "restore";
+  if (!fromRestore) return null;
+  return (
+    <div className="w-full bg-amber-500 text-white text-center py-2.5 px-4 text-sm font-medium">
+      {t("login.loginRequiredForFeature")}
+    </div>
+  );
+}
 
 const STEPS = [
   { icon: Upload, titleKey: "home.steps.step1Title" as const, descKey: "home.steps.step1Desc" as const },
@@ -21,6 +35,9 @@ export default function HomePage() {
   const { t } = useLocale();
   return (
     <div>
+      <Suspense fallback={null}>
+        <LoginRequiredBanner />
+      </Suspense>
       <HeroSection />
 
       <section className="border-t border-warm-200 bg-warm-50">

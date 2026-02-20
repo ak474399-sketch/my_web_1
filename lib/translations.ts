@@ -6,7 +6,7 @@ import type { Locale } from "./i18n";
 
 export type TranslationKeys = {
   nav: { restore: string; history: string; tools: string; cases: string; member: string; feedback: string; terms: string; privacy: string; more: string; signIn: string; signOut: string; memoryRestore: string };
-  login: { welcomeBack: string; welcomeToBrand: string; signInToSave: string; continueWithGoogle: string; signInWithApple: string; signInWithEmail: string; comingSoon: string; agreeTerms: string; and: string; terms: string; privacyPolicy: string; redirecting: string; pleaseComplete: string };
+  login: { welcomeBack: string; welcomeToBrand: string; signInToSave: string; loginRequiredForFeature: string; continueWithGoogle: string; signInWithApple: string; signInWithEmail: string; comingSoon: string; agreeTerms: string; and: string; terms: string; privacyPolicy: string; redirecting: string; pleaseComplete: string };
   footer: { memoryRestore: string; tagline: string; restoreMemories: string; cases: string; member: string; history: string; oldPhotos: string; fixScratches: string; reviveFaded: string; addColor: string; termsOfService: string; privacyPolicy: string; madeWithCare: string };
   common: { before: string; after: string; beforeAfter: string };
   home: {
@@ -161,6 +161,7 @@ const translations: Record<Locale, TranslationKeys> = {
       welcomeBack: "Welcome Back",
       welcomeToBrand: "Welcome to AI RestorePic",
       signInToSave: "Sign in to save your restorations and track your history.",
+      loginRequiredForFeature: "Sign in to use this feature.",
       continueWithGoogle: "Sign in with Google",
       signInWithApple: "Sign in with Apple",
       signInWithEmail: "Sign in with email",
@@ -380,6 +381,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       welcomeBack: "Willkommen zurück",
       welcomeToBrand: "Willkommen bei AI RestorePic",
       signInToSave: "Melden Sie sich an, um Wiederherstellungen zu speichern und den Verlauf zu sehen.",
+      loginRequiredForFeature: "Melden Sie sich an, um diese Funktion zu nutzen.",
       continueWithGoogle: "Mit Google anmelden",
       signInWithApple: "Mit Apple anmelden",
       signInWithEmail: "Mit E-Mail anmelden",
@@ -450,6 +452,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       welcomeToBrand: "Bienvenue sur AI RestorePic",
       signInToSave: "Connectez-vous pour enregistrer vos restaurations et consulter l’historique.",
       continueWithGoogle: "Se connecter avec Google",
+      loginRequiredForFeature: "Connectez-vous pour utiliser cette fonction.",
       signInWithApple: "Se connecter avec Apple",
       signInWithEmail: "Se connecter avec e-mail",
       comingSoon: "Bientôt disponible",
@@ -518,6 +521,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       welcomeBack: "欢迎回来",
       welcomeToBrand: "欢迎使用 AI RestorePic",
       signInToSave: "登录后可保存修复记录并查看历史。",
+      loginRequiredForFeature: "需要登录才可以使用该功能",
       continueWithGoogle: "使用 Google 登录",
       signInWithApple: "使用 Apple 登录",
       signInWithEmail: "使用邮箱登录",
@@ -587,6 +591,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       welcomeBack: "歡迎回來",
       welcomeToBrand: "歡迎使用 AI RestorePic",
       signInToSave: "登入後可儲存修復記錄並查看歷史。",
+      loginRequiredForFeature: "需要登入才可以使用該功能",
       continueWithGoogle: "使用 Google 登入",
       signInWithApple: "使用 Apple 登入",
       signInWithEmail: "使用電子郵件登入",
@@ -656,6 +661,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       welcomeBack: "Bienvenido de nuevo",
       welcomeToBrand: "Bienvenido a AI RestorePic",
       signInToSave: "Inicia sesión para guardar restauraciones y ver el historial.",
+      loginRequiredForFeature: "Inicia sesión para usar esta función.",
       continueWithGoogle: "Iniciar sesión con Google",
       signInWithApple: "Iniciar sesión con Apple",
       signInWithEmail: "Iniciar sesión con correo",
@@ -725,6 +731,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       welcomeBack: "Bem-vindo de volta",
       welcomeToBrand: "Bem-vindo ao AI RestorePic",
       signInToSave: "Entre para salvar restaurações e ver o histórico.",
+      loginRequiredForFeature: "Entre para usar este recurso.",
       continueWithGoogle: "Entrar com Google",
       signInWithApple: "Entrar com Apple",
       signInWithEmail: "Entrar com e-mail",
@@ -794,6 +801,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       welcomeBack: "مرحباً بعودتك",
       welcomeToBrand: "مرحباً بك في AI RestorePic",
       signInToSave: "سجّل الدخول لحفظ الاستعادة وعرض السجل.",
+      loginRequiredForFeature: "سجّل الدخول لاستخدام هذه الميزة.",
       continueWithGoogle: "تسجيل الدخول باستخدام Google",
       signInWithApple: "تسجيل الدخول باستخدام Apple",
       signInWithEmail: "تسجيل الدخول بالبريد الإلكتروني",

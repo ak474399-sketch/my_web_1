@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getSlugData, ALL_SLUGS } from "@/lib/seo-data";
+import { RestoreGate } from "./restore-gate";
 import { RestoreTool } from "./restore-tool";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -68,7 +69,9 @@ export default async function RestoreSlugPage({ params }: Props) {
         {data.description}
       </p>
 
-      <RestoreTool slug={slug} />
+      <RestoreGate>
+        <RestoreTool slug={slug} />
+      </RestoreGate>
 
       <section className="mt-16 max-w-3xl mx-auto">
         <h2 className="font-serif text-2xl md:text-3xl font-semibold text-warm-800 mb-4">
