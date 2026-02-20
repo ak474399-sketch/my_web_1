@@ -1,6 +1,31 @@
 import type { NextAuthOptions } from "next-auth";
+import { getServerSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { supabaseAdmin } from "@/lib/supabase";
+
+/** 从 Request 解析 cookies，供 App Router 的 API 路由正确获取 session */
+function cookiesFromRequest(request: Request): Record<string, string> {
+  const cookieHeader = request.headers.get("cookie");
+  if (!cookieHeader) return {};
+  return Object.fromEntries(
+    cookieHeader.split(";").map((s) => {
+      const i = s.indexOf("=");
+      const name = i === -1 ? s.trim() : s.slice(0, i).trim();
+      const value = i === -1 ? "" : s.slice(i + 1).trim();
+      return [name, value];
+    })
+  );
+}
+
+/** 在 App Router 的 GET/POST 等 API 中传入 request，以正确读取 session（否则 getServerSession(authOptions) 可能拿不到 cookie） */
+export async function getSessionFromRequest(request: Request) {
+  const req = {
+    headers: Object.fromEntries(request.headers.entries()),
+    cookies: cookiesFromRequest(request),
+  };
+  const res = { getHeader: () => undefined, setCookie: () => {}, setHeader: () => {} };
+  return getServerSession(req as never, res as never, authOptions);
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [

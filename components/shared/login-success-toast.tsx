@@ -7,7 +7,7 @@ import { CheckCircle, X } from "lucide-react";
 import { useLocale } from "@/components/shared/locale-provider";
 import { logLogin } from "@/lib/analytics";
 
-const DURATION_MS = 1600;
+const DURATION_MS = 2500;
 
 export function LoginSuccessToast() {
   const { data: session, status } = useSession();
