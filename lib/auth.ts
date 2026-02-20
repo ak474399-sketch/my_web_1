@@ -208,6 +208,18 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+
+    /** 显式放行同源回调 URL（含 ?login=success 等），避免 INVALID_CALLBACK_URL_ERROR */
+    redirect({ url, baseUrl }) {
+      try {
+        const u = new URL(url);
+        const base = new URL(baseUrl);
+        if (u.origin === base.origin) return url;
+      } catch {
+        // ignore
+      }
+      return baseUrl;
+    },
   },
 
   session: {
