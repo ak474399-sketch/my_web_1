@@ -101,7 +101,6 @@ export default function HomePage() {
 
       <ReviewsCarousel />
 
-      {/* 案例入口 */}
       <section className="border-t border-warm-200 bg-warm-50">
         <div className="container mx-auto px-4 py-16 md:py-20">
           <div className="max-w-4xl mx-auto rounded-2xl border border-warm-200 bg-white p-8 md:p-10 shadow-sm hover:shadow-md hover:border-warm-300 transition-all duration-200">
@@ -112,19 +111,19 @@ export default function HomePage() {
                 </div>
                 <div>
                   <h2 className="font-serif text-xl font-bold text-warm-800 mb-1">
-                    修复案例与家庭故事
+                    {t("home.casesSection.title")}
                   </h2>
                   <p className="text-warm-500 text-sm leading-relaxed">
-                    查看真实修复效果与用户分享的珍贵回忆。
+                    {t("home.casesSection.description")}
                   </p>
                 </div>
               </div>
               <Link
                 href="/cases"
-                onClick={() => logNavClick("/cases", "查看案例")}
+                onClick={() => logNavClick("/cases", t("home.casesSection.cta"))}
                 className="inline-flex items-center gap-2 rounded-xl border-2 border-accent text-accent hover:bg-accent hover:text-white px-6 py-3 font-medium transition-colors shrink-0"
               >
-                查看案例
+                {t("home.casesSection.cta")}
               </Link>
             </div>
           </div>

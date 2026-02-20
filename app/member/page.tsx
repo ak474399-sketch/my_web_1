@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Coins, Crown } from "lucide-react";
+import { Coins, Crown, CheckCircle } from "lucide-react";
 import { useLocale } from "@/components/shared/locale-provider";
 
 type CreditsData = {
@@ -16,7 +17,11 @@ type CreditsData = {
 export default function MemberCenterPage() {
   const { t } = useLocale();
   const { data: session, status } = useSession();
+  const searchParams = useSearchParams();
   const [data, setData] = useState<CreditsData | null>(null);
+
+  const checkoutSuccess = searchParams.get("checkout") === "success";
+  const checkoutId = searchParams.get("checkout_id") ?? searchParams.get("checkoutId") ?? null;
 
   useEffect(() => {
     if (status !== "authenticated") return;
@@ -46,6 +51,25 @@ export default function MemberCenterPage() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-8">
+      {checkoutSuccess && (
+        <div className="rounded-2xl border-2 border-green-200 bg-green-50 p-4 md:p-5 text-green-800">
+          <div className="flex items-start gap-3">
+            <CheckCircle className="w-6 h-6 shrink-0 text-green-600 mt-0.5" />
+            <div>
+              <p className="font-semibold">{t("member.checkoutSuccessTitle")}</p>
+              <p className="text-sm mt-1 text-green-700">
+                {t("member.checkoutSuccessDetail")}
+                {checkoutId ? (
+                  <code className="ml-1 px-1.5 py-0.5 rounded bg-green-100 font-mono text-xs break-all">
+                    {checkoutId}
+                  </code>
+                ) : null}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <h1 className="font-serif text-2xl font-bold text-warm-800">{t("member.memberCenter")}</h1>
 
       <div className="rounded-2xl border border-warm-300 bg-white p-6 shadow-sm">
