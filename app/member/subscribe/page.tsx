@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Check, Loader2, Zap, ArrowRight, Crown } from "lucide-react";
 import { useLocale } from "@/components/shared/locale-provider";
+import { useTimeout } from "@/components/shared/timeout-context";
 import { POLAR_PRODUCT_IDS, getCheckoutUrl } from "@/lib/polar";
+
+const SUBSCRIBE_TIMEOUT_MS = 45_000;
 
 function usePlans(t: (key: string) => string) {
   return [
@@ -53,10 +56,30 @@ function usePlans(t: (key: string) => string) {
 
 export default function SubscribePage() {
   const { t } = useLocale();
+  const { showTimeout } = useTimeout();
   const PLANS = usePlans(t);
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState<"credits" | "weekly" | "yearly" | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!loading) return;
+    timeoutIdRef.current = setTimeout(() => {
+      timeoutIdRef.current = null;
+      setLoading(null);
+      showTimeout({
+        actionKey: "subscribe",
+        onRetry: () => {},
+      });
+    }, SUBSCRIBE_TIMEOUT_MS);
+    return () => {
+      if (timeoutIdRef.current) {
+        clearTimeout(timeoutIdRef.current);
+        timeoutIdRef.current = null;
+      }
+    };
+  }, [loading, showTimeout]);
 
   const customerParams =
     session?.user?.email || session?.user?.id

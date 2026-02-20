@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 import { Loader2, Mail } from "lucide-react";
 import { Modal } from "@/components/shared/modal";
 import { useLocale } from "@/components/shared/locale-provider";
+import { useTimeout } from "@/components/shared/timeout-context";
 
 const AUTH_CALLBACK_URL = "/auth/callback?next=" + encodeURIComponent("/?login=success");
+const LOGIN_TIMEOUT_MS = 45_000;
 
 export function LoginModal({
   open,
@@ -18,7 +20,24 @@ export function LoginModal({
   cleared?: boolean;
 }) {
   const { t } = useLocale();
+  const { showTimeout } = useTimeout();
   const [isRedirecting, setIsRedirecting] = useState(false);
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!isRedirecting) return;
+    timeoutIdRef.current = setTimeout(() => {
+      timeoutIdRef.current = null;
+      setIsRedirecting(false);
+      showTimeout({ actionKey: "login" });
+    }, LOGIN_TIMEOUT_MS);
+    return () => {
+      if (timeoutIdRef.current) {
+        clearTimeout(timeoutIdRef.current);
+        timeoutIdRef.current = null;
+      }
+    };
+  }, [isRedirecting, showTimeout]);
 
   const handleGoogleSignIn = () => {
     setIsRedirecting(true);

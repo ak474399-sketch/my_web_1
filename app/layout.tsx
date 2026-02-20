@@ -11,6 +11,7 @@ import { PullToRefreshWrapper } from "@/components/shared/pull-to-refresh-wrappe
 import { FirebaseAnalytics } from "@/components/analytics/firebase-analytics";
 import { PageViewTracker } from "@/components/analytics/page-view-tracker";
 import { CookieConsentBar } from "@/components/shared/cookie-consent-bar";
+import { TimeoutProvider } from "@/components/shared/timeout-context";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -63,6 +64,7 @@ export default function RootLayout({
       >
         <AuthProvider>
           <LocaleProvider>
+          <TimeoutProvider>
           <FirebaseAnalytics />
           <PageViewTracker />
           <PullToRefreshWrapper>
@@ -76,6 +78,7 @@ export default function RootLayout({
             <LoginSuccessToast />
           </Suspense>
           <CookieConsentBar />
+          </TimeoutProvider>
           </LocaleProvider>
         </AuthProvider>
       </body>

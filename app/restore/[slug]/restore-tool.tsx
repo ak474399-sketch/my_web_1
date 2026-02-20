@@ -7,6 +7,7 @@ import { UploadZone } from "@/components/tool/upload-zone";
 import { CompareSlider } from "@/components/tool/compare-slider";
 import { logRestoreStarted, logRestoreCompleted, logRestoreFailed, logToolView } from "@/lib/analytics";
 import { useLocale } from "@/components/shared/locale-provider";
+import { useTimeout } from "@/components/shared/timeout-context";
 
 type RestoreToolProps = { slug?: string };
 
@@ -19,8 +20,11 @@ type RestoreResponse = {
   refunded?: boolean;
 };
 
+const RESTORE_TIMEOUT_MS = 45_000;
+
 export function RestoreTool({ slug = "" }: RestoreToolProps) {
   const { t } = useLocale();
+  const { showTimeout } = useTimeout();
   const [originalDataUrl, setOriginalDataUrl] = useState<string | null>(null);
   const [restoredDataUrl, setRestoredDataUrl] = useState<string | null>(null);
   const [restoreText, setRestoreText] = useState<string | null>(null);
@@ -31,6 +35,9 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
   const [pointsTip, setPointsTip] = useState<"deduct" | "refund" | null>(null);
   const pointsTipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const autoTriggered = useRef(false);
+  const lastUploadRef = useRef<{ dataUrl: string; mimeType: string } | null>(null);
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     if (slug) logToolView(slug);
@@ -38,6 +45,7 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
 
   async function handleUpload(dataUrl: string, mimeType: string) {
     if (slug) logRestoreStarted(slug);
+    lastUploadRef.current = { dataUrl, mimeType };
     setOriginalDataUrl(dataUrl);
     setRestoredDataUrl(null);
     setRestoreText(null);
@@ -49,7 +57,22 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
       clearTimeout(pointsTipTimer.current);
       pointsTipTimer.current = null;
     }
+    if (timeoutIdRef.current) {
+      clearTimeout(timeoutIdRef.current);
+      timeoutIdRef.current = null;
+    }
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
     setLoading(true);
+
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+    timeoutIdRef.current = setTimeout(() => {
+      timeoutIdRef.current = null;
+      controller.abort();
+    }, RESTORE_TIMEOUT_MS);
 
     try {
       const base64 = dataUrl.split(",")[1];
@@ -64,6 +87,7 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
           mimeType,
           slug: slug || undefined,
         }),
+        signal: controller.signal,
       });
 
       let data: RestoreResponse;
@@ -105,9 +129,24 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
       setPointsTip("deduct");
       pointsTipTimer.current = setTimeout(() => setPointsTip(null), 4000);
     } catch (e) {
-      if (slug) logRestoreFailed(slug, "network_or_error");
-      setError(e instanceof Error ? e.message : "Could not connect. Please check your internet.");
+      if (controller.signal.aborted) {
+        if (slug) logRestoreFailed(slug, "timeout");
+        showTimeout({
+          actionKey: "restore",
+          onRetry: lastUploadRef.current
+            ? () => handleUpload(lastUploadRef.current!.dataUrl, lastUploadRef.current!.mimeType)
+            : undefined,
+        });
+      } else {
+        if (slug) logRestoreFailed(slug, "network_or_error");
+        setError(e instanceof Error ? e.message : "Could not connect. Please check your internet.");
+      }
     } finally {
+      if (timeoutIdRef.current) {
+        clearTimeout(timeoutIdRef.current);
+        timeoutIdRef.current = null;
+      }
+      abortControllerRef.current = null;
       setLoading(false);
     }
   }
