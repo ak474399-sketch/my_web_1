@@ -1,4 +1,4 @@
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, Session } from "next-auth";
 import { getServerSession } from "next-auth";
 import { getToken } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
@@ -42,7 +42,7 @@ export async function getUserIdFromRequest(request: Request): Promise<string | n
 }
 
 /** 在 App Router 的 API 中传入 request 获取 session；优先用 JWT 构造保证 user.id 存在。 */
-export async function getSessionFromRequest(request: Request) {
+export async function getSessionFromRequest(request: Request): Promise<Session | null> {
   const secret = process.env.NEXTAUTH_SECRET;
   if (secret) {
     const token = await getToken({ req: reqForJwt(request) as never, secret });
