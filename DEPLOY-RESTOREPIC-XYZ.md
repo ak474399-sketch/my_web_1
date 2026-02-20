@@ -49,9 +49,13 @@
 ### 5. 部署与验证
 
 - 将当前修改 **提交并推送到 Git**，触发 Vercel 自动部署；或在 Vercel 控制台手动 **Redeploy**。
+- **若出现 NextAuth `INVALID_CALLBACK_URL_ERROR`（Received: https%3A%2F%2Frestorepic.xyz）**：
+  - 部署时务必执行 `npm install`（会跑 postinstall，给 next-auth 打补丁）。若使用 `npm ci --ignore-scripts`，需改为允许 scripts 或改为 `npm install`。
+  - 在 Vercel 控制台 **Redeploy** 时勾选 **Clear Build Cache** 再部署，确保用打补丁后的 node_modules 重新打包。
 - 部署完成后访问 `https://restorepic.xyz`，确认：
   - 页面标题、导航栏、页脚版权为 **AI RestorePic**。
   - 使用 Google 登录可正常跳转并回到 `https://restorepic.xyz`。
+  - 登录后积分/历史等接口不再报 500。
 
 ---
 
