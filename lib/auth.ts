@@ -48,11 +48,19 @@ export async function getSessionFromRequest(request: Request): Promise<Session |
     const token = await getToken({ req: reqForJwt(request) as never, secret });
     if (token) {
       const userId = (token as { userId?: string }).userId;
-      if (userId)
-        return {
-          user: { id: userId, email: token.email ?? null, name: token.name ?? null, image: token.picture ?? null },
-          expires: token.exp ? new Date(token.exp * 1000).toISOString() : "",
-        } as Awaited<ReturnType<typeof getServerSession>>;
+      if (userId) {
+        const session: Session = {
+          user: {
+            id: userId,
+            role: (token as { role?: string }).role ?? "user",
+            email: (token.email as string | null) ?? null,
+            name: (token.name as string | null) ?? null,
+            image: (token.picture as string | null) ?? null,
+          },
+          expires: (token.exp as number | undefined) ? new Date((token.exp as number) * 1000).toISOString() : "",
+        };
+        return session;
+      }
     }
   }
   const req = {
