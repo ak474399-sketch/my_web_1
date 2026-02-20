@@ -5,8 +5,8 @@
 import type { Locale } from "./i18n";
 
 export type TranslationKeys = {
-  nav: { restore: string; history: string; tools: string; cases: string; member: string; feedback: string; terms: string; privacy: string; more: string; signIn: string; signOut: string; memoryRestore: string };
-  login: { welcomeBack: string; welcomeToBrand: string; signInToSave: string; loginRequiredForFeature: string; continueWithGoogle: string; signInWithApple: string; signInWithEmail: string; comingSoon: string; agreeTerms: string; and: string; terms: string; privacyPolicy: string; redirecting: string; pleaseComplete: string };
+  nav: { restore: string; history: string; tools: string; cases: string; member: string; feedback: string; terms: string; privacy: string; more: string; signIn: string; signOut: string; clearLoginState: string; memoryRestore: string };
+  login: { welcomeBack: string; welcomeToBrand: string; signInToSave: string; loginRequiredForFeature: string; clearedMessage: string; continueWithGoogle: string; signInWithApple: string; signInWithEmail: string; comingSoon: string; agreeTerms: string; and: string; terms: string; privacyPolicy: string; redirecting: string; pleaseComplete: string };
   footer: { memoryRestore: string; tagline: string; restoreMemories: string; cases: string; member: string; history: string; oldPhotos: string; fixScratches: string; reviveFaded: string; addColor: string; termsOfService: string; privacyPolicy: string; madeWithCare: string };
   common: { before: string; after: string; beforeAfter: string };
   home: {
@@ -37,7 +37,7 @@ export type TranslationKeys = {
     article1: { title: string; excerpt: string; readTime: string };
     article2: { title: string; excerpt: string; readTime: string };
   };
-  restore: { pageTitle: string; pageSubtitle: string };
+  restore: { pageTitle: string; pageSubtitle: string; serverError: string };
   cases: {
     badge: string;
     title: string;
@@ -156,6 +156,7 @@ const translations: Record<Locale, TranslationKeys> = {
       more: "More",
       signIn: "Sign In",
       signOut: "Sign Out",
+      clearLoginState: "Clear login state",
       memoryRestore: "AI RestorePic",
     },
     login: {
@@ -173,6 +174,7 @@ const translations: Record<Locale, TranslationKeys> = {
       privacyPolicy: "Privacy Policy",
       redirecting: "Redirecting to Google…",
       pleaseComplete: "Please complete sign-in in the new window.",
+      clearedMessage: "Login state cleared. Please sign in again.",
     },
     footer: {
       memoryRestore: "AI RestorePic",
@@ -273,7 +275,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       article1: { title: "The Beautiful History of Family Photography", excerpt: "From the very first photographs in the 1830s to the snapshots in your family drawer, every era produced images on different materials — tin, glass, paper, and film. Each one ages differently, and each one tells a story worth preserving.", readTime: "7 min read" },
       article2: { title: "Simple Tips to Keep Your Photos Safe for Decades", excerpt: "Store photos in acid-free sleeves, away from sunlight and humidity. But even the best-kept prints will age. Scanning your photos today is the best gift you can give to future generations who want to remember.", readTime: "4 min read" },
     },
-    restore: { pageTitle: "Restore Your Photo", pageSubtitle: "Choose a photo from your family album, and our AI will carefully remove damage, brighten faded colors, and bring back the details you remember." },
+    restore: { pageTitle: "Restore Your Photo", pageSubtitle: "Choose a photo from your family album, and our AI will carefully remove damage, brighten faded colors, and bring back the details you remember.", serverError: "Service temporarily unavailable. Please try again in a moment." },
     cases: { badge: "Cases & Stories", title: "Restoration Cases & Family Stories", subtitle: "See how others use AI to restore old photos and the family memories behind them.", restoreTitle: "Restoration Cases", restoreSubtitle: "Sample cases with placeholder before/after images.", beforeLabel: "Before", afterLabel: "After", storiesTitle: "Family Stories", storiesSubtitle: "Real stories from users: one old photo, one family memory.", ctaTitle: "Restore your precious memories too", ctaSubtitle: "Upload an old photo and let AI restore colors, remove scratches, and preserve family and time.", ctaButton: "Restore now" },
     history: {
       loadingHistory: "Loading your history…",
@@ -377,6 +379,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       more: "Mehr",
       signIn: "Anmelden",
       signOut: "Abmelden",
+      clearLoginState: "Anmeldestatus löschen",
       memoryRestore: "AI RestorePic",
     },
     login: {
@@ -394,6 +397,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       privacyPolicy: "Datenschutzrichtlinie",
       redirecting: "Weiterleitung zu Google…",
       pleaseComplete: "Bitte schließen Sie die Anmeldung im neuen Fenster ab.",
+      clearedMessage: "Anmeldestatus gelöscht. Bitte erneut anmelden.",
     },
     footer: {
       memoryRestore: "AI RestorePic",
@@ -424,7 +428,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
     },
     feature: { howWeHelp: "So helfen wir", restoreWhatMatters: "Das Wichtigste wiederherstellen", feature0: { tag: "Kratzer heilen", title: "Spuren der Zeit sanft entfernen", description: "Im Laufe der Jahre sammeln wertvolle Fotos Kratzer, Knicke und Staub. Unsere KI erkennt jede Unvollkommenheit und füllt sie mit den umgebenden Farben und Texturen aus.", benefit1: "Entfernt Kratzer, Knicke und Staub sanft", benefit2: "Füllt Schäden natürlich aus", benefit3: "Sicher auch für Fotos mit Gesichtern", beforeLabel: "Vorher", afterLabel: "Nachher" }, feature1: { tag: "Gesichter zurückbringen", title: "Ihre Lieben wieder klar erkennen", description: "Unschärfe oder Verblassen in alten Fotos erschweren die Erkennung. Unsere KI schärft Gesichter — Augen, Lächeln, Haare — behutsam.", benefit1: "Schärft auch Gesichter in Gruppenfotos", benefit2: "Hebt Augen, Lächeln und Ausdruck hervor", benefit3: "Jede Person bleibt erkennbar", beforeLabel: "Vorher", afterLabel: "Nachher" }, feature2: { tag: "Farbe hinzufügen", title: "Schwarz-Weiß zum Leben erwecken", description: "Stellen Sie sich Omas Brautkleid in echter Farbe vor. Unsere KI analysiert Formen und Kontext und kolorisiert natürlich und epochengerecht.", benefit1: "Farben passend zur Epoche", benefit2: "Natürliche Hauttöne und Landschaften", benefit3: "Funktioniert mit Fotos aus jeder Dekade", beforeLabel: "Schwarz-Weiß", afterLabel: "In Farbe" }, feature3: { tag: "Körnigkeit reduzieren", title: "Weichzeichner und Korn glätten", description: "Alte Film- und frühe Digitalfotos sind oft körnig. Unsere KI unterscheidet Korn vom echten Bild und bereinigt behutsam.", benefit1: "Foto bleibt scharf, Korn wird reduziert", benefit2: "Für Film und alte Digitalfotos", benefit3: "Ideal zum Neuabdruck", beforeLabel: "Körnig", afterLabel: "Sauber" } },
     knowledge: { learnExplore: "Lernen & Entdecken", storiesTitle: "Geschichten hinter den Fotos", storiesSubtitle: "Kunst, Geschichte und einfache Schritte zur Bewahrung Ihrer wertvollsten Erinnerungen.", readMore: "Weiterlesen", article0: { title: "Wie KI alte Fotos wiederbelebt", excerpt: "Moderne KI erkennt Schäden, die das Auge übersieht — und repariert Ihr Bild in Sekunden wie ein Restaurator.", readTime: "5 Min. Lesezeit" }, article1: { title: "Die Geschichte der Familienfotografie", excerpt: "Von den ersten Fotografien bis zu den Schnappschüssen in Ihrer Schublade: Jede Epoche erzählt eine Geschichte.", readTime: "7 Min. Lesezeit" }, article2: { title: "Tipps: Fotos jahrzehntelang sichern", excerpt: "Säurefreie Hüllen, wenig Licht und Feuchtigkeit. Heute scannen ist das beste Geschenk für künftige Generationen.", readTime: "4 Min. Lesezeit" } },
-    restore: { pageTitle: "Foto wiederherstellen", pageSubtitle: "Wählen Sie ein Foto aus dem Familienalbum — unsere KI entfernt Schäden, hellt Farben auf und bringt Details zurück." },
+    restore: { pageTitle: "Foto wiederherstellen", pageSubtitle: "Wählen Sie ein Foto aus dem Familienalbum — unsere KI entfernt Schäden, hellt Farben auf und bringt Details zurück.", serverError: "Dienst vorübergehend nicht verfügbar. Bitte versuchen Sie es in Kürze erneut." },
     cases: { badge: "Fälle & Geschichten", title: "Restaurierungsfälle & Familiengeschichten", subtitle: "So nutzen andere KI zur Restaurierung und die Geschichten dahinter.", restoreTitle: "Restaurierungsfälle", restoreSubtitle: "Beispielfälle mit Platzhalterbildern.", beforeLabel: "Vorher", afterLabel: "Nachher", storiesTitle: "Familiengeschichten", storiesSubtitle: "Echte Nutzerberichte: ein Foto, eine Erinnerung.", ctaTitle: "Auch Ihre Erinnerungen restaurieren", ctaSubtitle: "Altes Foto hochladen – KI stellt Farben wieder her und entfernt Kratzer.", ctaButton: "Jetzt restaurieren" },
     history: { loadingHistory: "Verlauf wird geladen…", signInToSeeHistory: "Melden Sie sich an, um Ihren Verlauf zu sehen", signInToSeeHistoryDesc: "Wiederhergestellte Fotos werden hier nach der Anmeldung gespeichert.", restorationHistory: "Wiederherstellungsverlauf", photosRestoredWhileSignedIn: "Fotos, die Sie nach der Anmeldung wiederhergestellt haben.", noRestorationsYet: "Noch keine Wiederherstellungen. Stellen Sie ein Foto wieder her, sobald Sie angemeldet sind.", restoreAPhoto: "Foto wiederherstellen", beforeAfter: "Vorher / Nachher" },
     loginSuccess: { title: "Erfolgreich angemeldet", description: "Verlauf und Sync sind jetzt aktiv.", close: "Schließen" },
@@ -447,6 +451,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       more: "Plus",
       signIn: "Connexion",
       signOut: "Déconnexion",
+      clearLoginState: "Effacer l'état de connexion",
       memoryRestore: "AI RestorePic",
     },
     login: {
@@ -464,6 +469,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       privacyPolicy: "Politique de confidentialité",
       redirecting: "Redirection vers Google…",
       pleaseComplete: "Veuillez terminer la connexion dans la nouvelle fenêtre.",
+      clearedMessage: "État de connexion effacé. Veuillez vous reconnecter.",
     },
     footer: {
       memoryRestore: "AI RestorePic",
@@ -494,7 +500,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
     },
     feature: { howWeHelp: "Comment nous aidons", restoreWhatMatters: "Restaurer l'essentiel", feature0: { tag: "Réparer les rayures", title: "Effacer en douceur les marques du temps", description: "Les photos précieuses accumulent rayures, plis et poussière. Notre IA repère chaque imperfection et la comble avec les couleurs et textures environnantes.", benefit1: "Supprime rayures, plis et poussière en douceur", benefit2: "Comble les dommages naturellement", benefit3: "Sûr même pour les photos avec visages", beforeLabel: "Avant", afterLabel: "Après" }, feature1: { tag: "Rendre les visages", title: "Revoyez vos proches clairement", description: "Les visages flous ou délavés rendent les gens méconnaissables. Notre IA affine les détails du visage.", benefit1: "Affine les visages en photo de groupe", benefit2: "Fait ressortir yeux, sourires et expressions", benefit3: "Chacun garde son apparence", beforeLabel: "Avant", afterLabel: "Après" }, feature2: { tag: "Ajouter la couleur", title: "Le noir et blanc prend vie", description: "Imaginez la robe de mariée de grand-mère en vraie couleur. Notre IA étudie les formes et le contexte pour appliquer des couleurs naturelles et d'époque.", benefit1: "Couleurs en accord avec l'époque", benefit2: "Teints de peau et paysages naturels", benefit3: "Fonctionne pour toutes les décennies", beforeLabel: "Noir et blanc", afterLabel: "En couleur" }, feature3: { tag: "Réduire le grain", title: "Lisser le flou et le grain", description: "Les anciens films et appareils numériques produisent souvent des images granuleuses. Notre IA distingue le grain de l'image réelle et nettoie en douceur.", benefit1: "Garde la netteté tout en réduisant le grain", benefit2: "Pour films et anciens numériques", benefit3: "Idéal pour réimprimer", beforeLabel: "Granuleux", afterLabel: "Propre" } },
     knowledge: { learnExplore: "Apprendre et explorer", storiesTitle: "Histoires derrière les photos", storiesSubtitle: "Découvrez l'art, l'histoire et les étapes pour préserver les souvenirs les plus précieux de votre famille.", readMore: "Lire la suite", article0: { title: "Comment l'IA redonne vie aux vieilles photos", excerpt: "L'IA moderne voit les dommages invisibles à l'œil — rayures, couleurs délavées, visages flous. Elle répare votre image en secondes.", readTime: "5 min de lecture" }, article1: { title: "La belle histoire de la photo de famille", excerpt: "Des premiers clichés des années 1830 aux photos de votre tiroir, chaque époque raconte une histoire à préserver.", readTime: "7 min de lecture" }, article2: { title: "Conseils pour conserver vos photos des décennies", excerpt: "Pochettes sans acide, à l'abri de la lumière et de l'humidité. Numériser aujourd'hui est le meilleur cadeau pour les générations futures.", readTime: "4 min de lecture" } },
-    restore: { pageTitle: "Restaurer votre photo", pageSubtitle: "Choisissez une photo de l'album familial ; notre IA supprimera les dommages, ravivera les couleurs et restituera les détails." },
+    restore: { pageTitle: "Restaurer votre photo", pageSubtitle: "Choisissez une photo de l'album familial ; notre IA supprimera les dommages, ravivera les couleurs et restituera les détails.", serverError: "Service temporairement indisponible. Veuillez réessayer dans un instant." },
     cases: { badge: "Cas et histoires", title: "Cas de restauration et histoires familiales", subtitle: "Comment d'autres utilisent l'IA pour restaurer et les souvenirs derrière.", restoreTitle: "Cas de restauration", restoreSubtitle: "Exemples avec images avant/après.", beforeLabel: "Avant", afterLabel: "Après", storiesTitle: "Histoires familiales", storiesSubtitle: "Témoignages réels : une photo, un souvenir.", ctaTitle: "Restaurer vos souvenirs aussi", ctaSubtitle: "Uploadez une vieille photo, l'IA restaure couleurs et rayures.", ctaButton: "Restaurer" },
     history: { loadingHistory: "Chargement de l'historique…", signInToSeeHistory: "Connectez-vous pour voir votre historique", signInToSeeHistoryDesc: "Vos photos restaurées sont enregistrées ici après connexion.", restorationHistory: "Historique de restauration", photosRestoredWhileSignedIn: "Photos que vous avez restaurées en étant connecté.", noRestorationsYet: "Aucune restauration. Restaurez une photo en étant connecté pour la voir ici.", restoreAPhoto: "Restaurer une photo", beforeAfter: "Avant / Après" },
     loginSuccess: { title: "Connexion réussie", description: "Historique et synchronisation sont activés.", close: "Fermer" },
@@ -517,6 +523,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       more: "更多",
       signIn: "登录",
       signOut: "退出",
+      clearLoginState: "清除登录状态",
       memoryRestore: "AI RestorePic",
     },
     login: {
@@ -534,6 +541,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       privacyPolicy: "隐私政策",
       redirecting: "正在跳转到 Google…",
       pleaseComplete: "请在新窗口中完成登录。",
+      clearedMessage: "已清除登录状态，请重新登录。",
     },
     footer: {
       memoryRestore: "AI RestorePic",
@@ -564,7 +572,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
     },
     feature: { howWeHelp: "我们能做什么", restoreWhatMatters: "修复最重要的", feature0: { tag: "修复划痕", title: "轻柔抹去岁月痕迹", description: "珍贵照片会随岁月留下划痕、折痕和污点。我们的 AI 识别每一处瑕疵，用周围色彩与纹理自然填补。", benefit1: "轻柔去除划痕、折痕与灰尘", benefit2: "自然填补损伤，不显人工", benefit3: "含人脸的照片也安全", beforeLabel: "修复前", afterLabel: "修复后" }, feature1: { tag: "还原面容", title: "再次清晰看见所爱之人", description: "老照片中模糊或褪色的脸让人难以辨认。我们的 AI 轻柔锐化面部细节——眼睛、笑容、头发。", benefit1: "集体照中的脸也能锐化", benefit2: "突出眼神、笑容与表情", benefit3: "每人仍保持本人样貌", beforeLabel: "修复前", afterLabel: "修复后" }, feature2: { tag: "添加色彩", title: "黑白照焕发色彩", description: "想象奶奶的婚纱还原真色，或爷爷儿时玩耍的花园重绽繁花。我们的 AI 根据形状与语境为照片赋予自然、贴合时代的色彩。", benefit1: "色彩贴合时代", benefit2: "自然肤色与风景", benefit3: "适用于任意年代的照片", beforeLabel: "黑白", afterLabel: "上色" }, feature3: { tag: "去除颗粒", title: "抚平模糊与颗粒", description: "老胶片与早期数码相机常产生颗粒感。我们的 AI 区分颗粒与真实画面，轻柔去噪，得到可打印装框的清晰照片。", benefit1: "去噪同时保持清晰", benefit2: "适用于胶片与老数码", benefit3: "适合重新冲印", beforeLabel: "颗粒", afterLabel: "干净" } },
     knowledge: { learnExplore: "了解与探索", storiesTitle: "照片背后的故事", storiesSubtitle: "了解保存家庭珍贵回忆的艺术、历史与简单步骤。", readMore: "阅读更多", article0: { title: "AI 如何让老照片重获新生", excerpt: "现代 AI 能看见人眼忽略的损伤——细微划痕、褪色、模糊的脸。它从海量照片中学习应有的样貌，然后像专业修复师一样轻柔修复。全程仅需数秒。", readTime: "5 分钟阅读" }, article1: { title: "家庭摄影的美好历史", excerpt: "从 1830 年代的第一张照片到你家抽屉里的快照，每个时代用不同载体——锡版、玻璃、相纸、胶片。每一种老化方式不同，每一种都值得保存。", readTime: "7 分钟阅读" }, article2: { title: "让照片安全保存数十年的小贴士", excerpt: "用无酸套保存，避光防潮。但再好的保存也会老化。今天扫描照片，是留给未来想回忆的人最好的礼物。", readTime: "4 分钟阅读" } },
-    restore: { pageTitle: "修复你的照片", pageSubtitle: "从家庭相册选一张照片，我们的 AI 会细心去除损伤、提亮褪色并还原你记得的细节。" },
+    restore: { pageTitle: "修复你的照片", pageSubtitle: "从家庭相册选一张照片，我们的 AI 会细心去除损伤、提亮褪色并还原你记得的细节。", serverError: "服务暂时异常，请稍后重试。" },
     cases: { badge: "案例与故事", title: "修复案例与家庭故事", subtitle: "看看其他人如何用 AI 修复老照片，以及一张张旧照背后的家庭记忆。", restoreTitle: "修复案例", restoreSubtitle: "以下为示意案例，使用占位图展示修复前后对比效果。", beforeLabel: "修复前", afterLabel: "修复后", storiesTitle: "家庭故事", storiesSubtitle: "来自用户的真实分享：一张老照片，一段家族记忆。", ctaTitle: "也来修复你的珍贵回忆", ctaSubtitle: "上传老照片，让 AI 帮你还原色彩、去除划痕，留住家人与时光。", ctaButton: "立即修复" },
     history: { loadingHistory: "正在加载历史…", signInToSeeHistory: "登录后可查看历史", signInToSeeHistoryDesc: "登录后修复的照片会保存在这里。", restorationHistory: "修复历史", photosRestoredWhileSignedIn: "您登录后修复的照片。", noRestorationsYet: "暂无修复记录。登录后修复一张照片即可在此查看。", restoreAPhoto: "修复一张照片", beforeAfter: "修复前 / 修复后" },
     loginSuccess: { title: "登录成功", description: "已为你启用历史记录与同步保存功能。", close: "关闭" },
@@ -587,6 +595,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       more: "更多",
       signIn: "登入",
       signOut: "登出",
+      clearLoginState: "清除登入狀態",
       memoryRestore: "AI RestorePic",
     },
     login: {
@@ -604,6 +613,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       privacyPolicy: "隱私權政策",
       redirecting: "正在跳轉至 Google…",
       pleaseComplete: "請在新視窗中完成登入。",
+      clearedMessage: "已清除登入狀態，請重新登入。",
     },
     footer: {
       memoryRestore: "AI RestorePic",
@@ -634,7 +644,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
     },
     feature: { howWeHelp: "我們能做什麼", restoreWhatMatters: "修復最重要的", feature0: { tag: "修復刮痕", title: "輕柔抹去歲月痕跡", description: "珍貴照片會隨歲月留下刮痕、折痕和污點。我們的 AI 識別每一處瑕疵，用周圍色彩與紋理自然填補。", benefit1: "輕柔去除刮痕、折痕與灰塵", benefit2: "自然填補損傷，不顯人工", benefit3: "含人臉的照片也安全", beforeLabel: "修復前", afterLabel: "修復後" }, feature1: { tag: "還原面容", title: "再次清晰看見所愛之人", description: "老照片中模糊或褪色的臉讓人難以辨認。我們的 AI 輕柔銳化面部細節。", benefit1: "集體照中的臉也能銳化", benefit2: "突出眼神、笑容與表情", benefit3: "每人仍保持本人樣貌", beforeLabel: "修復前", afterLabel: "修復後" }, feature2: { tag: "添加色彩", title: "黑白照煥發色彩", description: "想像奶奶的婚紗還原真色，或爺爺兒時玩耍的花園重綻繁花。我們的 AI 根據形狀與語境為照片賦予自然、貼合時代的色彩。", benefit1: "色彩貼合時代", benefit2: "自然膚色與風景", benefit3: "適用於任意年代的照片", beforeLabel: "黑白", afterLabel: "上色" }, feature3: { tag: "去除顆粒", title: "撫平模糊與顆粒", description: "老膠片與早期數位相機常產生顆粒感。我們的 AI 區分顆粒與真實畫面，輕柔去噪。", benefit1: "去噪同時保持清晰", benefit2: "適用於膠片與老數位", benefit3: "適合重新沖印", beforeLabel: "顆粒", afterLabel: "乾淨" } },
     knowledge: { learnExplore: "了解與探索", storiesTitle: "照片背後的故事", storiesSubtitle: "了解保存家庭珍貴回憶的藝術、歷史與簡單步驟。", readMore: "閱讀更多", article0: { title: "AI 如何讓老照片重獲新生", excerpt: "現代 AI 能看見人眼忽略的損傷——細微刮痕、褪色、模糊的臉。它從海量照片中學習應有的樣貌，然後像專業修復師一樣輕柔修復。", readTime: "5 分鐘閱讀" }, article1: { title: "家庭攝影的美好歷史", excerpt: "從 1830 年代的第一張照片到你家抽屜裡的快照，每個時代用不同載體。每一種都值得保存。", readTime: "7 分鐘閱讀" }, article2: { title: "讓照片安全保存數十年的小貼士", excerpt: "用無酸套保存，避光防潮。今天掃描照片，是留給未來想回憶的人最好的禮物。", readTime: "4 分鐘閱讀" } },
-    restore: { pageTitle: "修復你的照片", pageSubtitle: "從家庭相冊選一張照片，我們的 AI 會細心去除損傷、提亮褪色並還原你記得的細節。" },
+    restore: { pageTitle: "修復你的照片", pageSubtitle: "從家庭相冊選一張照片，我們的 AI 會細心去除損傷、提亮褪色並還原你記得的細節。", serverError: "服務暫時異常，請稍後重試。" },
     cases: { badge: "案例與故事", title: "修復案例與家庭故事", subtitle: "看看其他人如何用 AI 修復老照片，以及一張張舊照背後的家庭記憶。", restoreTitle: "修復案例", restoreSubtitle: "以下為示意案例，使用佔位圖展示修復前後對比效果。", beforeLabel: "修復前", afterLabel: "修復後", storiesTitle: "家庭故事", storiesSubtitle: "來自用戶的真實分享：一張老照片，一段家族記憶。", ctaTitle: "也來修復你的珍貴回憶", ctaSubtitle: "上傳老照片，讓 AI 幫你還原色彩、去除劃痕，留住家人與時光。", ctaButton: "立即修復" },
     history: { loadingHistory: "正在載入歷史…", signInToSeeHistory: "登入後可查看歷史", signInToSeeHistoryDesc: "登入後修復的照片會儲存在這裡。", restorationHistory: "修復歷史", photosRestoredWhileSignedIn: "您登入後修復的照片。", noRestorationsYet: "暫無修復記錄。登入後修復一張照片即可在此查看。", restoreAPhoto: "修復一張照片", beforeAfter: "修復前 / 修復後" },
     loginSuccess: { title: "登入成功", description: "已為你啟用歷史記錄與同步儲存功能。", close: "關閉" },
@@ -657,6 +667,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       more: "Más",
       signIn: "Iniciar sesión",
       signOut: "Cerrar sesión",
+      clearLoginState: "Borrar estado de sesión",
       memoryRestore: "AI RestorePic",
     },
     login: {
@@ -674,6 +685,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       privacyPolicy: "Política de privacidad",
       redirecting: "Redirigiendo a Google…",
       pleaseComplete: "Completa el inicio de sesión en la nueva ventana.",
+      clearedMessage: "Estado de sesión borrado. Vuelve a iniciar sesión.",
     },
     footer: {
       memoryRestore: "AI RestorePic",
@@ -704,7 +716,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
     },
     feature: { howWeHelp: "Cómo ayudamos", restoreWhatMatters: "Restaurar lo que más importa", feature0: { tag: "Reparar rayones", title: "Borrar suavemente las marcas del tiempo", description: "Con los años, las fotos preciosas acumulan rayones, pliegues y manchas de polvo. Nuestra IA identifica cada imperfección y la rellena con los colores y texturas del entorno.", benefit1: "Elimina rayones, pliegues y polvo con suavidad", benefit2: "Rellena daños de forma natural", benefit3: "Seguro incluso para fotos con rostros", beforeLabel: "Antes", afterLabel: "Después" }, feature1: { tag: "Recuperar rostros", title: "Vuelve a ver con claridad a tus seres queridos", description: "Los rostros borrosos o desvaídos en fotos antiguas dificultan reconocer a la gente. Nuestra IA afina con suavidad los detalles del rostro.", benefit1: "Afinación de rostros en fotos de grupo", benefit2: "Resalta ojos, sonrisas y expresiones", benefit3: "Cada persona mantiene su aspecto", beforeLabel: "Antes", afterLabel: "Después" }, feature2: { tag: "Añadir color", title: "Ver el blanco y negro cobrar vida", description: "Imagina el vestido de novia de la abuela en su color real. Nuestra IA estudia formas y contexto para aplicar colores naturales y de época.", benefit1: "Colores que coinciden con la época", benefit2: "Tonos de piel y paisajes naturales", benefit3: "Funciona con fotos de cualquier década", beforeLabel: "Blanco y negro", afterLabel: "En color" }, feature3: { tag: "Reducir grano", title: "Suavizar desenfoque y grano", description: "Las fotos de película y las primeras digitales suelen ser granulosas. Nuestra IA distingue el grano de la imagen real y limpia con suavidad.", benefit1: "Mantiene nitidez y reduce grano", benefit2: "Para película y fotos digitales antiguas", benefit3: "Ideal para reimprimir", beforeLabel: "Granulado", afterLabel: "Limpio" } },
     knowledge: { learnExplore: "Aprender y explorar", storiesTitle: "Historias detrás de las fotos", storiesSubtitle: "Descubre el arte, la historia y los pasos para preservar los recuerdos más preciados de tu familia.", readMore: "Leer más", article0: { title: "Cómo la IA devuelve la vida a fotos antiguas", excerpt: "La IA moderna ve daños que el ojo no percibe — rayones, colores desvaídos, rostros borrosos. Repara tu imagen en segundos.", readTime: "5 min de lectura" }, article1: { title: "La bella historia de la fotografía familiar", excerpt: "Desde las primeras fotos de los años 1830 hasta las de tu cajón, cada época cuenta una historia que merece preservarse.", readTime: "7 min de lectura" }, article2: { title: "Consejos para conservar tus fotos durante décadas", excerpt: "Guárdalas en fundas sin ácido, lejos del sol y la humedad. Escanear hoy es el mejor regalo para las generaciones futuras.", readTime: "4 min de lectura" } },
-    restore: { pageTitle: "Restaurar tu foto", pageSubtitle: "Elige una foto del álbum familiar; nuestra IA eliminará daños, avivará colores y recuperará los detalles que recuerdas." },
+    restore: { pageTitle: "Restaurar tu foto", pageSubtitle: "Elige una foto del álbum familiar; nuestra IA eliminará daños, avivará colores y recuperará los detalles que recuerdas.", serverError: "Servicio no disponible temporalmente. Por favor, inténtalo de nuevo en un momento." },
     cases: { badge: "Casos e historias", title: "Casos de restauración e historias familiares", subtitle: "Cómo otros usan la IA para restaurar y las memorias detrás.", restoreTitle: "Casos de restauración", restoreSubtitle: "Casos de ejemplo con imágenes antes/después.", beforeLabel: "Antes", afterLabel: "Después", storiesTitle: "Historias familiares", storiesSubtitle: "Historias reales: una foto, un recuerdo.", ctaTitle: "Restaura tus recuerdos también", ctaSubtitle: "Sube una foto antigua; la IA restaura colores y quita rayones.", ctaButton: "Restaurar ahora" },
     history: { loadingHistory: "Cargando historial…", signInToSeeHistory: "Inicia sesión para ver tu historial", signInToSeeHistoryDesc: "Tus fotos restauradas se guardan aquí tras iniciar sesión.", restorationHistory: "Historial de restauración", photosRestoredWhileSignedIn: "Fotos que has restaurado con la sesión iniciada.", noRestorationsYet: "Aún no hay restauraciones. Restaura una foto con la sesión iniciada para verla aquí.", restoreAPhoto: "Restaurar una foto", beforeAfter: "Antes / Después" },
     loginSuccess: { title: "Sesión iniciada correctamente", description: "El historial y la sincronización están activos.", close: "Cerrar" },
@@ -727,6 +739,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       more: "Mais",
       signIn: "Entrar",
       signOut: "Sair",
+      clearLoginState: "Limpar estado de login",
       memoryRestore: "AI RestorePic",
     },
     login: {
@@ -744,6 +757,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       privacyPolicy: "Política de privacidade",
       redirecting: "Redirecionando para o Google…",
       pleaseComplete: "Conclua o login na nova janela.",
+      clearedMessage: "Estado de login limpo. Faça login novamente.",
     },
     footer: {
       memoryRestore: "AI RestorePic",
@@ -774,7 +788,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
     },
     feature: { howWeHelp: "Como ajudamos", restoreWhatMatters: "Restaurar o que importa", feature0: { tag: "Reparar arranhões", title: "Apagar suavemente as marcas do tempo", description: "Com o tempo, fotos preciosas ganham arranhões, vincos e manchas. Nossa IA identifica cada imperfeição e preenche com as cores e texturas ao redor.", benefit1: "Remove arranhões, vincos e pó com suavidade", benefit2: "Preenche danos de forma natural", benefit3: "Seguro mesmo para fotos com rostos", beforeLabel: "Antes", afterLabel: "Depois" }, feature1: { tag: "Recuperar rostos", title: "Veja seus entes queridos com clareza de novo", description: "Rostos desfocados ou desbotados em fotos antigas dificultam o reconhecimento. Nossa IA afia com suavidade os detalhes do rosto.", benefit1: "Afia rostos em fotos de grupo", benefit2: "Destaca olhos, sorrisos e expressões", benefit3: "Cada pessoa mantém sua aparência", beforeLabel: "Antes", afterLabel: "Depois" }, feature2: { tag: "Adicionar cor", title: "Ver preto e branco ganhar vida", description: "Imagine o vestido de noiva da vovó na cor real. Nossa IA estuda formas e contexto para aplicar cores naturais e de época.", benefit1: "Cores que combinam com a época", benefit2: "Tons de pele e paisagens naturais", benefit3: "Funciona com fotos de qualquer década", beforeLabel: "Preto e branco", afterLabel: "Colorido" }, feature3: { tag: "Reduzir grão", title: "Suavizar desfoque e grão", description: "Fotos de filme e câmeras digitais antigas costumam ser granuladas. Nossa IA distingue o grão da imagem real e limpa com suavidade.", benefit1: "Mantém nitidez e reduz grão", benefit2: "Para filme e fotos digitais antigas", benefit3: "Ótimo para reimprimir", beforeLabel: "Granulado", afterLabel: "Limpo" } },
     knowledge: { learnExplore: "Aprender e explorar", storiesTitle: "Histórias por trás das fotos", storiesSubtitle: "Descubra a arte, a história e os passos para preservar as memórias mais preciosas da sua família.", readMore: "Ler mais", article0: { title: "Como a IA traz fotos antigas de volta à vida", excerpt: "A IA moderna vê danos que o olho não percebe — arranhões, cores desbotadas, rostos desfocados. Ela repara sua imagem em segundos.", readTime: "5 min de leitura" }, article1: { title: "A bela história da fotografia de família", excerpt: "Das primeiras fotos dos anos 1830 às da sua gaveta, cada época conta uma história que merece ser preservada.", readTime: "7 min de leitura" }, article2: { title: "Dicas para manter suas fotos seguras por décadas", excerpt: "Guarde em capas sem ácido, longe do sol e da umidade. Digitalizar hoje é o melhor presente para as gerações futuras.", readTime: "4 min de leitura" } },
-    restore: { pageTitle: "Restaurar sua foto", pageSubtitle: "Escolha uma foto do álbum de família; nossa IA removerá danos, avivará cores e recuperará os detalhes que você lembra." },
+    restore: { pageTitle: "Restaurar sua foto", pageSubtitle: "Escolha uma foto do álbum de família; nossa IA removerá danos, avivará cores e recuperará os detalhes que você lembra.", serverError: "Serviço temporariamente indisponível. Tente novamente em um momento." },
     cases: { badge: "Casos e histórias", title: "Casos de restauração e histórias de família", subtitle: "Como outros usam a IA para restaurar e as memórias por trás.", restoreTitle: "Casos de restauração", restoreSubtitle: "Casos de exemplo com imagens antes/depois.", beforeLabel: "Antes", afterLabel: "Depois", storiesTitle: "Histórias de família", storiesSubtitle: "Histórias reais: uma foto, uma memória.", ctaTitle: "Restaurar suas memórias também", ctaSubtitle: "Envie uma foto antiga; a IA restaura cores e remove arranhões.", ctaButton: "Restaurar agora" },
     history: { loadingHistory: "Carregando histórico…", signInToSeeHistory: "Entre para ver seu histórico", signInToSeeHistoryDesc: "Suas fotos restauradas são salvas aqui após entrar.", restorationHistory: "Histórico de restauração", photosRestoredWhileSignedIn: "Fotos que você restaurou com a sessão iniciada.", noRestorationsYet: "Ainda não há restaurações. Restaure uma foto com a sessão iniciada para aparecer aqui.", restoreAPhoto: "Restaurar uma foto", beforeAfter: "Antes / Depois" },
     loginSuccess: { title: "Login realizado com sucesso", description: "Histórico e sincronização estão ativos.", close: "Fechar" },
@@ -797,6 +811,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       more: "المزيد",
       signIn: "تسجيل الدخول",
       signOut: "تسجيل الخروج",
+      clearLoginState: "مسح حالة تسجيل الدخول",
       memoryRestore: "AI RestorePic",
     },
     login: {
@@ -814,6 +829,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       privacyPolicy: "سياسة الخصوصية",
       redirecting: "جاري التوجيه إلى Google…",
       pleaseComplete: "يرجى إكمال تسجيل الدخول في النافذة الجديدة.",
+      clearedMessage: "تم مسح حالة تسجيل الدخول. يرجى تسجيل الدخول مرة أخرى.",
     },
     footer: {
       memoryRestore: "AI RestorePic",
@@ -844,7 +860,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
     },
     feature: { howWeHelp: "كيف نساعد", restoreWhatMatters: "استعادة الأهم", feature0: { tag: "إصلاح الخدوش", title: "مسح آثار الزمن برفق", description: "بمرور السنوات تتراكم الخدوش والثنيات والغبار على الصور الثمينة. ذكاؤنا يحدد كل عيب ويملأه بالألوان والملمس المحيط.", benefit1: "يزيل الخدوش والثنيات والغبار برفق", benefit2: "يملأ الأضرار بشكل طبيعي", benefit3: "آمن حتى للصور التي تحتوي وجوهاً", beforeLabel: "قبل", afterLabel: "بعد" }, feature1: { tag: "استعادة الوجوه", title: "أعد رؤية أحبائك بوضوح", description: "الوجوه الضبابية أو الباهتة في الصور القديمة تصعّب التعرف على الناس. ذكاؤنا يحدد تفاصيل الوجه برفق.", benefit1: "يحدد الوجوه في الصور الجماعية", benefit2: "يبرز العيون والابتسامات والتعبيرات", benefit3: "كل شخص يبقى على طبيعته", beforeLabel: "قبل", afterLabel: "بعد" }, feature2: { tag: "إضافة اللون", title: "شاهد الأبيض والأسود ينبضان بالحياة", description: "تخيل فستان زفاف الجدة بلونه الحقيقي. ذكاؤنا يدرس الأشكال والسياق لتطبيق ألوان طبيعية وعصرية.", benefit1: "ألوان تتناسب مع الفترة", benefit2: "بشرات ومناظر طبيعية", benefit3: "يناسب صور أي عقد", beforeLabel: "أبيض وأسود", afterLabel: "ملون" }, feature3: { tag: "تقليل الحبيبات", title: "تنعيم الضبابية والحبيبات", description: "صور الأفلام والكاميرات الرقمية القديمة غالباً ما تكون حبيبية. ذكاؤنا يفرق بين الحبيبات والصورة الحقيقية وينظف برفق.", benefit1: "يحافظ على الوضوح ويقلل الحبيبات", benefit2: "لصور الأفلام والرقمية القديمة", benefit3: "مثالي لإعادة الطباعة", beforeLabel: "حبيبي", afterLabel: "نظيف" } },
     knowledge: { learnExplore: "تعلم واستكشف", storiesTitle: "قصص خلف الصور", storiesSubtitle: "اكتشف الفن والتاريخ والخطوات البسيطة لحفظ أثمن ذكريات عائلتك.", readMore: "اقرأ المزيد", article0: { title: "كيف يعيد الذكاء الاصطناعي الحياة للصور القديمة", excerpt: "الذكاء الاصطناعي الحديث يرى أضراراً لا تراها العين — خدوشاً وألواناً باهتة ووجوهاً ضبابية. يصلح صورتك في ثوانٍ.", readTime: "٥ دقائق قراءة" }, article1: { title: "التاريخ الجميل لتصوير العائلة", excerpt: "من أوائل الصور في ثلاثينيات القرن التاسع عشر إلى لقطات درجك، كل حقبة تحكي قصة تستحق الحفظ.", readTime: "٧ دقائق قراءة" }, article2: { title: "نصائح بسيطة لحفظ صورك لعقود", excerpt: "احفظها في أكمام خالية من الحمض، بعيداً عن الشمس والرطوبة. المسح الرقمي اليوم أفضل هدية للأجيال القادمة.", readTime: "٤ دقائق قراءة" } },
-    restore: { pageTitle: "استعادة صورتك", pageSubtitle: "اختر صورة من ألبوم العائلة؛ ذكاؤنا يزيل الأضرار ويحيي الألوان ويعيد التفاصيل التي تتذكرها." },
+    restore: { pageTitle: "استعادة صورتك", pageSubtitle: "اختر صورة من ألبوم العائلة؛ ذكاؤنا يزيل الأضرار ويحيي الألوان ويعيد التفاصيل التي تتذكرها.", serverError: "الخدمة غير متاحة مؤقتاً. يرجى المحاولة مرة أخرى بعد قليل." },
     cases: { badge: "حالات وقصص", title: "حالات الاستعادة وقصص العائلة", subtitle: "كيف يستخدم الآخرون الذكاء الاصطناعي واستعادة الذكريات.", restoreTitle: "حالات الاستعادة", restoreSubtitle: "حالات نموذجية مع صور قبل/بعد.", beforeLabel: "قبل", afterLabel: "بعد", storiesTitle: "قصص عائلية", storiesSubtitle: "قصص حقيقية: صورة واحدة، ذكرى واحدة.", ctaTitle: "استعد ذكرياتك أيضاً", ctaSubtitle: "ارفع صورة قديمة؛ الذكاء الاصطناعي يستعيد الألوان ويزيل الخدوش.", ctaButton: "استعادة الآن" },
     history: { loadingHistory: "جاري تحميل السجل…", signInToSeeHistory: "سجّل الدخول لعرض سجلك", signInToSeeHistoryDesc: "صورك المستعادة تُحفظ هنا بعد تسجيل الدخول.", restorationHistory: "سجل الاستعادة", photosRestoredWhileSignedIn: "الصور التي استعدتها أثناء تسجيل الدخول.", noRestorationsYet: "لا استعادة بعد. استعد صورة أثناء تسجيل الدخول لتظهر هنا.", restoreAPhoto: "استعادة صورة", beforeAfter: "قبل / بعد" },
     loginSuccess: { title: "تم تسجيل الدخول بنجاح", description: "السجل والمزامنة مفعّلان الآن.", close: "إغلاق" },

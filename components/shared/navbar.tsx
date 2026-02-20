@@ -281,6 +281,22 @@ export function Navbar() {
                     </div>
                   </div>
                   <button
+                    type="button"
+                    onClick={async () => {
+                      setUserMenuOpen(false);
+                      await signOut({ redirect: false });
+                      try {
+                        sessionStorage.removeItem("hero_upload");
+                        sessionStorage.removeItem("hero_upload_mime");
+                      } catch {}
+                      window.location.href = "/?login=1&cleared=1";
+                    }}
+                    className="w-full flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-warm-500 hover:bg-warm-50 hover:text-warm-700 transition-colors mt-1"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    {t("nav.clearLoginState")}
+                  </button>
+                  <button
                     onClick={() => signOut({ callbackUrl: "/" })}
                     className="w-full flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-warm-500 hover:bg-warm-50 hover:text-warm-700 transition-colors mt-1"
                   >
@@ -300,7 +316,7 @@ export function Navbar() {
                 <LogIn className="w-4 h-4" />
                 {t("nav.signIn")}
               </button>
-              <LoginModal open={loginModalOpen} onClose={closeLoginModal} />
+              <LoginModal open={loginModalOpen} onClose={closeLoginModal} cleared={searchParams.get("cleared") === "1"} />
             </>
           )}
         </nav>

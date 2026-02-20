@@ -1,6 +1,6 @@
 import { createHash } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
-import { supabase, supabaseAdmin } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase";
 
 const MAX_CONTENT_LENGTH = 2000;
 const MAX_EMAIL_LENGTH = 320;
@@ -21,15 +21,25 @@ function gravatarUrl(email: string): string {
   return `https://www.gravatar.com/avatar/${hash}?s=96&d=mp`;
 }
 
+const isHtmlResponse = (msg: unknown): boolean =>
+  typeof msg === "string" && (msg.trimStart().startsWith("<!") || msg.includes("</html>"));
+
 export async function GET() {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("user_reviews")
     .select("id, email, content, country, created_at")
     .order("created_at", { ascending: false })
     .limit(50);
 
   if (error) {
-    console.error("[/api/reviews GET]", error);
+    const msg = error?.message ?? String(error);
+    if (isHtmlResponse(msg)) {
+      console.error(
+        "[/api/reviews GET] Supabase returned HTML instead of JSON. Check NEXT_PUBLIC_SUPABASE_URL (must be your Supabase project URL, e.g. https://xxx.supabase.co)."
+      );
+    } else {
+      console.error("[/api/reviews GET]", error);
+    }
     return NextResponse.json({ error: "Failed to load reviews" }, { status: 500 });
   }
 

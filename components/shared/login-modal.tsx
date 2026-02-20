@@ -11,9 +11,11 @@ const AUTH_CALLBACK_URL = "/auth/callback?next=" + encodeURIComponent("/?login=s
 export function LoginModal({
   open,
   onClose,
+  cleared = false,
 }: {
   open: boolean;
   onClose: () => void;
+  cleared?: boolean;
 }) {
   const { t } = useLocale();
   const [isRedirecting, setIsRedirecting] = useState(false);
@@ -40,6 +42,11 @@ export function LoginModal({
         </div>
       ) : (
         <div className="pt-8 pb-6 px-6 bg-warm-50">
+          {cleared && (
+            <p className="text-center text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2 mb-4">
+              {t("login.clearedMessage")}
+            </p>
+          )}
           <div className="text-center mb-6">
             <h2 id="login-modal-title" className="font-serif text-2xl font-bold text-warm-800 mb-1">
               {t("login.welcomeToBrand")}

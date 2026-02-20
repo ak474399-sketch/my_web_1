@@ -70,7 +70,7 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
       try {
         data = await res.json();
       } catch {
-        setError(res.ok ? "Something went wrong. Please try again." : `Request failed (${res.status})`);
+        setError(res.ok ? t("restore.serverError") : (res.status === 500 ? t("restore.serverError") : `Request failed (${res.status})`));
         return;
       }
 
@@ -88,7 +88,8 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
           setError(data.message ?? data.error ?? "生成失败");
           pointsTipTimer.current = setTimeout(() => setPointsTip(null), 4000);
         } else {
-          setError(data.message ?? data.error ?? `Request failed (${res.status})`);
+          const fallback = res.status === 500 ? t("restore.serverError") : `Request failed (${res.status})`;
+          setError(res.status === 500 ? (data.message ?? t("restore.serverError")) : (data.message ?? data.error ?? fallback));
         }
         return;
       }
