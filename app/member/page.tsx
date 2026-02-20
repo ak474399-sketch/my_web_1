@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -14,7 +14,7 @@ type CreditsData = {
   lastRefillAt: string | null;
 };
 
-export default function MemberCenterPage() {
+function MemberCenterContent() {
   const { t } = useLocale();
   const { data: session, status } = useSession();
   const searchParams = useSearchParams();
@@ -111,5 +111,13 @@ export default function MemberCenterPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function MemberCenterPage() {
+  return (
+    <Suspense fallback={<div className="max-w-2xl mx-auto py-16 text-center text-warm-500">Loading…</div>}>
+      <MemberCenterContent />
+    </Suspense>
   );
 }
