@@ -92,7 +92,7 @@ export async function getCredits(userId: string): Promise<UserCreditsRow | null>
 
 const INITIAL_BONUS_REASONS = ["signup_bonus", "initial_bonus"] as const;
 
-/** 未获得过一次性 5 积分的用户发放 5 积分（仅一次）。含老用户从未拿过的。 */
+/** 未获得过一次性 5 积分的用户发放 5 积分（仅一次）。含老用户从未拿过的。先插入记录再改余额，配合 DB 唯一约束防并发重复发放。 */
 export async function grantInitialBonusIfEligible(
   userId: string
 ): Promise<{ granted: boolean }> {
@@ -115,19 +115,25 @@ export async function grantInitialBonusIfEligible(
   if (!user) return { granted: false };
 
   const nowIso = new Date().toISOString();
-  const newCredits = (user.credits ?? 0) + 5;
 
-  await supabaseAdmin
-    .from("users")
-    .update({ credits: newCredits, updated_at: nowIso })
-    .eq("id", userId);
-
-  await supabaseAdmin.from("points_history").insert({
+  const { error: insertErr } = await supabaseAdmin.from("points_history").insert({
     user_id: userId,
     amount: 5,
     reason: "initial_bonus",
     created_at: nowIso,
   });
+
+  if (insertErr) {
+    const code = (insertErr as { code?: string })?.code;
+    if (code === "23505") return { granted: false };
+    throw insertErr;
+  }
+
+  const newCredits = (user.credits ?? 0) + 5;
+  await supabaseAdmin
+    .from("users")
+    .update({ credits: newCredits, updated_at: nowIso })
+    .eq("id", userId);
 
   return { granted: true };
 }

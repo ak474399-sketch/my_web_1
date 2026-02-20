@@ -1,10 +1,9 @@
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { NextRequest, NextResponse } from "next/server";
+import { getSessionFromRequest } from "@/lib/auth";
 import { supabaseAdmin } from "@/lib/supabase";
 
-export async function GET() {
-  const session = await getServerSession(authOptions);
+export async function GET(request: NextRequest) {
+  const session = await getSessionFromRequest(request);
   const userId = session?.user?.id as string | undefined;
 
   if (!session?.user) {
@@ -12,11 +11,8 @@ export async function GET() {
   }
 
   if (!userId) {
-    console.error("[/api/restore/history] session.user.id missing — user may need to sign out and sign in again");
-    return NextResponse.json(
-      { error: "Session invalid", message: "请退出后重新登录" },
-      { status: 401 }
-    );
+    console.error("[/api/restore/history] session.user.id missing");
+    return NextResponse.json({ error: "Session invalid", message: "请刷新页面或重新登录" }, { status: 401 });
   }
 
   const { data, error } = await supabaseAdmin

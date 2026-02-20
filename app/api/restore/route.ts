@@ -4,36 +4,16 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
+import { getSessionFromRequest } from "@/lib/auth";
 import { restorePhoto } from "@/lib/gemini";
-import { authOptions } from "@/lib/auth";
 import { supabaseAdmin } from "@/lib/supabase";
 import { uploadRestorationImages } from "@/lib/storage";
 import { deductForRestore, refundForRestore } from "@/lib/credits";
 
 const MAX_BODY = 10 * 1024 * 1024; // 10MB
 
-/** 从 Request 的 Cookie 头解析为 { name: value }，供 getServerSession 使用 */
-function cookiesFromRequest(request: NextRequest): Record<string, string> {
-  const cookieHeader = request.headers.get("cookie");
-  if (!cookieHeader) return {};
-  return Object.fromEntries(
-    cookieHeader.split(";").map((s) => {
-      const i = s.indexOf("=");
-      const name = i === -1 ? s.trim() : s.slice(0, i).trim();
-      const value = i === -1 ? "" : s.slice(i + 1).trim();
-      return [name, value];
-    })
-  );
-}
-
 export async function POST(request: NextRequest) {
-  const req = {
-    headers: Object.fromEntries(request.headers.entries()),
-    cookies: cookiesFromRequest(request),
-  };
-  const res = { getHeader: () => undefined, setCookie: () => {}, setHeader: () => {} };
-  const session = await getServerSession(req as never, res as never, authOptions);
+  const session = await getSessionFromRequest(request);
   const userId = session?.user?.id as string | undefined;
 
   if (!userId) {

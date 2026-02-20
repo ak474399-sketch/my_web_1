@@ -38,10 +38,19 @@ export function LoginSuccessToast() {
 
     if (!bonusFetched.current) {
       bonusFetched.current = true;
-      fetch("/api/user/initial-bonus", { credentials: "include" })
-        .then((res) => (res.ok ? res.json() : null))
-        .then((data) => data?.granted === true && setBonusGranted(true))
-        .catch(() => {});
+      const delayMs = 400;
+      const tryFetch = (retry = false) =>
+        fetch("/api/user/initial-bonus", { credentials: "include" })
+          .then((res) => {
+            if (res.status === 401 && !retry) {
+              setTimeout(() => tryFetch(true), 600);
+              return null;
+            }
+            return res.ok ? res.json() : null;
+          })
+          .then((data) => data?.granted === true && setBonusGranted(true))
+          .catch(() => {});
+      setTimeout(tryFetch, delayMs);
     }
 
     setVisible(true);
