@@ -114,6 +114,10 @@ export async function grantInitialBonusIfEligible(
 
   if (!user) return { granted: false };
 
+  if ((user.credits ?? 0) >= 5) {
+    return { granted: false };
+  }
+
   const nowIso = new Date().toISOString();
 
   const { error: insertErr } = await supabaseAdmin.from("points_history").insert({

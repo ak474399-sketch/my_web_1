@@ -1,9 +1,10 @@
 import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
+import { getToken } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
 import { supabaseAdmin } from "@/lib/supabase";
 
-/** 从 Request 解析 cookies，供 App Router 的 API 路由正确获取 session */
+/** 从 Request 解析 cookies，供 getServerSession 使用 */
 function cookiesFromRequest(request: Request): Record<string, string> {
   const cookieHeader = request.headers.get("cookie");
   if (!cookieHeader) return {};
@@ -17,8 +18,43 @@ function cookiesFromRequest(request: Request): Record<string, string> {
   );
 }
 
-/** 在 App Router 的 GET/POST 等 API 中传入 request，以正确读取 session（否则 getServerSession(authOptions) 可能拿不到 cookie） */
+/** 供 getToken 使用的 req 形态：需带 headers 与 cookies（next-auth 从 cookie 读 JWT） */
+function reqForJwt(request: Request) {
+  return {
+    headers: request.headers,
+    cookies: cookiesFromRequest(request),
+  };
+}
+
+/**
+ * 在 App Router 的 API 中从 request 获取当前用户 id。
+ * 优先用 getToken 从 JWT cookie 解析（在 Route Handler 中最可靠），否则回退到 getServerSession。
+ */
+export async function getUserIdFromRequest(request: Request): Promise<string | null> {
+  const secret = process.env.NEXTAUTH_SECRET;
+  if (secret) {
+    const token = await getToken({ req: reqForJwt(request) as never, secret });
+    const id = (token as { userId?: string } | null)?.userId;
+    if (id) return id;
+  }
+  const session = await getSessionFromRequest(request);
+  return (session?.user?.id as string) ?? null;
+}
+
+/** 在 App Router 的 API 中传入 request 获取 session；优先用 JWT 构造保证 user.id 存在。 */
 export async function getSessionFromRequest(request: Request) {
+  const secret = process.env.NEXTAUTH_SECRET;
+  if (secret) {
+    const token = await getToken({ req: reqForJwt(request) as never, secret });
+    if (token) {
+      const userId = (token as { userId?: string }).userId;
+      if (userId)
+        return {
+          user: { id: userId, email: token.email ?? null, name: token.name ?? null, image: token.picture ?? null },
+          expires: token.exp ? new Date(token.exp * 1000).toISOString() : "",
+        } as Awaited<ReturnType<typeof getServerSession>>;
+    }
+  }
   const req = {
     headers: Object.fromEntries(request.headers.entries()),
     cookies: cookiesFromRequest(request),

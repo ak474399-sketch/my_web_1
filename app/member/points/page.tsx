@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Coins, ChevronDown } from "lucide-react";
 import { useLocale } from "@/components/shared/locale-provider";
+import { hasLocalBonusRecord, setLocalBonusRecord } from "@/lib/initial-bonus-storage";
 
 type Item = {
   id: string;
@@ -32,6 +33,7 @@ export default function PointsHistoryPage() {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
   const [credits, setCredits] = useState<number | null>(null);
+  const initialBonusFetched = useRef(false);
 
   useEffect(() => {
     if (status !== "authenticated") {
@@ -43,6 +45,28 @@ export default function PointsHistoryPage() {
       .then((res) => (res.ok ? res.json() : null))
       .then((d) => d != null && setCredits(d.credits))
       .catch(() => setCredits(null));
+  }, [status]);
+
+  useEffect(() => {
+    if (status !== "authenticated" || !session?.user) return;
+    if (initialBonusFetched.current) return;
+    initialBonusFetched.current = true;
+    const userId = (session.user as { id?: string })?.id;
+    if (userId && hasLocalBonusRecord(userId)) return;
+    fetch("/api/user/initial-bonus", { credentials: "include" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.granted && userId) {
+          setLocalBonusRecord(userId);
+          fetch("/api/user/credits", { credentials: "include" })
+            .then((r) => (r.ok ? r.json() : null))
+            .then((d) => d != null && setCredits(d.credits));
+          fetch("/api/user/points-history?page=1", { credentials: "include" })
+            .then((r) => (r.ok ? r.json() : { items: [] }))
+            .then((d) => setItems(d.items ?? []));
+        }
+      })
+      .catch(() => {});
   }, [status]);
 
   useEffect(() => {

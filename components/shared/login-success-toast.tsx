@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { CheckCircle, X } from "lucide-react";
 import { useLocale } from "@/components/shared/locale-provider";
 import { logLogin } from "@/lib/analytics";
+import { hasLocalBonusRecord, setLocalBonusRecord } from "@/lib/initial-bonus-storage";
 
 const DURATION_MS = 2500;
 
@@ -38,19 +39,29 @@ export function LoginSuccessToast() {
 
     if (!bonusFetched.current) {
       bonusFetched.current = true;
-      const delayMs = 400;
-      const tryFetch = (retry = false) =>
-        fetch("/api/user/initial-bonus", { credentials: "include" })
-          .then((res) => {
-            if (res.status === 401 && !retry) {
-              setTimeout(() => tryFetch(true), 600);
-              return null;
-            }
-            return res.ok ? res.json() : null;
-          })
-          .then((data) => data?.granted === true && setBonusGranted(true))
-          .catch(() => {});
-      setTimeout(tryFetch, delayMs);
+      const userId = (session.user as { id?: string })?.id;
+      if (userId && hasLocalBonusRecord(userId)) {
+        setBonusGranted(true);
+      } else {
+        const delayMs = 400;
+        const tryFetch = (retry = false) =>
+          fetch("/api/user/initial-bonus", { credentials: "include" })
+            .then((res) => {
+              if (res.status === 401 && !retry) {
+                setTimeout(() => tryFetch(true), 600);
+                return null;
+              }
+              return res.ok ? res.json() : null;
+            })
+            .then((data) => {
+              if (data?.granted === true) {
+                setLocalBonusRecord(userId);
+                setBonusGranted(true);
+              }
+            })
+            .catch(() => {});
+        setTimeout(tryFetch, delayMs);
+      }
     }
 
     setVisible(true);
