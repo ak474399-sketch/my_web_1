@@ -41,28 +41,53 @@ function reqForJwt(request: Request) {
  */
 export async function getUserIdFromRequest(request: Request): Promise<string | null> {
   const secret = process.env.NEXTAUTH_SECRET;
+  const debugInfo: Record<string, unknown> = { hasSecret: !!secret };
+
   if (secret) {
     try {
-      const token = await getToken({ req: reqForJwt(request) as never, secret });
+      const jwtReq = reqForJwt(request);
+      const cookieNames = Object.keys(jwtReq.cookies).filter(
+        (n) => n.includes("next-auth") || n.includes("__Secure")
+      );
+      debugInfo.sessionCookieNames = cookieNames;
+
+      const token = await getToken({ req: jwtReq as never, secret });
+      debugInfo.hasToken = !!token;
       if (token) {
+        debugInfo.tokenKeys = Object.keys(token);
+        debugInfo.hasUserId = !!(token as { userId?: string }).userId;
+        debugInfo.hasEmail = !!token.email;
         const id = (token as { userId?: string }).userId;
         if (id) return id;
-        // userId not in token — try email lookup
         if (token.email) {
           const { data } = await supabaseAdmin
             .from("users")
             .select("id")
             .eq("email", String(token.email))
             .maybeSingle();
+          debugInfo.emailLookupFound = !!data?.id;
           if (data?.id) return data.id;
         }
       }
     } catch (err) {
+      debugInfo.getTokenError = (err as Error)?.message;
       console.warn("[getUserIdFromRequest] getToken failed:", (err as Error)?.message);
     }
   }
-  const session = await getSessionFromRequest(request);
-  return (session?.user?.id as string) ?? null;
+
+  try {
+    const session = await getSessionFromRequest(request);
+    debugInfo.hasSession = !!session;
+    debugInfo.sessionUserId = (session?.user as { id?: string })?.id ?? null;
+    if (session?.user) return (session.user as { id: string }).id ?? null;
+  } catch (err) {
+    debugInfo.sessionError = (err as Error)?.message;
+  }
+
+  console.warn("[getUserIdFromRequest] returning null, debug:", JSON.stringify(debugInfo));
+  // Temporarily expose debug info in development or when auth fails
+  (request as Request & { _authDebug?: unknown })._authDebug = debugInfo;
+  return null;
 }
 
 /** 在 App Router 的 API 中传入 request 获取 session；优先用 JWT 构造保证 user.id 存在。 */
