@@ -13,51 +13,72 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  // Fix encoded callback URL cookie that causes NextAuth INVALID_CALLBACK_URL_ERROR.
-  // If the cookie value looks like "https%3A%2F%2F..." instead of "https://...",
-  // rewrite the request cookie (decoded) and also set the response cookie so the
-  // browser stores the corrected value for subsequent requests.
-  let needsFix = false;
-  const cookieHeader = request.headers.get("cookie") ?? "";
-  let fixedCookieHeader = cookieHeader;
-
-  for (const name of CALLBACK_COOKIE_NAMES) {
-    const raw = request.cookies.get(name)?.value;
-    if (!raw) continue;
-    if (raw.startsWith("https%3A") || raw.startsWith("http%3A")) {
-      needsFix = true;
-      try {
-        const decoded = decodeURIComponent(raw);
-        fixedCookieHeader = fixedCookieHeader.replace(
-          new RegExp(`(${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})=${raw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`),
-          `${name}=${decoded}`
-        );
-      } catch {
-        // can't decode — just delete it
-        fixedCookieHeader = fixedCookieHeader.replace(
-          new RegExp(`${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}=[^;]*;?\\s*`),
-          ""
-        );
+  // For non-auth API routes and pages: strip the callback URL cookie entirely.
+  // This cookie is only needed during the OAuth sign-in/callback flow.
+  // If it contains an encoded URL (https%3A%2F%2F...), it causes NextAuth's
+  // assertConfig to throw INVALID_CALLBACK_URL_ERROR, breaking getServerSession.
+  const isAuthRoute = pathname.startsWith("/api/auth/");
+  if (isAuthRoute) {
+    // During OAuth flow, decode the cookie instead of stripping it
+    let needsFix = false;
+    const parts: string[] = [];
+    for (const part of (request.headers.get("cookie") ?? "").split(";")) {
+      const eq = part.indexOf("=");
+      if (eq === -1) { parts.push(part); continue; }
+      const name = part.slice(0, eq).trim();
+      const value = part.slice(eq + 1).trim();
+      if (CALLBACK_COOKIE_NAMES.includes(name) && (value.startsWith("https%3A") || value.startsWith("http%3A"))) {
+        needsFix = true;
+        try {
+          parts.push(`${name}=${decodeURIComponent(value)}`);
+        } catch {
+          // skip bad cookie
+        }
+      } else {
+        parts.push(part);
       }
+    }
+    if (needsFix) {
+      const requestHeaders = new Headers(request.headers);
+      requestHeaders.set("cookie", parts.join("; "));
+      const response = NextResponse.next({ request: { headers: requestHeaders } });
+      for (const name of CALLBACK_COOKIE_NAMES) {
+        const raw = request.cookies.get(name)?.value;
+        if (raw && (raw.startsWith("https%3A") || raw.startsWith("http%3A"))) {
+          try { response.cookies.set(name, decodeURIComponent(raw), { path: "/" }); } catch { response.cookies.delete(name); }
+        }
+      }
+      return response;
+    }
+    return NextResponse.next();
+  }
+
+  // For all other routes: remove callback URL cookies completely from the request
+  // to prevent assertConfig failures in getServerSession.
+  let hasCallbackCookie = false;
+  for (const name of CALLBACK_COOKIE_NAMES) {
+    if (request.cookies.get(name)) {
+      hasCallbackCookie = true;
+      break;
     }
   }
 
-  if (needsFix) {
+  if (hasCallbackCookie) {
+    const parts: string[] = [];
+    for (const part of (request.headers.get("cookie") ?? "").split(";")) {
+      const eq = part.indexOf("=");
+      if (eq === -1) { parts.push(part); continue; }
+      const name = part.slice(0, eq).trim();
+      if (CALLBACK_COOKIE_NAMES.includes(name)) continue; // strip it
+      parts.push(part);
+    }
     const requestHeaders = new Headers(request.headers);
-    requestHeaders.set("cookie", fixedCookieHeader);
-    const response = NextResponse.next({
-      request: { headers: requestHeaders },
-    });
-    // Also fix the cookie in the browser for future requests
+    requestHeaders.set("cookie", parts.join("; "));
+    const response = NextResponse.next({ request: { headers: requestHeaders } });
+    // Also delete from browser
     for (const name of CALLBACK_COOKIE_NAMES) {
-      const raw = request.cookies.get(name)?.value;
-      if (!raw) continue;
-      if (raw.startsWith("https%3A") || raw.startsWith("http%3A")) {
-        try {
-          response.cookies.set(name, decodeURIComponent(raw), { path: "/" });
-        } catch {
-          response.cookies.delete(name);
-        }
+      if (request.cookies.get(name)) {
+        response.cookies.delete(name);
       }
     }
     return response;
@@ -72,5 +93,7 @@ export const config = {
     "/index.html",
     "/api/:path*",
     "/login-success",
+    "/history",
+    "/member/:path*",
   ],
 };
