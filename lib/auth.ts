@@ -41,53 +41,50 @@ function reqForJwt(request: Request) {
  */
 export async function getUserIdFromRequest(request: Request): Promise<string | null> {
   const secret = process.env.NEXTAUTH_SECRET;
-  const debugInfo: Record<string, unknown> = { hasSecret: !!secret };
-
   if (secret) {
     try {
-      const jwtReq = reqForJwt(request);
-      const cookieNames = Object.keys(jwtReq.cookies).filter(
-        (n) => n.includes("next-auth") || n.includes("__Secure")
-      );
-      debugInfo.sessionCookieNames = cookieNames;
-
-      const token = await getToken({ req: jwtReq as never, secret });
-      debugInfo.hasToken = !!token;
+      const token = await getToken({ req: reqForJwt(request) as never, secret });
       if (token) {
-        debugInfo.tokenKeys = Object.keys(token);
-        debugInfo.hasUserId = !!(token as { userId?: string }).userId;
-        debugInfo.hasEmail = !!token.email;
         const id = (token as { userId?: string }).userId;
         if (id) return id;
+        // userId not in JWT — look up or auto-create user by email
         if (token.email) {
-          const { data } = await supabaseAdmin
+          const email = String(token.email);
+          const { data: existing } = await supabaseAdmin
             .from("users")
             .select("id")
-            .eq("email", String(token.email))
+            .eq("email", email)
             .maybeSingle();
-          debugInfo.emailLookupFound = !!data?.id;
-          if (data?.id) return data.id;
+          if (existing?.id) return existing.id;
+          // User has a valid session but no DB row — auto-create
+          // (happens when signIn callback failed due to assertConfig or DB issue)
+          const { data: created } = await supabaseAdmin
+            .from("users")
+            .insert({
+              email,
+              name: (token.name as string) ?? null,
+              avatar_url: (token.picture as string) ?? null,
+              credits: 5,
+            })
+            .select("id")
+            .single();
+          if (created?.id) {
+            await supabaseAdmin.from("points_history").insert({
+              user_id: created.id,
+              amount: 5,
+              reason: "signup_bonus",
+              created_at: new Date().toISOString(),
+            }).catch(() => {});
+            return created.id;
+          }
         }
       }
     } catch (err) {
-      debugInfo.getTokenError = (err as Error)?.message;
       console.warn("[getUserIdFromRequest] getToken failed:", (err as Error)?.message);
     }
   }
-
-  try {
-    const session = await getSessionFromRequest(request);
-    debugInfo.hasSession = !!session;
-    debugInfo.sessionUserId = (session?.user as { id?: string })?.id ?? null;
-    if (session?.user) return (session.user as { id: string }).id ?? null;
-  } catch (err) {
-    debugInfo.sessionError = (err as Error)?.message;
-  }
-
-  console.warn("[getUserIdFromRequest] returning null, debug:", JSON.stringify(debugInfo));
-  // Temporarily expose debug info in development or when auth fails
-  (request as Request & { _authDebug?: unknown })._authDebug = debugInfo;
-  return null;
+  const session = await getSessionFromRequest(request);
+  return (session?.user as { id?: string })?.id ?? null;
 }
 
 /** 在 App Router 的 API 中传入 request 获取 session；优先用 JWT 构造保证 user.id 存在。 */
