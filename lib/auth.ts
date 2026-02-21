@@ -42,9 +42,24 @@ function reqForJwt(request: Request) {
 export async function getUserIdFromRequest(request: Request): Promise<string | null> {
   const secret = process.env.NEXTAUTH_SECRET;
   if (secret) {
-    const token = await getToken({ req: reqForJwt(request) as never, secret });
-    const id = (token as { userId?: string } | null)?.userId;
-    if (id) return id;
+    try {
+      const token = await getToken({ req: reqForJwt(request) as never, secret });
+      if (token) {
+        const id = (token as { userId?: string }).userId;
+        if (id) return id;
+        // userId not in token — try email lookup
+        if (token.email) {
+          const { data } = await supabaseAdmin
+            .from("users")
+            .select("id")
+            .eq("email", String(token.email))
+            .maybeSingle();
+          if (data?.id) return data.id;
+        }
+      }
+    } catch (err) {
+      console.warn("[getUserIdFromRequest] getToken failed:", (err as Error)?.message);
+    }
   }
   const session = await getSessionFromRequest(request);
   return (session?.user?.id as string) ?? null;
@@ -80,12 +95,17 @@ export async function getSessionFromRequest(request: Request): Promise<Session |
       }
     }
   }
-  const req = {
-    headers: Object.fromEntries(request.headers.entries()),
-    cookies: cookiesFromRequest(request),
-  };
-  const res = { getHeader: () => undefined, setCookie: () => {}, setHeader: () => {} };
-  return getServerSession(req as never, res as never, authOptions);
+  try {
+    const req = {
+      headers: Object.fromEntries(request.headers.entries()),
+      cookies: cookiesFromRequest(request),
+    };
+    const res = { getHeader: () => undefined, setCookie: () => {}, setHeader: () => {} };
+    return await getServerSession(req as never, res as never, authOptions);
+  } catch (err) {
+    console.warn("[getSessionFromRequest] getServerSession failed, returning null:", (err as Error)?.message);
+    return null;
+  }
 }
 
 export const authOptions: NextAuthOptions = {
