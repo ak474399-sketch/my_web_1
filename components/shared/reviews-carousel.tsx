@@ -15,9 +15,9 @@ type ReviewItem = {
 
 /** 无数据或请求失败时使用的静态展示数据（真人风格头像占位） */
 const FALLBACK_REVIEWS: ReviewItem[] = [
-  { id: "f1", displayName: "Sarah M.", content: "Restored my grandparents' wedding photo in seconds. The result was beyond my expectations.", createdAt: "", country: undefined, avatarUrl: "https://i.pravatar.cc/96?u=f1" },
-  { id: "f2", displayName: "James L.", content: "Used the scratch removal tool on an old family portrait. Simple and fast. Will definitely use again.", createdAt: "", country: undefined, avatarUrl: "https://i.pravatar.cc/96?u=f2" },
-  { id: "f3", displayName: "Elena K.", content: "The black and white colorization brought my dad's childhood photo to life. So emotional to see it in color.", createdAt: "", country: undefined, avatarUrl: "https://i.pravatar.cc/96?u=f3" },
+  { id: "f1", displayName: "Sarah M.", content: "Restored my grandparents' wedding photo in seconds. The result was beyond my expectations.", createdAt: "", country: undefined, avatarUrl: "/images/avatar-fallback-1.png" },
+  { id: "f2", displayName: "James L.", content: "Used the scratch removal tool on an old family portrait. Simple and fast. Will definitely use again.", createdAt: "", country: undefined, avatarUrl: "/images/avatar-fallback-2.png" },
+  { id: "f3", displayName: "Elena K.", content: "The black and white colorization brought my dad's childhood photo to life. So emotional to see it in color.", createdAt: "", country: undefined, avatarUrl: "/images/avatar-fallback-3.png" },
 ];
 
 function getAvatarUrl(review: ReviewItem): string {

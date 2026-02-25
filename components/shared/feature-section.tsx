@@ -7,10 +7,10 @@ import { useLocale } from "@/components/shared/locale-provider";
 const FEATURE_KEYS = ["feature0", "feature1", "feature2", "feature3"] as const;
 
 const FEATURE_IMGS = [
-  { beforeImg: "https://images.unsplash.com/photo-1508766917616-d22f3f1eea14?w=600&q=80&sat=-100&blur=1", afterImg: "https://images.unsplash.com/photo-1508766917616-d22f3f1eea14?w=600&q=80" },
-  { beforeImg: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80&blur=2", afterImg: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80" },
-  { beforeImg: "https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?w=600&q=80&sat=-100", afterImg: "https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?w=600&q=80" },
-  { beforeImg: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&q=80&blur=1", afterImg: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&q=80" },
+  { beforeImg: "/images/ba-faded-before.png", afterImg: "/images/ba-faded-after.png" },
+  { beforeImg: "/images/ba-scratch-before.png", afterImg: "/images/ba-scratch-after.png" },
+  { beforeImg: "/images/ba-colorize-before.png", afterImg: "/images/ba-colorize-after.png" },
+  { beforeImg: "/images/ba-water-before.png", afterImg: "/images/ba-water-after.png" },
 ];
 
 const fadeIn = {

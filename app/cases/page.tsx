@@ -6,15 +6,15 @@ import { useLocale } from "@/components/shared/locale-provider";
 import { logNavClick } from "@/lib/analytics";
 
 const RESTORE_CASES = [
-  { id: "1", title: "Faded photo restored", titleZh: "褪色老照片修复", desc: "A 1970s family portrait, heavily faded; AI restored color and detail.", descZh: "一张上世纪 70 年代的全家福，褪色严重，经 AI 修复后色彩与细节得以还原。", before: "https://placehold.co/600x400/e8e0d5/7a6b5a?text=Before", after: "https://placehold.co/600x400/d4a853/3d2e1c?text=After" },
-  { id: "2", title: "Scratches and creases removed", titleZh: "划痕与折痕去除", desc: "An old black-and-white photo full of scratches; after restoration, clean and clear.", descZh: "保存多年的黑白照片布满划痕，修复后画面干净、人物清晰。", before: "https://placehold.co/600x400/c4b8a8/5c5248?text=Before", after: "https://placehold.co/600x400/c9b896/3d2e1c?text=After" },
-  { id: "3", title: "Black-and-white colorized", titleZh: "黑白照上色", desc: "A vintage wedding photo colorized by AI, bringing back period clothing and scene.", descZh: "祖辈的黑白结婚照经智能上色，重现当年的服装与场景色彩。", before: "https://placehold.co/600x400/a89b8a/4a4035?text=B&W", after: "https://placehold.co/600x400/d4a853/3d2e1c?text=Colorized" },
+  { id: "1", title: "Faded photo restored", titleZh: "褪色老照片修复", desc: "A 1970s family portrait, heavily faded; AI restored color and detail.", descZh: "一张上世纪 70 年代的全家福，褪色严重，经 AI 修复后色彩与细节得以还原。", before: "/images/ba-faded-before.png", after: "/images/ba-faded-after.png" },
+  { id: "2", title: "Scratches and creases removed", titleZh: "划痕与折痕去除", desc: "An old black-and-white photo full of scratches; after restoration, clean and clear.", descZh: "保存多年的黑白照片布满划痕，修复后画面干净、人物清晰。", before: "/images/ba-scratch-before.png", after: "/images/ba-scratch-after.png" },
+  { id: "3", title: "Black-and-white colorized", titleZh: "黑白照上色", desc: "A vintage wedding photo colorized by AI, bringing back period clothing and scene.", descZh: "祖辈的黑白结婚照经智能上色，重现当年的服装与场景色彩。", before: "/images/ba-colorize-before.png", after: "/images/ba-colorize-after.png" },
 ];
 
 const FAMILY_STORIES = [
-  { id: "1", title: "Three generations, one photo", titleZh: "三代人的一张合影", excerpt: "Grandma always wanted to restore a portrait from her youth. We helped her upload, restore, and print it. She looked at it for a long time without saying a word.", excerptZh: "奶奶一直想修复她年轻时和姐妹的合影，照片已经发黄破损。我们帮她上传、修复，打印出来装裱后，她看了很久都没说话。", image: "https://placehold.co/400x300/e8e0d5/7a6b5a?text=Family" },
-  { id: "2", title: "Father's military portrait", titleZh: "父亲的军装照", excerpt: "An old army photo was damaged in a move. After AI restoration, it was flat again and the insignia looked clearer.", excerptZh: "父亲当兵时的老照片在搬家时受了潮，边缘都卷了。用 AI 修复后，不仅平整了，连当时的肩章和帽徽都更清晰了。", image: "https://placehold.co/400x300/c4b8a8/5c5248?text=Memory" },
-  { id: "3", title: "Family in front of the old house", titleZh: "老宅前的全家福", excerpt: "Before the old house was torn down, we found a family photo at the door. Restoring it became our way of keeping 'home'.", excerptZh: "老房子拆掉前，我们翻出了在门口拍的全家福。修复这张照片，成了我们留住「老家」的一种方式。", image: "https://placehold.co/400x300/a89b8a/4a4035?text=Home" },
+  { id: "1", title: "Three generations, one photo", titleZh: "三代人的一张合影", excerpt: "Grandma always wanted to restore a portrait from her youth. We helped her upload, restore, and print it. She looked at it for a long time without saying a word.", excerptZh: "奶奶一直想修复她年轻时和姐妹的合影，照片已经发黄破损。我们帮她上传、修复，打印出来装裱后，她看了很久都没说话。", image: "/images/story-3gen-family.png" },
+  { id: "2", title: "Father's military portrait", titleZh: "父亲的军装照", excerpt: "An old army photo was damaged in a move. After AI restoration, it was flat again and the insignia looked clearer.", excerptZh: "父亲当兵时的老照片在搬家时受了潮，边缘都卷了。用 AI 修复后，不仅平整了，连当时的肩章和帽徽都更清晰了。", image: "/images/story-military-portrait.png" },
+  { id: "3", title: "Family in front of the old house", titleZh: "老宅前的全家福", excerpt: "Before the old house was torn down, we found a family photo at the door. Restoring it became our way of keeping 'home'.", excerptZh: "老房子拆掉前，我们翻出了在门口拍的全家福。修复这张照片，成了我们留住「老家」的一种方式。", image: "/images/story-old-house-family.png" },
 ];
 
 export default function CasesPage() {

@@ -5,8 +5,7 @@ import { useLocale } from "@/components/shared/locale-provider";
 import { logNavClick } from "@/lib/analytics";
 
 /** 全屏背景图（可替换为视频 URL），与标题镂空共用同一图以保证对齐 */
-const BANNER_BG =
-  "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=1920&q=80";
+const BANNER_BG = "/images/hero-restoration-main.png";
 
 export default function FullscreenHeroBanner() {
   const { t } = useLocale();

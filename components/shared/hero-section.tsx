@@ -7,8 +7,7 @@ import { ChevronDown, Upload } from "lucide-react";
 import { useLocale } from "@/components/shared/locale-provider";
 
 /** 首屏左侧静态图（无全屏视频） */
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1508766917616-d22f3f1eea14?w=800&q=75";
+const HERO_IMAGE = "/images/hero-restoration-main.png";
 
 const ACCEPT = "image/jpeg,image/png,image/webp";
 const MAX_SIZE_MB = 8;
