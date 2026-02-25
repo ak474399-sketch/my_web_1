@@ -43,14 +43,18 @@ export async function GET() {
     return NextResponse.json({ error: "Failed to load reviews" }, { status: 500 });
   }
 
-  const list = (data ?? []).map((row) => ({
-    id: row.id,
-    displayName: maskEmail(row.email),
-    content: row.content,
-    country: row.country ?? undefined,
-    createdAt: row.created_at,
-    avatarUrl: gravatarUrl(row.email),
-  }));
+  const MIN_CONTENT_LENGTH = 10;
+
+  const list = (data ?? [])
+    .filter((row) => typeof row.content === "string" && row.content.trim().length >= MIN_CONTENT_LENGTH)
+    .map((row) => ({
+      id: row.id,
+      displayName: maskEmail(row.email),
+      content: row.content,
+      country: row.country ?? undefined,
+      createdAt: row.created_at,
+      avatarUrl: gravatarUrl(row.email),
+    }));
 
   return NextResponse.json(list);
 }

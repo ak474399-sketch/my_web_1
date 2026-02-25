@@ -6,8 +6,8 @@ import { motion } from "framer-motion";
 import { ChevronDown, Upload } from "lucide-react";
 import { useLocale } from "@/components/shared/locale-provider";
 
-/** 首屏左侧静态图（无全屏视频） */
-const HERO_IMAGE = "/images/hero-restoration-main.png";
+const HERO_VIDEO = "/videos/homevideo.mp4";
+const HERO_POSTER = "/images/hero-poster.png";
 
 const ACCEPT = "image/jpeg,image/png,image/webp";
 const MAX_SIZE_MB = 8;
@@ -60,7 +60,7 @@ export default function HeroSection() {
       <section className="relative min-h-[calc(100vh-4rem)] flex items-center bg-warm-50">
         <div className="container mx-auto px-4 py-12 md:py-20">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-            {/* left — static image */}
+            {/* left — hero video */}
             <motion.div
               variants={container}
               initial="hidden"
@@ -69,9 +69,13 @@ export default function HeroSection() {
             >
               <motion.div variants={slideUp} className="relative">
                 <div className="relative rounded-2xl overflow-hidden shadow-lg shadow-warm-900/10 ring-1 ring-warm-300 aspect-[4/3] bg-warm-200">
-                  <img
-                    src={HERO_IMAGE}
-                    alt=""
+                  <video
+                    src={HERO_VIDEO}
+                    poster={HERO_POSTER}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-warm-900/30 via-transparent to-transparent pointer-events-none" />
