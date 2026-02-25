@@ -69,12 +69,16 @@ export async function getUserIdFromRequest(request: Request): Promise<string | n
             .select("id")
             .single();
           if (created?.id) {
-            await supabaseAdmin.from("points_history").insert({
-              user_id: created.id,
-              amount: 5,
-              reason: "signup_bonus",
-              created_at: new Date().toISOString(),
-            }).catch(() => {});
+            try {
+              await supabaseAdmin.from("points_history").insert({
+                user_id: created.id,
+                amount: 5,
+                reason: "signup_bonus",
+                created_at: new Date().toISOString(),
+              });
+            } catch {
+              // 非阻塞：积分历史写入失败不影响登录身份恢复
+            }
             return created.id;
           }
         }
