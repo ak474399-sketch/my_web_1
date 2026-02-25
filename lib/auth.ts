@@ -56,9 +56,7 @@ export async function getUserIdFromRequest(request: Request): Promise<string | n
             .eq("email", email)
             .maybeSingle();
           if (existing?.id) return existing.id;
-          // User has a valid session but no DB row — auto-create
-          // (happens when signIn callback failed due to assertConfig or DB issue)
-          const { data: created } = await supabaseAdmin
+          const { data: created, error: insertErr } = await supabaseAdmin
             .from("users")
             .insert({
               email,
@@ -68,6 +66,9 @@ export async function getUserIdFromRequest(request: Request): Promise<string | n
             })
             .select("id")
             .single();
+          if (insertErr) {
+            console.error("[getUserIdFromRequest] auto-create failed:", insertErr.message, insertErr.code, insertErr.details);
+          }
           if (created?.id) {
             try {
               await supabaseAdmin.from("points_history").insert({
@@ -76,9 +77,7 @@ export async function getUserIdFromRequest(request: Request): Promise<string | n
                 reason: "signup_bonus",
                 created_at: new Date().toISOString(),
               });
-            } catch {
-              // 非阻塞：积分历史写入失败不影响登录身份恢复
-            }
+            } catch { /* non-blocking */ }
             return created.id;
           }
         }
