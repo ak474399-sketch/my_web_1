@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ChevronDown, Upload } from "lucide-react";
@@ -27,7 +27,25 @@ export default function HeroSection() {
   const [drag, setDrag] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.src = HERO_VIDEO;
+          video.load();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
 
   const handleFile = useCallback(
     (file: File) => {
@@ -58,8 +76,8 @@ export default function HeroSection() {
   return (
     <>
       <section className="relative min-h-[calc(100vh-4rem)] flex items-center bg-warm-50">
-        <div className="container mx-auto px-4 py-12 md:py-20">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-16 items-center">
             {/* left — hero video */}
             <motion.div
               variants={container}
@@ -70,12 +88,13 @@ export default function HeroSection() {
               <motion.div variants={slideUp} className="relative">
                 <div className="relative rounded-2xl overflow-hidden shadow-lg shadow-warm-900/10 ring-1 ring-warm-300 aspect-[4/3] bg-warm-200">
                   <video
-                    src={HERO_VIDEO}
+                    ref={videoRef}
                     poster={HERO_POSTER}
                     autoPlay
                     loop
                     muted
                     playsInline
+                    preload="none"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-warm-900/30 via-transparent to-transparent pointer-events-none" />
@@ -99,7 +118,7 @@ export default function HeroSection() {
 
               <motion.h1
                 variants={slideUp}
-                className="font-serif text-4xl md:text-5xl lg:text-[3.5rem] font-bold tracking-tight leading-[1.15] mb-5 text-warm-800"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold tracking-tight leading-[1.15] mb-5 text-warm-800"
               >
                 {t("home.hero.titleLine1")}
                 <br />
@@ -108,7 +127,7 @@ export default function HeroSection() {
 
               <motion.p
                 variants={slideUp}
-                className="text-warm-500 leading-relaxed mb-8 max-w-lg"
+                className="text-warm-500 text-sm sm:text-base leading-relaxed mb-8 max-w-lg"
               >
                 {t("home.hero.intro")}
               </motion.p>
@@ -120,7 +139,7 @@ export default function HeroSection() {
                   onDragLeave={() => setDrag(false)}
                   onClick={() => inputRef.current?.click()}
                   className={`
-                    rounded-2xl border-2 border-dashed p-8 md:p-10 text-center transition-all cursor-pointer
+                    rounded-2xl border-2 border-dashed p-6 sm:p-8 md:p-10 text-center transition-all cursor-pointer
                     ${drag
                       ? "border-accent bg-accent/5 scale-[1.01]"
                       : "border-warm-300 bg-white hover:border-accent/50 hover:shadow-md hover:shadow-warm-900/5"
@@ -141,7 +160,7 @@ export default function HeroSection() {
                   <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mx-auto mb-4">
                     <Upload className="w-7 h-7 text-accent" />
                   </div>
-                  <p className="text-warm-700 font-semibold text-lg mb-1">
+                  <p className="text-warm-700 font-semibold text-base sm:text-lg mb-1">
                     {t("home.hero.dropTitle")}
                   </p>
                   <p className="text-warm-400">

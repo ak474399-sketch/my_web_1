@@ -17,10 +17,10 @@ export default function KnowledgeSection() {
   const { t } = useLocale();
   return (
     <section className="border-t border-warm-200">
-      <div className="container mx-auto px-4 py-20 md:py-28">
-        <div className="text-center mb-14">
+      <div className="container mx-auto px-4 py-12 sm:py-20 md:py-28">
+        <div className="text-center mb-10 sm:mb-14">
           <p className="text-accent font-medium tracking-wide mb-3">{t("knowledge.learnExplore")}</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-warm-800">{t("knowledge.storiesTitle")}</h2>
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-warm-800">{t("knowledge.storiesTitle")}</h2>
           <p className="text-warm-400 mt-3 max-w-xl mx-auto">{t("knowledge.storiesSubtitle")}</p>
         </div>
 
@@ -38,13 +38,13 @@ export default function KnowledgeSection() {
               whileInView="visible"
               viewport={{ once: true, margin: "-60px" }}
               transition={{ delay: i * 0.1 }}
-              className="group flex flex-col rounded-2xl bg-white border border-warm-300 p-6 shadow-sm hover:shadow-lg hover:shadow-warm-900/5 transition-all"
+              className="group flex flex-col rounded-2xl bg-white border border-warm-300 p-4 sm:p-6 shadow-sm hover:shadow-lg hover:shadow-warm-900/5 transition-all"
             >
               <div className="flex items-center gap-2 mb-4">
                 <BookOpen className="w-4 h-4 text-accent" />
                 <span className="text-sm text-warm-400">{t(`knowledge.${key}.readTime`)}</span>
               </div>
-              <h3 className="font-serif text-xl font-semibold text-warm-800 mb-3 leading-snug group-hover:text-accent transition-colors">
+              <h3 className="font-serif text-lg sm:text-xl font-semibold text-warm-800 mb-3 leading-snug group-hover:text-accent transition-colors">
                 {t(`knowledge.${key}.title`)}
               </h3>
               <p className="text-warm-500 leading-relaxed flex-1">{t(`knowledge.${key}.excerpt`)}</p>

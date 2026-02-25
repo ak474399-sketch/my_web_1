@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import { Upload, Sparkles, Eye, Shield, Heart, Images } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -8,10 +9,11 @@ import { ALL_SLUGS, RESTORE_SLUGS } from "@/lib/seo-data";
 import { SlugIcon } from "@/lib/icons";
 import { useLocale } from "@/components/shared/locale-provider";
 import HeroSection from "@/components/shared/hero-section";
-import FeatureSection from "@/components/shared/feature-section";
-import { ReviewsCarousel } from "@/components/shared/reviews-carousel";
-import KnowledgeSection from "@/components/shared/knowledge-section";
 import { logToolClick, logNavClick } from "@/lib/analytics";
+
+const FeatureSection = dynamic(() => import("@/components/shared/feature-section"), { ssr: false });
+const ReviewsCarousel = dynamic(() => import("@/components/shared/reviews-carousel").then((m) => ({ default: m.ReviewsCarousel })), { ssr: false });
+const KnowledgeSection = dynamic(() => import("@/components/shared/knowledge-section"), { ssr: false });
 
 function LoginRequiredBanner() {
   const searchParams = useSearchParams();
@@ -41,23 +43,23 @@ export default function HomePage() {
       <HeroSection />
 
       <section className="border-t border-warm-200 bg-warm-50">
-        <div className="container mx-auto px-4 py-16 md:py-24">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold text-warm-800 text-center mb-4">
+        <div className="container mx-auto px-4 py-12 sm:py-16 md:py-24">
+          <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-warm-800 text-center mb-4">
             {t("home.steps.title")}
           </h2>
-          <p className="text-warm-500 text-center max-w-xl mx-auto mb-14">
+          <p className="text-warm-500 text-sm sm:text-base text-center max-w-xl mx-auto mb-10 sm:mb-14">
             {t("home.steps.subtitle")}
           </p>
-          <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto">
             {STEPS.map((step) => (
               <div
                 key={step.titleKey}
-                className="rounded-2xl bg-white border border-warm-200 p-8 text-center shadow-sm hover:shadow-md hover:border-warm-300 transition-all duration-200"
+                className="rounded-2xl bg-white border border-warm-200 p-6 sm:p-8 text-center shadow-sm hover:shadow-md hover:border-warm-300 transition-all duration-200"
               >
                 <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mx-auto mb-5">
                   <step.icon className="w-7 h-7 text-accent" />
                 </div>
-                <h3 className="font-serif text-xl font-semibold text-warm-800 mb-2">{t(step.titleKey)}</h3>
+                <h3 className="font-serif text-lg sm:text-xl font-semibold text-warm-800 mb-2">{t(step.titleKey)}</h3>
                 <p className="text-warm-500 leading-relaxed">{t(step.descKey)}</p>
               </div>
             ))}
@@ -68,11 +70,11 @@ export default function HomePage() {
       <FeatureSection />
 
       <section className="border-t border-warm-200 bg-white">
-        <div className="container mx-auto px-4 py-16 md:py-24">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold text-warm-800 text-center mb-3">
+        <div className="container mx-auto px-4 py-12 sm:py-16 md:py-24">
+          <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-warm-800 text-center mb-3">
             {t("home.toolsSection.title")}
           </h2>
-          <p className="text-warm-500 text-center max-w-lg mx-auto mb-10">
+          <p className="text-warm-500 text-sm sm:text-base text-center max-w-lg mx-auto mb-8 sm:mb-10">
             {t("home.toolsSection.subtitle")}
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 max-w-5xl mx-auto">
@@ -119,8 +121,8 @@ export default function HomePage() {
       <ReviewsCarousel />
 
       <section className="border-t border-warm-200 bg-warm-50">
-        <div className="container mx-auto px-4 py-16 md:py-20">
-          <div className="max-w-4xl mx-auto rounded-2xl border border-warm-200 bg-white p-8 md:p-10 shadow-sm hover:shadow-md hover:border-warm-300 transition-all duration-200">
+        <div className="container mx-auto px-4 py-12 sm:py-16 md:py-20">
+          <div className="max-w-4xl mx-auto rounded-2xl border border-warm-200 bg-white p-5 sm:p-8 md:p-10 shadow-sm hover:shadow-md hover:border-warm-300 transition-all duration-200">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center shrink-0">
@@ -150,12 +152,12 @@ export default function HomePage() {
       <KnowledgeSection />
 
       <section className="border-t border-warm-200 bg-warm-100">
-        <div className="container mx-auto px-4 py-16 md:py-24">
+        <div className="container mx-auto px-4 py-12 sm:py-16 md:py-24">
           <div className="max-w-2xl mx-auto text-center">
             <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mx-auto mb-6">
               <Shield className="w-7 h-7 text-accent" />
             </div>
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-warm-800 mb-3">
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-warm-800 mb-3">
               {t("home.privacySection.title")}
             </h2>
             <p className="text-warm-500 leading-relaxed mb-8">

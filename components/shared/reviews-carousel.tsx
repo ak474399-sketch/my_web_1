@@ -78,9 +78,9 @@ export function ReviewsCarousel() {
   const list = ensureMinReviews(reviews.length > 0 ? reviews : FALLBACK_REVIEWS);
 
   return (
-    <section className="border-t border-warm-200 bg-warm-50 py-12 md:py-16">
-      <div className="container mx-auto px-4 mb-8">
-        <h2 className="font-serif text-2xl md:text-3xl font-bold text-warm-800 text-center mb-2">
+    <section className="border-t border-warm-200 bg-warm-50 py-8 sm:py-12 md:py-16">
+      <div className="container mx-auto px-4 mb-6 sm:mb-8">
+        <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-warm-800 text-center mb-2">
           {t("home.reviewsSection.title")}
         </h2>
         <p className="text-warm-500 text-center max-w-xl mx-auto mb-4">
@@ -120,7 +120,7 @@ export function ReviewsCarousel() {
             {list.map((review) => (
               <article
                 key={review.id}
-                className="w-[min(340px,90vw)] md:w-80 rounded-2xl border border-warm-300 bg-white p-6 shadow-sm hover:shadow-md transition-shadow text-center"
+                className="w-[min(340px,calc(100vw-2rem))] md:w-80 rounded-2xl border border-warm-300 bg-white p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow text-center"
               >
                 <img
                   src={getAvatarUrl(review)}

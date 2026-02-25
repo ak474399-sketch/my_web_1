@@ -5,7 +5,7 @@
 import type { Locale } from "./i18n";
 
 export type TranslationKeys = {
-  nav: { restore: string; history: string; tools: string; cases: string; member: string; feedback: string; terms: string; privacy: string; more: string; signIn: string; signOut: string; clearLoginState: string; memoryRestore: string };
+  nav: { restore: string; history: string; tools: string; cases: string; member: string; feedback: string; terms: string; privacy: string; more: string; signIn: string; signOut: string; clearLoginState: string; memoryRestore: string; blog: string };
   login: { welcomeBack: string; welcomeToBrand: string; signInToSave: string; loginRequiredForFeature: string; clearedMessage: string; continueWithGoogle: string; signInWithApple: string; signInWithEmail: string; comingSoon: string; agreeTerms: string; and: string; terms: string; privacyPolicy: string; redirecting: string; pleaseComplete: string };
   footer: { memoryRestore: string; tagline: string; restoreMemories: string; cases: string; member: string; history: string; oldPhotos: string; fixScratches: string; reviveFaded: string; addColor: string; termsOfService: string; privacyPolicy: string; madeWithCare: string };
   common: { before: string; after: string; beforeAfter: string };
@@ -184,6 +184,7 @@ const translations: Record<Locale, TranslationKeys> = {
       signOut: "Sign Out",
       clearLoginState: "Clear login state",
       memoryRestore: "AI RestorePic",
+      blog: "Blog",
     },
     login: {
       welcomeBack: "Welcome Back",
@@ -421,6 +422,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       signOut: "Abmelden",
       clearLoginState: "Anmeldestatus löschen",
       memoryRestore: "AI RestorePic",
+      blog: "Blog",
     },
     login: {
       welcomeBack: "Willkommen zurück",
@@ -494,6 +496,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       signOut: "Déconnexion",
       clearLoginState: "Effacer l'état de connexion",
       memoryRestore: "AI RestorePic",
+      blog: "Blog",
     },
     login: {
       welcomeBack: "Bon retour",
@@ -567,6 +570,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       signOut: "退出",
       clearLoginState: "清除登录状态",
       memoryRestore: "AI RestorePic",
+      blog: "博客",
     },
     login: {
       welcomeBack: "欢迎回来",
@@ -640,6 +644,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       signOut: "登出",
       clearLoginState: "清除登入狀態",
       memoryRestore: "AI RestorePic",
+      blog: "部落格",
     },
     login: {
       welcomeBack: "歡迎回來",
@@ -713,6 +718,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       signOut: "Cerrar sesión",
       clearLoginState: "Borrar estado de sesión",
       memoryRestore: "AI RestorePic",
+      blog: "Blog",
     },
     login: {
       welcomeBack: "Bienvenido de nuevo",
@@ -786,6 +792,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       signOut: "Sair",
       clearLoginState: "Limpar estado de login",
       memoryRestore: "AI RestorePic",
+      blog: "Blog",
     },
     login: {
       welcomeBack: "Bem-vindo de volta",
@@ -859,6 +866,7 @@ reviewsSection: { title: "What Users Say", subtitle: "Real experiences from peop
       signOut: "تسجيل الخروج",
       clearLoginState: "مسح حالة تسجيل الدخول",
       memoryRestore: "AI RestorePic",
+      blog: "مدونة",
     },
     login: {
       welcomeBack: "مرحباً بعودتك",

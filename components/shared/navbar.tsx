@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { useSearchParams, usePathname } from "next/navigation";
-import { Heart, ChevronDown, FileText, Shield, LogIn, LogOut, History, Coins, Crown, Images, MoreHorizontal, Globe } from "lucide-react";
+import { Heart, ChevronDown, FileText, Shield, LogIn, LogOut, History, Coins, Crown, Images, MoreHorizontal, Globe, BookOpen } from "lucide-react";
 import { LoginModal } from "@/components/shared/login-modal";
 import { LanguageSelector } from "@/components/shared/language-selector";
 import { useLocale } from "@/components/shared/locale-provider";
@@ -114,7 +114,7 @@ export function Navbar() {
           <span className="hidden sm:inline">{t("nav.memoryRestore")}</span>
         </Link>
 
-        <nav className="flex items-center gap-5">
+        <nav className="flex items-center gap-2 sm:gap-5">
           <Link
             href="/cases"
             onClick={() => logNavClick("/cases", t("nav.cases"))}
@@ -122,6 +122,14 @@ export function Navbar() {
           >
             <Images className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">{t("nav.cases")}</span>
+          </Link>
+          <Link
+            href="/blog"
+            onClick={() => logNavClick("/blog", t("nav.blog"))}
+            className="flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors"
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">{t("nav.blog")}</span>
           </Link>
           {(!membershipType || membershipType === "free") && (
             <Link
@@ -158,8 +166,8 @@ export function Navbar() {
             </button>
 
             {toolsOpen && (
-              <div className="absolute top-full right-0 mt-2 w-[420px] max-h-[70vh] overflow-y-auto rounded-2xl border border-warm-300 bg-white shadow-xl shadow-warm-900/8 p-2">
-                <div className="grid grid-cols-2 gap-1">
+              <div className="absolute top-full right-0 mt-2 w-[calc(100vw-2rem)] sm:w-[420px] max-h-[70vh] overflow-y-auto rounded-2xl border border-warm-300 bg-white shadow-xl shadow-warm-900/8 p-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
                   {ALL_SLUGS.map((slug) => {
                     const d = RESTORE_SLUGS[slug];
                     const kwKey = `home.toolKeywords.${slug}`;
@@ -208,7 +216,7 @@ export function Navbar() {
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${moreOpen ? "rotate-180" : ""}`} />
               </button>
               {moreOpen && (
-                <div className="absolute top-full right-0 mt-2 w-52 rounded-2xl border border-warm-300 bg-white shadow-xl shadow-warm-900/10 p-2 z-50">
+                <div className="absolute top-full right-0 mt-2 w-[calc(100vw-2rem)] sm:w-52 rounded-2xl border border-warm-300 bg-white shadow-xl shadow-warm-900/10 p-2 z-50">
                   <Link href="/terms" onClick={() => setMoreOpen(false)} className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-warm-600 hover:bg-warm-50">
                     <FileText className="w-4 h-4" />
                     {t("nav.terms")}
@@ -256,7 +264,7 @@ export function Navbar() {
               </Link>
 
               {userMenuOpen && (
-                <div className="absolute top-full right-0 mt-2 w-56 rounded-2xl border border-warm-300 bg-white shadow-xl shadow-warm-900/10 p-2">
+                <div className="absolute top-full right-0 mt-2 w-[calc(100vw-2rem)] sm:w-56 rounded-2xl border border-warm-300 bg-white shadow-xl shadow-warm-900/10 p-2">
                   <div className="px-3 py-2.5 border-b border-warm-100 mb-2">
                     <p className="text-sm font-medium text-warm-800 truncate">{session.user.name}</p>
                     <p className="text-xs text-warm-400 truncate">{session.user.email}</p>

@@ -15,8 +15,14 @@ html {
 
 body {
   @apply bg-warm-50 text-warm-700 min-h-screen;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.75;
+}
+
+@media (min-width: 640px) {
+  body {
+    font-size: 18px;
+  }
 }
 
 input[type="range"] {
@@ -25,4 +31,54 @@ input[type="range"] {
 
 ::selection {
   background-color: #D4A85340;
+}
+
+/* Blog prose styling */
+.prose {
+  @apply text-warm-700 leading-relaxed;
+}
+.prose h2 {
+  @apply font-serif text-xl sm:text-2xl font-bold text-warm-800 mt-10 mb-4;
+}
+.prose h3 {
+  @apply font-serif text-lg sm:text-xl font-semibold text-warm-800 mt-8 mb-3;
+}
+.prose p {
+  @apply mb-5;
+}
+.prose a {
+  @apply text-accent hover:text-accent-muted underline underline-offset-2 transition-colors;
+}
+.prose ul, .prose ol {
+  @apply mb-5 pl-6;
+}
+.prose ul {
+  @apply list-disc;
+}
+.prose ol {
+  @apply list-decimal;
+}
+.prose li {
+  @apply mb-2;
+}
+.prose strong {
+  @apply font-semibold text-warm-800;
+}
+.prose blockquote {
+  @apply border-l-4 border-accent/30 pl-4 italic text-warm-500 my-6;
+}
+.prose code {
+  @apply bg-warm-100 text-warm-800 rounded px-1.5 py-0.5 text-sm font-mono;
+}
+.prose pre {
+  @apply bg-warm-800 text-warm-100 rounded-xl p-4 overflow-x-auto my-6 text-sm;
+}
+.prose pre code {
+  @apply bg-transparent text-inherit p-0;
+}
+.prose hr {
+  @apply border-warm-200 my-8;
+}
+.prose img {
+  @apply rounded-xl my-6;
 }
