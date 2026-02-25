@@ -2,21 +2,34 @@ import { NextRequest, NextResponse } from "next/server";
 import { getUserIdFromRequest } from "@/lib/auth";
 import { getCredits } from "@/lib/credits";
 import { getToken } from "next-auth/jwt";
+import { supabaseAdmin } from "@/lib/supabase";
 
 export async function GET(request: NextRequest) {
   const userId = await getUserIdFromRequest(request);
   if (!userId) {
     const cookieHeader = request.headers.get("cookie") ?? "";
-    const hasSessionToken = cookieHeader.includes("next-auth.session-token");
     const hasSecureToken = cookieHeader.includes("__Secure-next-auth.session-token");
-    const cookieNames = cookieHeader.split(";").map(c => c.split("=")[0].trim()).filter(Boolean);
 
     let tokenDebug: string = "not_attempted";
+    let supabaseDebug: string = "not_attempted";
     try {
       const secret = process.env.NEXTAUTH_SECRET;
       if (secret) {
         const token = await getToken({ req: request as never, secret });
         tokenDebug = token ? `valid(email=${token.email},userId=${(token as Record<string, unknown>).userId ?? "none"})` : "null";
+
+        if (token?.email) {
+          const { data, error } = await supabaseAdmin
+            .from("users")
+            .select("id, email")
+            .eq("email", String(token.email))
+            .maybeSingle();
+          supabaseDebug = error
+            ? `error:${error.message}(${error.code})`
+            : data
+              ? `found(id=${data.id})`
+              : "not_found";
+        }
       } else {
         tokenDebug = "no_secret";
       }
@@ -24,10 +37,10 @@ export async function GET(request: NextRequest) {
       tokenDebug = `error:${(e as Error).message}`;
     }
 
-    console.error("[credits 401]", { hasSessionToken, hasSecureToken, cookieNames, tokenDebug });
+    console.error("[credits 401]", { hasSecureToken, tokenDebug, supabaseDebug });
     return NextResponse.json({
       error: "Unauthorized",
-      debug: { hasSessionToken, hasSecureToken, cookieNames, tokenDebug },
+      debug: { hasSecureToken, tokenDebug, supabaseDebug },
     }, { status: 401 });
   }
 
