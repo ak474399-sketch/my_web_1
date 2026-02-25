@@ -40,7 +40,12 @@ function getSupabaseAdmin(): SupabaseClient {
       : "Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY";
     throw new Error(hint);
   }
-  _supabaseAdmin = createClient(url, key);
+  _supabaseAdmin = createClient(url, key, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
   return _supabaseAdmin;
 }
 
