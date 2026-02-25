@@ -120,7 +120,8 @@ export function RestoreTool({ slug = "" }: RestoreToolProps) {
         return;
       }
 
-      setRestoreText(data.text ?? null);
+      const rawText = (data.text ?? "").replace(/^[\s""''「」]+$/g, "").trim();
+      setRestoreText(rawText || null);
       if (data.imageBase64) {
         if (slug) logRestoreCompleted(slug);
         const outMime = data.imageMimeType || "image/png";
