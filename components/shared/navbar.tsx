@@ -24,6 +24,7 @@ export function Navbar() {
   const moreTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [avatarBroken, setAvatarBroken] = useState(false);
   const [credits, setCredits] = useState<number | null>(null);
+  const [membershipType, setMembershipType] = useState<string | null>(null);
   const toolsTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const userTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -79,7 +80,10 @@ export function Navbar() {
     }
     fetch("/api/user/credits")
       .then((res) => (res.ok ? res.json() : null))
-      .then((data) => data != null && typeof data.credits === "number" && setCredits(data.credits))
+      .then((data) => {
+        if (data != null && typeof data.credits === "number") setCredits(data.credits);
+        if (data?.membershipType) setMembershipType(data.membershipType);
+      })
       .catch(() => setCredits(null));
   }, [session?.user]);
 
@@ -119,14 +123,16 @@ export function Navbar() {
             <Images className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">{t("nav.cases")}</span>
           </Link>
-          <Link
-            href="/member/subscribe"
-            onClick={() => logNavClick("/member/subscribe", t("nav.member"))}
-            className="flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors"
-          >
-            <Crown className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">{t("nav.member")}</span>
-          </Link>
+          {(!membershipType || membershipType === "free") && (
+            <Link
+              href="/member/subscribe"
+              onClick={() => logNavClick("/member/subscribe", t("nav.member"))}
+              className="flex items-center gap-1 text-warm-500 hover:text-warm-800 transition-colors"
+            >
+              <Crown className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">{t("nav.member")}</span>
+            </Link>
+          )}
           {session?.user && (
             <Link
               href="/history"
